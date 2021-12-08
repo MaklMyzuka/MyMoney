@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="muzdima.boringmoney">
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BoringMoney">
+        <activity
+            android:name=".activity.ImportExportActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.DictionariesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.AccountGroupsDictionaryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.AccountsDictionaryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.CategoriesDictionaryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.CurrenciesDictionaryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.DraftActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.ActionsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.CurrencyCardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.AccountCardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.CategoryCardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.AccountGroupCardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

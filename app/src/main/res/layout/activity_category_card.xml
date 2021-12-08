@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewTitleCategoryCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/category_edit"
+            android:textColor="@color/header"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/checkBoxHideCategoryCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/is_not_visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitleCategoryCard" />
+
+        <TextView
+            android:id="@+id/textViewNameCategoryCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:labelFor="@id/editTextNameCategoryCard"
+            android:text="@string/name"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextNameCategoryCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editTextNameCategoryCard" />
+
+        <EditText
+            android:id="@+id/editTextNameCategoryCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewNameCategoryCard"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxHideCategoryCard" />
+
+        <CheckBox
+            android:id="@+id/checkBoxParentCategoryCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/null_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameCategoryCard" />
+
+        <TextView
+            android:id="@+id/textViewParentCategoryCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:labelFor="@id/historySpinnerParentCategoryCard"
+            android:text="@string/parent"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/historySpinnerParentCategoryCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/historySpinnerParentCategoryCard" />
+
+        <muzdima.boringmoney.view.HistorySpinner
+            android:id="@+id/historySpinnerParentCategoryCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewParentCategoryCard"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxParentCategoryCard" />
+
+        <TextView
+            android:id="@+id/textViewCommentCategoryCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:labelFor="@id/editTextCommentCategoryCard"
+            android:text="@string/comment"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextCommentCategoryCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editTextCommentCategoryCard" />
+
+        <EditText
+            android:id="@+id/editTextCommentCategoryCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewCommentCategoryCard"
+            app:layout_constraintTop_toBottomOf="@+id/historySpinnerParentCategoryCard" />
+
+        <Button
+            android:id="@+id/buttonAcceptCategoryCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/edit_button_label"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDeleteCategoryCard"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCommentCategoryCard" />
+
+        <Button
+            android:id="@+id/buttonDeleteCategoryCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/delete_button_label"
+            app:layout_constraintEnd_toStartOf="@+id/buttonCancelCategoryCard"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonAcceptCategoryCard"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCommentCategoryCard" />
+
+        <Button
+            android:id="@+id/buttonCancelCategoryCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/cancel_button_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonDeleteCategoryCard"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCommentCategoryCard" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
