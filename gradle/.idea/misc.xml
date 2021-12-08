@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/account_group_selector.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/account_selector.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/action_editor_transaction.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/action_editor_transfer.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/activity_account_card.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/activity_account_group_card.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/activity_actions.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/activity_draft.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/changeable_action_list.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/BoringMoney/app/src/main/res/layout/transaction_item.xml" value="0.15489130434782608" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/account_group_selector.xml" value="0.1046875" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/account_selector.xml" value="0.1046875" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/activity_account_group_card.xml" value="0.10416666666666667" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/activity_actions.xml" value="0.22" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/activity_dictionaries.xml" value="0.1046875" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/activity_draft.xml" value="0.18" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/activity_main.xml" value="0.1046875" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/activity_statistics.xml" value="0.1046875" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/category_selector.xml" value="0.1046875" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/changeable_action_list.xml" value="0.14673913043478262" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/transaction_item.xml" value="0.5" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/layout/transfer_item.xml" value="0.1046875" />
+        <entry key="..\:/MyAndroid/MyMoney/app/src/main/res/menu/main_menu.xml" value="0.2015625" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.3828125" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout-w1240dp/category_selector.xml" value="0.25" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/account_group_selector.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/account_selector.xml" value="0.32563405797101447" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/action_editor_transaction.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/action_editor_transfer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_account_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_account_group_card.xml" value="0.33" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_actions.xml" value="0.29924242424242425" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_category_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_currency_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_dictionaries.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_dictionary.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_draft.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_import_export.xml" value="0.25181159420289856" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_login.xml" value="0.25181159420289856" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_main.xml" value="0.3211050724637681" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/activity_transactions.xml" value="0.33" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/category_selector.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/changeable_action_list.xml" value="0.2755681818181818" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/dictionary_item.xml" value="0.29739583333333336" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/history_spinner.xml" value="0.32563405797101447" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/loading_dialog.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/multi_select_item.xml" value="0.33" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/settings_activity.xml" value="0.25181159420289856" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/transaction_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/layout/transfer_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/menu/main_menu.xml" value="0.3359375" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2851851851851852" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.221875" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/xml/root_import_export.xml" value="0.25181159420289856" />
+        <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/xml/root_preferences.xml" value="0.25181159420289856" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

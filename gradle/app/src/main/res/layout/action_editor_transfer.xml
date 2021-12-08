@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textViewTitleTransferEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDateTransferEditor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewDateTransferEditor" />
+
+    <TextView
+        android:id="@+id/textViewDateTransferEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:minHeight="48dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTimeTransferEditor"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTimeTransferEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:minHeight="48dp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewDateTransferEditor" />
+
+    <TextView
+        android:id="@+id/textViewFromTransferEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/transfer_from"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accountTransferEditorFrom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/accountTransferEditorFrom" />
+
+    <muzdima.mymoney.view.HistorySpinner
+        android:id="@+id/accountTransferEditorFrom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/account_from"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewFromTransferEditor"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateTransferEditor" />
+
+    <TextView
+        android:id="@+id/textViewToTransferEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/transfer_to"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/accountTransferEditorTo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/accountTransferEditorTo" />
+
+    <muzdima.mymoney.view.HistorySpinner
+        android:id="@+id/accountTransferEditorTo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/account_to"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/accountTransferEditorFrom"
+        app:layout_constraintTop_toBottomOf="@+id/accountTransferEditorFrom" />
+
+    <EditText
+        android:id="@+id/editSumTransferEditorFrom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/sum_from_hint"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        android:textColorHint="@color/hint"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCurrencyTransferEditorFrom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountTransferEditorTo" />
+
+    <TextView
+        android:id="@+id/textViewCurrencyTransferEditorFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editSumTransferEditorFrom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editSumTransferEditorFrom" />
+
+    <EditText
+        android:id="@+id/editSumTransferEditorTo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/sum_to_hint"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        android:textColorHint="@color/hint"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCurrencyTransferEditorTo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editSumTransferEditorFrom" />
+
+    <TextView
+        android:id="@+id/textViewCurrencyTransferEditorTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/editSumTransferEditorTo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editSumTransferEditorTo" />
+
+    <Button
+        android:id="@+id/buttonAcceptTransferEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_button_label"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCancelTransferEditor"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editSumTransferEditorTo" />
+
+    <Button
+        android:id="@+id/buttonCancelTransferEditor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/cancel_button_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonAcceptTransferEditor"
+        app:layout_constraintTop_toBottomOf="@+id/editSumTransferEditorTo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

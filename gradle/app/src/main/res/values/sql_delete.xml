@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_delete_transaction">
+        DELETE FROM [transaction] WHERE [transaction].[id] = ?1;
+    </string>
+    <string name="sql_delete_transfer">
+        DELETE FROM [transfer] WHERE [transfer].[id] = ?1;
+    </string>
+    <string name="sql_delete_currency">
+        DELETE FROM [currency] WHERE [currency].[id] = ?1;
+    </string>
+    <string name="sql_delete_account">
+        DELETE FROM [account] WHERE [account].[id] = ?1;
+    </string>
+    <string name="sql_delete_category">
+        DELETE FROM [category] WHERE [category].[id] = ?1;
+    </string>
+    <string name="sql_delete_account_group">
+        DELETE FROM [account_group] WHERE [account_group].[id] = ?1;
+    </string>
+    <string name="sql_delete_account_group_account_by_account_group">
+        DELETE FROM [account_group_accounts] WHERE [account_group_id] = ?1;
+    </string>
+    <string name="sql_delete_account_group_account_by_account">
+        DELETE FROM [account_group_accounts] WHERE [account_id] = ?1;
+    </string>
+</resources>

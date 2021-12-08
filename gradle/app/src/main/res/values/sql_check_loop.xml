@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_check_update_category_loop">
+        WITH RECURSIVE [category_path]([category_id_from], [category_id_to]) AS
+        (
+            SELECT [category_id_from], [category_id_to]
+            FROM
+            (
+                SELECT
+                    [category].[id] AS [category_id_from],
+                    [category].[parent_id] AS [category_id_to]
+                FROM [category] WHERE [category].[id] != ?1
+                UNION ALL
+                SELECT
+                    ?1 AS [category_id_from],
+                    ?2 AS [category_id_to]
+            ) AS [category_path_init]
+                UNION ALL
+            SELECT
+                [category_path].[category_id_from] AS [category_id_from],
+                [category].[parent_id] AS [category_id_to]
+            FROM [category_path]
+            INNER JOIN [category] ON [category].[id] = [category_path].[category_id_to]
+            WHERE [category_path].[category_id_from] != [category_path].[category_id_to]
+        )
+        SELECT NOT EXISTS(SELECT 1 FROM [category_path] WHERE [category_path].[category_id_from] = [category_path].[category_id_to]);
+    </string>
+</resources>

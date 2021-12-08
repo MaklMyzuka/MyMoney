@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewTitleAccountGroupCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/account_group_edit"
+            android:textColor="@color/header"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/checkBoxHideAccountGroupCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/is_not_visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitleAccountGroupCard" />
+
+        <TextView
+            android:id="@+id/textViewNameAccountGroupCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:labelFor="@id/editTextNameAccountGroupCard"
+            android:text="@string/name"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextNameAccountGroupCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editTextNameAccountGroupCard" />
+
+        <EditText
+            android:id="@+id/editTextNameAccountGroupCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewNameAccountGroupCard"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxHideAccountGroupCard" />
+
+        <TextView
+            android:id="@+id/textViewCommentAccountGroupCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:labelFor="@id/editTextCommentAccountGroupCard"
+            android:text="@string/comment"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextCommentAccountGroupCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editTextCommentAccountGroupCard" />
+
+        <EditText
+            android:id="@+id/editTextCommentAccountGroupCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewCommentAccountGroupCard"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameAccountGroupCard" />
+
+        <TextView
+            android:id="@+id/textViewAccountsAccountGroupCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/accounts"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCommentAccountGroupCard" />
+
+        <muzdima.mymoney.view.MultiSelect
+            android:id="@+id/multiSelectAccountGroupCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAccountsAccountGroupCard" />
+
+        <Button
+            android:id="@+id/buttonAcceptAccountGroupCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/edit_button_label"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDeleteAccountGroupCard"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/multiSelectAccountGroupCard" />
+
+        <Button
+            android:id="@+id/buttonDeleteAccountGroupCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/delete_button_label"
+            app:layout_constraintEnd_toStartOf="@+id/buttonCancelAccountGroupCard"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonAcceptAccountGroupCard"
+            app:layout_constraintTop_toBottomOf="@+id/multiSelectAccountGroupCard" />
+
+        <Button
+            android:id="@+id/buttonCancelAccountGroupCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/cancel_button_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonDeleteAccountGroupCard"
+            app:layout_constraintTop_toBottomOf="@+id/multiSelectAccountGroupCard" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout></ScrollView>

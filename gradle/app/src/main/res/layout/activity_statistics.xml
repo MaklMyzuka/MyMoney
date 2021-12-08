@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewAccountGroups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/account_groups"
+            android:textColor="@color/header"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <muzdima.mymoney.view.AccountGroupSelector
+            android:id="@+id/accountGroupSelector10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <muzdima.mymoney.view.AccountGroupSelector
+            android:id="@+id/accountGroupSelector11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <muzdima.mymoney.view.AccountGroupSelector
+            android:id="@+id/accountGroupSelector12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <muzdima.mymoney.view.AccountGroupSelector
+            android:id="@+id/accountGroupSelector13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <muzdima.mymoney.view.AccountGroupSelector
+            android:id="@+id/accountGroupSelector14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <muzdima.mymoney.view.AccountGroupSelector
+            android:id="@+id/accountGroupSelector15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textViewCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/categories_month"
+            android:textColor="@color/header"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <muzdima.mymoney.view.CategorySelector
+            android:id="@+id/categorySelector10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <muzdima.mymoney.view.CategorySelector
+            android:id="@+id/categorySelector11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <muzdima.mymoney.view.CategorySelector
+            android:id="@+id/categorySelector12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <muzdima.mymoney.view.CategorySelector
+            android:id="@+id/categorySelector13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <muzdima.mymoney.view.CategorySelector
+            android:id="@+id/categorySelector14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <muzdima.mymoney.view.CategorySelector
+            android:id="@+id/categorySelector15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</ScrollView>
