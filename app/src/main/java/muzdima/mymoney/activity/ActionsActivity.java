@@ -68,12 +68,12 @@ public class ActionsActivity extends AppCompatActivity {
                 textViewDate.setOnClickListener(view -> {
                     long dateUTC = dateUTC();
                     new DatePickerDialog(this, (datePicker, year, month, dayOfMonth) -> {
-                        dateStartUTC = DateTime.parseUTCFromLocal(DateTime.printLocalDate(year, month, dayOfMonth), "00:00");
+                        dateStartUTC = DateTime.parseUTCFromLocal(DateTime.printLocalDate(year, month + 1, dayOfMonth), "00:00");
                         setDate();
                         Worker.run(this, this::update);
                     },
                             DateTime.getLocalYear(dateUTC),
-                            DateTime.getLocalMonth(dateUTC),
+                            DateTime.getLocalMonth(dateUTC) - 1,
                             DateTime.getLocalDayOfMonth(dateUTC))
                             .show();
                 });

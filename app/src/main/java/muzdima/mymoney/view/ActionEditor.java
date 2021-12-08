@@ -58,9 +58,9 @@ public class ActionEditor extends LinearLayout {
         date.setText(DateTime.printUTCToLocalDate(item.createdAtUTC));
         date.setOnClickListener(view ->
                 new DatePickerDialog(getContext(), (datePicker, year, month, dayOfMonth) ->
-                        date.setText(DateTime.printLocalDate(year, month, dayOfMonth)),
+                        date.setText(DateTime.printLocalDate(year, month + 1, dayOfMonth)),
                         DateTime.getLocalYear(item.createdAtUTC),
-                        DateTime.getLocalMonth(item.createdAtUTC),
+                        DateTime.getLocalMonth(item.createdAtUTC) - 1,
                         DateTime.getLocalDayOfMonth(item.createdAtUTC))
                         .show()
         );
@@ -154,9 +154,9 @@ public class ActionEditor extends LinearLayout {
         date.setText(DateTime.printUTCToLocalDate(item.createdAtUTC));
         date.setOnClickListener(view ->
                 new DatePickerDialog(getContext(), (datePicker, year, month, dayOfMonth) ->
-                        date.setText(DateTime.printLocalDate(year, month, dayOfMonth)),
+                        date.setText(DateTime.printLocalDate(year, month + 1, dayOfMonth)),
                         DateTime.getLocalYear(item.createdAtUTC),
-                        DateTime.getLocalMonth(item.createdAtUTC),
+                        DateTime.getLocalMonth(item.createdAtUTC) - 1,
                         DateTime.getLocalDayOfMonth(item.createdAtUTC))
                         .show()
         );
