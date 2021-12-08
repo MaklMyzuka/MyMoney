@@ -18,6 +18,7 @@ import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.utils.ConfirmDialog;
 import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.Worker;
+import muzdima.mymoney.view.CategorySelector;
 import muzdima.mymoney.view.ChangeableActionList;
 
 public class ActionsActivity extends AppCompatActivity {
@@ -25,11 +26,15 @@ public class ActionsActivity extends AppCompatActivity {
     private TextView textViewDate;
     private Button buttonToggle;
     private ChangeableActionList actionList;
+    private CategorySelector categorySelector;
 
     // CALL FROM WORKER THREAD
     private void update() {
-        List<IActionItem> items = Repository.getRepository().getActionItems(dateStartUTC, DateTime.addDays(dateStartUTC, 1));
-        runOnUiThread(() -> actionList.update(items));
+        List<IActionItem> items = Repository.getRepository().getActionItems(fromUTC(), toUTC());
+        runOnUiThread(() -> {
+            actionList.update(items);
+            categorySelector.update(fromUTC(), toUTC());
+        });
     }
 
     private long dateUTC() {
@@ -40,6 +45,14 @@ public class ActionsActivity extends AppCompatActivity {
         textViewDate.setText(DateTime.printUTCToLocalDate(dateUTC()));
     }
 
+    private long fromUTC() {
+        return dateStartUTC;
+    }
+
+    private long toUTC() {
+        return DateTime.addDays(dateStartUTC, 1);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +60,13 @@ public class ActionsActivity extends AppCompatActivity {
         buttonToggle = findViewById(R.id.buttonToggleActions);
         actionList = findViewById(R.id.changeableActionListActions);
         textViewDate = findViewById(R.id.textViewDateActions);
+        categorySelector = findViewById(R.id.categorySelectorActions);
         dateStartUTC = DateTime.getLocalDayStartUTC(DateTime.getNowUTC());
+        categorySelector.init("history_category_selector_on_actions", fromUTC(), toUTC());
         setDate();
 
         Worker.run(this, () -> {
-            List<IActionItem> items = Repository.getRepository().getActionItems(dateStartUTC, DateTime.addDays(dateStartUTC, 1));
+            List<IActionItem> items = Repository.getRepository().getActionItems(fromUTC(), toUTC());
             runOnUiThread(() -> {
                 actionList.init(true, items, null, () -> Worker.run(this, this::update));
                 actionList.setOnCheckedChangeListener(selectedAll -> buttonToggle.setText(selectedAll ? R.string.toggle_none_button_label : R.string.toggle_all_button_label));

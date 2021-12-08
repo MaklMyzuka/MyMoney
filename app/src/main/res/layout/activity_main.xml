@@ -62,17 +62,17 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

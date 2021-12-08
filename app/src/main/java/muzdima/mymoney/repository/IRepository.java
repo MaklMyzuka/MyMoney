@@ -27,7 +27,7 @@ public interface IRepository {
     List<SpinnerItem> getCategorySpinnerItems();
     List<SpinnerItem> getAccountGroupSpinnerItems();
     Money.MoneyItem getAccountSum(long accountId);
-    Money getCategorySum(long categoryId);
+    Money getCategorySum(long categoryId, long fromUTC, long toUTC);
     Money getAccountGroupSum(long accountGroupId);
     List<DictionaryItem> getCurrencyDictionaryItems(boolean includeHidden);
     List<DictionaryItem> getAccountDictionaryItems(boolean includeHidden);

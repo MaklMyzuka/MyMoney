@@ -338,9 +338,8 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public Money getCategorySum(long categoryId) {
-        long monthStartUTC = DateTime.getMonthStartUTC();
-        return getMoney(R.string.sql_get_category_sum, new String[]{String.valueOf(categoryId), String.valueOf(monthStartUTC)});
+    public Money getCategorySum(long categoryId, long fromUTC, long toUTC){
+        return getMoney(R.string.sql_get_category_sum, new String[]{String.valueOf(categoryId), String.valueOf(fromUTC), String.valueOf(toUTC) });
     }
 
     @Override

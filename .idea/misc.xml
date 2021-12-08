@@ -59,8 +59,14 @@
         <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.221875" />
         <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/xml/root_import_export.xml" value="0.25181159420289856" />
         <entry key="..\:/Users/muzdima/source/repos/BoringMoney/app/src/main/res/xml/root_preferences.xml" value="0.25181159420289856" />
+        <entry key="..\:/Users/muzdima/source/repos/MyMoney/app/src/main/res/layout/account_selector.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/muzdima/source/repos/MyMoney/app/src/main/res/layout/activity_account_group_card.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/MyMoney/app/src/main/res/layout/activity_actions.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/muzdima/source/repos/MyMoney/app/src/main/res/layout/activity_dictionary.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/MyMoney/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/muzdima/source/repos/MyMoney/app/src/main/res/layout/activity_statistics.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/muzdima/source/repos/MyMoney/app/src/main/res/layout/category_selector.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/muzdima/source/repos/MyMoney/app/src/main/res/menu/main_menu.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>

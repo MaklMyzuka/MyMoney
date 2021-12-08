@@ -10,9 +10,29 @@ public class DateTime {
         return Instant.now().getEpochSecond();
     }
 
-    public static long getMonthStartUTC() {
-        String yearMonth = DateTimeFormatter.ofPattern("yyyy-MM").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now());
-        return Instant.parse(yearMonth + "-01T00:00:00Z").getEpochSecond();
+    public static int getCurrentYear() {
+        return Integer.parseInt(DateTimeFormatter.ofPattern("yyyy").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()));
+    }
+
+    public static int getCurrentMonth() {
+        return Integer.parseInt(DateTimeFormatter.ofPattern("MM").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()));
+    }
+
+    public static long getCurrentMonthStartUTC() {
+        int year = getCurrentYear();
+        int month = getCurrentMonth();
+        return Instant.parse(String.format("%s-%s%s-01T00:00:00Z",year,month/10,month%10)).getEpochSecond();
+    }
+
+    public static long getCurrentMonthEndUTC() {
+        int year = getCurrentYear();
+        int month = getCurrentMonth();
+        month++;
+        if (month == 13){
+            month = 1;
+            year++;
+        }
+        return Instant.parse(String.format("%s-%s%s-01T00:00:00Z",year,month/10,month%10)).getEpochSecond();
     }
 
     private static String printUTCToLocal(long utc, String pattern) {

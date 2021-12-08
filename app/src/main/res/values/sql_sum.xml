@@ -46,7 +46,7 @@
             SELECT SUM([transaction].[sum10000]) AS [sum10000], [account].[currency_id] AS [currency_id]
             FROM [transaction]
             INNER JOIN [account] ON [account].[id] = [transaction].[account_id]
-            WHERE [transaction].[is_committed] = 1 AND [transaction].[category_id] IN [category_ids_filter] AND [transaction].[created_at_utc] > ?2
+            WHERE [transaction].[is_committed] = 1 AND [transaction].[category_id] IN [category_ids_filter] AND [transaction].[created_at_utc] > ?2 AND [transaction].[created_at_utc] <![CDATA[<]]> ?3
             GROUP BY [account].[currency_id]
         ) AS [category_res]
         INNER JOIN [currency] ON [currency].[id] = [category_res].[currency_id]

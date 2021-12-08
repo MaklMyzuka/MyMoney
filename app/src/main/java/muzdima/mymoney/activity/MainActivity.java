@@ -13,12 +13,12 @@ import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.AccountGroupSelector;
 import muzdima.mymoney.view.AccountSelector;
-import muzdima.mymoney.view.CategorySelector;
+import muzdima.mymoney.view.CategorySelectorCurrentMonth;
 
 public class MainActivity extends AppCompatActivity {
 
     private AccountSelector[] accountSelectors;
-    private CategorySelector[] categorySelectors;
+    private CategorySelectorCurrentMonth[] categorySelectors;
     private AccountGroupSelector[] accountGroupSelectors;
     private boolean firstResume = true;
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.accountSelector4),
                 findViewById(R.id.accountSelector5),
                 findViewById(R.id.accountSelector6)};
-        categorySelectors = new CategorySelector[]{
+        categorySelectors = new CategorySelectorCurrentMonth[]{
                 findViewById(R.id.categorySelector1),
                 findViewById(R.id.categorySelector2),
                 findViewById(R.id.categorySelector3)};
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             n++;
         }
         n = 1;
-        for (CategorySelector categorySelector : categorySelectors) {
+        for (CategorySelectorCurrentMonth categorySelector : categorySelectors) {
             categorySelector.init("history_category_selector_" + n + "_on_main");
             n++;
         }
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         for (AccountSelector accountSelector : accountSelectors) {
             accountSelector.update();
         }
-        for (CategorySelector categorySelector : categorySelectors) {
+        for (CategorySelectorCurrentMonth categorySelector : categorySelectors) {
             categorySelector.update();
         }
         for (AccountGroupSelector accountGroupSelector : accountGroupSelectors) {

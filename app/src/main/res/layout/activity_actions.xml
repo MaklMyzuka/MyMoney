@@ -72,12 +72,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/barrierButtonsActions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barrierDateActions">
+        app:layout_constraintTop_toBottomOf="@+id/categorySelectorActions">
 
     </muzdima.mymoney.view.ChangeableActionList>
 
@@ -129,6 +128,17 @@
         app:barrierDirection="top"
         app:constraint_referenced_ids="viewUpButtonToggleActions,viewUpButtonDeleteActions"
         tools:layout_editor_absoluteY="618dp" />
+
+    <muzdima.mymoney.view.CategorySelector
+        android:id="@+id/categorySelectorActions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateActions" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

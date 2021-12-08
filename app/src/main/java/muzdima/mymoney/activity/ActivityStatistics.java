@@ -15,10 +15,11 @@ import muzdima.mymoney.view.AccountGroupSelector;
 import muzdima.mymoney.view.AccountSelector;
 import muzdima.mymoney.view.CategorySelector;
 import muzdima.mymoney.activity.MainActivity;
+import muzdima.mymoney.view.CategorySelectorCurrentMonth;
 
 public class ActivityStatistics extends AppCompatActivity {
     private AccountGroupSelector[] accountGroupSelectors1;
-    private CategorySelector[] categorySelectors1;
+    private CategorySelectorCurrentMonth[] categorySelectors1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
@@ -30,28 +31,25 @@ public class ActivityStatistics extends AppCompatActivity {
                 findViewById(R.id.accountGroupSelector13),
                 findViewById(R.id.accountGroupSelector14),
                 findViewById(R.id.accountGroupSelector15)};
-        categorySelectors1 = new CategorySelector[]{
+        categorySelectors1 = new CategorySelectorCurrentMonth[]{
                 findViewById(R.id.categorySelector10),
                 findViewById(R.id.categorySelector11),
                 findViewById(R.id.categorySelector12),
                 findViewById(R.id.categorySelector13),
                 findViewById(R.id.categorySelector14),
                 findViewById(R.id.categorySelector15)};
-        Worker.run(this, () -> {
-            Repository.getRepository().init(getApplicationContext());
-            runOnUiThread(this::init);
-        });
+        init();
     }
     private void init() {
 
         int n = 1;
         for (AccountGroupSelector accountGroupSelector : accountGroupSelectors1) {
-            accountGroupSelector.init("history_account_group_selector_" + n + "_on_main");
+            accountGroupSelector.init("history_account_group_selector_" + n + "_on_statistics");
             n++;
         }
         n = 1;
-        for (CategorySelector categorySelector : categorySelectors1) {
-            categorySelector.init("history_category_selector_" + n + "_on_main");
+        for (CategorySelectorCurrentMonth categorySelector : categorySelectors1) {
+            categorySelector.init("history_category_selector_" + n + "_on_statistics");
             n++;
         }
     }

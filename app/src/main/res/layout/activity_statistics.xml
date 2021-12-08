@@ -59,31 +59,31 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.CategorySelector
+        <muzdima.mymoney.view.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

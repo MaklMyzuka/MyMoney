@@ -21,6 +21,8 @@ public class CategorySelector extends LinearLayout {
     private final List<SpinnerItem> items = new ArrayList<>();
     private HistorySpinner spinner;
     private TextView textView;
+    private long fromUTC;
+    private long toUTC;
 
     public CategorySelector(Context context) {
         super(context);
@@ -52,12 +54,14 @@ public class CategorySelector extends LinearLayout {
     private void updateSum() {
         Activity activity = ActivitySolver.getActivity(getContext());
         Worker.run(activity, () -> {
-            String sumLabel = Repository.getRepository().getCategorySum(spinner.getSelectedId()).toString();
+            String sumLabel = Repository.getRepository().getCategorySum(spinner.getSelectedId(), fromUTC, toUTC).toString();
             activity.runOnUiThread(() -> textView.setText(sumLabel));
         });
     }
 
-    public void init(String history_key) {
+    public void init(String history_key, long fromUTC, long toUTC) {
+        this.fromUTC = fromUTC;
+        this.toUTC = toUTC;
         updateData(() -> {
             spinner.setOnItemSelectedListener(id -> updateSum());
             spinner.init(history_key, items, null);
@@ -73,7 +77,9 @@ public class CategorySelector extends LinearLayout {
         });
     }
 
-    public void update() {
+    public void update(long fromUTC, long toUTC) {
+        this.fromUTC = fromUTC;
+        this.toUTC = toUTC;
         updateData(() -> {
             spinner.update();
             updateSum();
