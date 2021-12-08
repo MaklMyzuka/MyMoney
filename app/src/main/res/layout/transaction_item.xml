@@ -3,79 +3,93 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:layout_marginEnd="2dp"
+   >
 
     <CheckBox
         android:id="@+id/checkBoxTransactionItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewProductTransactionItem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="300dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewSumTransactionItem"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonTransactionItem"
+        app:layout_constraintHorizontal_bias="0.777"
         app:layout_constraintStart_toEndOf="@+id/checkBoxTransactionItem"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewSumTransactionItem" />
 
     <TextView
         android:id="@+id/textViewCategoryTransactionItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewTimeTransactionItem"
+        android:layout_width="300dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewProductTransactionItem"
+        app:layout_constraintStart_toStartOf="@+id/textViewProductTransactionItem"
         app:layout_constraintTop_toBottomOf="@+id/textViewProductTransactionItem" />
 
     <TextView
         android:id="@+id/textViewSumTransactionItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonTransactionItem"
+        android:layout_width="117dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxTransactionItem"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewAccountTransactionItem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewCategoryTransactionItem"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxTransactionItem"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProductTransactionItem" />
+        android:layout_width="300dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewCategoryTransactionItem"
+        app:layout_constraintStart_toStartOf="@+id/textViewCategoryTransactionItem"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCategoryTransactionItem"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textViewTimeTransactionItem"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSumTransactionItem"
         app:layout_constraintEnd_toStartOf="@+id/buttonTransactionItem"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSumTransactionItem" />
+        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintStart_toEndOf="@+id/textViewSumTransactionItem"
+        app:layout_constraintTop_toTopOf="@+id/textViewSumTransactionItem" />
 
     <Button
         android:id="@+id/buttonTransactionItem"
-        android:layout_width="50dp"
+        android:layout_width="48dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
         android:text="@string/action_button_transaction_item_label"
+        android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <View
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textViewAccountTransactionItem"
-        app:layout_constraintStart_toStartOf="@+id/textViewAccountTransactionItem"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAccountTransactionItem" />
+        android:id="@+id/divider"
+        android:layout_width="408dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/header"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccountTransactionItem"
+        tools:ignore="MissingConstraints" />
+    <View style="@style/Divider.Horizontal"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

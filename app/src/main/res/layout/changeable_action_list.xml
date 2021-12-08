@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <muzdima.boringmoney.view.ActionEditor
+    <muzdima.mymoney.view.ActionEditor
         android:id="@+id/actionEditor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <muzdima.boringmoney.view.ActionListForChangeable
+    <muzdima.mymoney.view.ActionListForChangeable
         android:id="@+id/actionList"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/historySpinnerParentCategoryCard" />
 
-        <muzdima.boringmoney.view.HistorySpinner
+        <muzdima.mymoney.view.HistorySpinner
             android:id="@+id/historySpinnerParentCategoryCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

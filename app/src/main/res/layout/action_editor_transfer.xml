@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/accountTransferEditorFrom" />
 
-    <muzdima.boringmoney.view.HistorySpinner
+    <muzdima.mymoney.view.HistorySpinner
         android:id="@+id/accountTransferEditorFrom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/accountTransferEditorTo" />
 
-    <muzdima.boringmoney.view.HistorySpinner
+    <muzdima.mymoney.view.HistorySpinner
         android:id="@+id/accountTransferEditorTo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

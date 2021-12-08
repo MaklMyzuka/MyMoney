@@ -70,7 +70,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/historySpinnerCurrencyAccountCard" />
 
-        <muzdima.boringmoney.view.HistorySpinner
+        <muzdima.mymoney.view.HistorySpinner
             android:id="@+id/historySpinnerCurrencyAccountCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextCommentAccountCard" />
 
-        <muzdima.boringmoney.view.MultiSelect
+        <muzdima.mymoney.view.MultiSelect
             android:id="@+id/multiSelectAccountCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

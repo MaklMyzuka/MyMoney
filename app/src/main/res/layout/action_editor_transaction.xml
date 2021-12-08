@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textViewDateTransactionEditor" />
 
-    <muzdima.boringmoney.view.HistorySpinner
+    <muzdima.mymoney.view.HistorySpinner
         android:id="@+id/accountTransactionEditor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editSumTransactionEditor" />
 
-    <muzdima.boringmoney.view.HistorySpinner
+    <muzdima.mymoney.view.HistorySpinner
         android:id="@+id/categoryTransactionEditor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

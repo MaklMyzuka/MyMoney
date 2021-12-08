@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BoringMoney</string>
+    <string name="app_name">MyMoney</string>
     <string name="repository_file_name">db.sqlite</string>
     <string name="loading_dialog_text">Ожидайте завершения операции</string>
     <string name="permission_not_granted">Разрешение не предоставлено</string>
@@ -39,7 +39,7 @@
     <string name="transfer_from">Из </string>
     <string name="transfer_to">В </string>
     <string name="draft">Черновик</string>
-    <string name="toggle_all_button_label">Выбрать все</string>
+    <string name="toggle_all_button_label">Выбрать &#10;все</string>
     <string name="toggle_none_button_label">Очистить</string>
     <string name="commit_button_label">Сохранить</string>
     <string name="delete_button_label">Удалить</string>
@@ -92,4 +92,5 @@
     <string name="parent">Родитель</string>
     <string name="null_parent">корневой элемент в иерархии</string>
     <string name="error_hierarchy_loop">Наличие циклов в иерархии недопустимо</string>
+    <string name="menu_statistics_report">Статистика</string>
 </resources>
