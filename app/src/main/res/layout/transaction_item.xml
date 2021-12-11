@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp"
-    android:layout_marginEnd="2dp"
-   >
+    android:layout_marginEnd="2dp">
 
     <CheckBox
         android:id="@+id/checkBoxTransactionItem"
@@ -37,7 +36,7 @@
         app:layout_constraintStart_toStartOf="@+id/textViewProductTransactionItem"
         app:layout_constraintTop_toBottomOf="@+id/textViewProductTransactionItem" />
 
-    <TextView
+    <muzdima.mymoney.view.MoneyTextView
         android:id="@+id/textViewSumTransactionItem"
         android:layout_width="117dp"
         android:layout_height="25dp"
@@ -52,11 +51,9 @@
         android:layout_width="300dp"
         android:layout_height="18dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textViewCategoryTransactionItem"
         app:layout_constraintStart_toStartOf="@+id/textViewCategoryTransactionItem"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCategoryTransactionItem"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCategoryTransactionItem" />
 
     <TextView
         android:id="@+id/textViewTimeTransactionItem"
@@ -80,16 +77,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <View
-        android:id="@+id/divider"
-        android:layout_width="408dp"
+        android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="8dp"
         android:background="@color/header"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAccountTransactionItem"
-        tools:ignore="MissingConstraints" />
-    <View style="@style/Divider.Horizontal"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccountTransactionItem" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

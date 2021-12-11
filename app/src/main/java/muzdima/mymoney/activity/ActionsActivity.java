@@ -21,7 +21,7 @@ import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.CategorySelector;
 import muzdima.mymoney.view.ChangeableActionList;
 
-public class ActionsActivity extends AppCompatActivity {
+public class ActionsActivity extends MenuActivity {
     private long dateStartUTC;
     private TextView textViewDate;
     private Button buttonToggle;

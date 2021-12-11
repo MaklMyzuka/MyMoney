@@ -22,7 +22,7 @@ import muzdima.mymoney.utils.ErrorDialog;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.MultiSelect;
 
-public class AccountGroupCardActivity extends AppCompatActivity {
+public class AccountGroupCardActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class AccountGroupCardActivity extends AppCompatActivity {
                 ConfirmDialog.show(this, R.string.dialog_delete_title, String.format(getString(R.string.dialog_delete_message), 1), () ->
                         Worker.run(this, () -> {
                             if (!Repository.getRepository().deleteAccountGroup(accountGroupId)) {
-                                runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_account_group_delete));
+                                runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_account_group_delete, null));
                             } else {
                                 runOnUiThread(this::finish);
                             }

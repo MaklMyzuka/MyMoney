@@ -15,7 +15,7 @@ import muzdima.mymoney.R;
 import muzdima.mymoney.repository.model.DictionaryItem;
 import muzdima.mymoney.utils.Worker;
 
-public abstract class DictionaryActivity extends AppCompatActivity {
+public abstract class DictionaryActivity extends MenuActivity {
 
     private ViewGroup layoutDictionaryItems;
     private SwitchCompat switchShowHidden;

@@ -35,7 +35,7 @@
         WITH RECURSIVE [category_ids_filter]([category_id]) AS
         (
             SELECT ?1 AS [category_id]
-                UNION
+                UNION ALL
             SELECT [category].[id] AS [category_id]
             FROM [category_ids_filter]
             INNER JOIN [category] ON [category].[parent_id] = [category_ids_filter].[category_id]
@@ -90,5 +90,25 @@
             GROUP BY [account_group_total].[currency_id]
         ) AS [account_group_res]
         INNER JOIN [currency] ON [currency].[id] = [account_group_res].[currency_id]
+    </string>
+    <string name="sql_get_category_sum_by_currency">
+        WITH RECURSIVE [category_ids_filter]([category_id]) AS
+        (
+            SELECT ?1 AS [category_id]
+                UNION ALL
+            SELECT [category].[id] AS [category_id]
+            FROM [category_ids_filter]
+            INNER JOIN [category] ON [category].[parent_id] = [category_ids_filter].[category_id]
+        )
+        SELECT [category_res].[currency_id] AS [currency_id], [currency].[symbol] AS [currency_symbol], [category_res].[sum10000] AS [sum10000]
+        FROM
+        (
+            SELECT SUM([transaction].[sum10000]) AS [sum10000], [account].[currency_id] AS [currency_id]
+            FROM [transaction]
+            INNER JOIN [account] ON [account].[id] = [transaction].[account_id]
+            WHERE [transaction].[is_committed] = 1 AND [account].[currency_id] = ?2 AND [transaction].[category_id] IN [category_ids_filter] AND [transaction].[created_at_utc] > ?3 AND [transaction].[created_at_utc] <![CDATA[<]]> ?4
+            GROUP BY [account].[currency_id]
+        ) AS [category_res]
+        INNER JOIN [currency] ON [currency].[id] = [category_res].[currency_id]
     </string>
 </resources>

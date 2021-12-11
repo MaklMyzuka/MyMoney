@@ -21,28 +21,31 @@ public class ErrorDialog {
         return string + (cause != null ? "\n\n" + context.getString(R.string.cause) + "\n" + printException(context, cause) : "");
     }
 
-    public static void showError(Context context, Exception exception) {
-        showError(context, printException(context, exception));
+    public static void showError(Context context, Exception exception, Runnable callback) {
+        showError(context, printException(context, exception), callback);
     }
 
-    public static void showError(Context context, String message, Exception exception) {
-        showError(context, message + "\n\n" + context.getString(R.string.exception) + "\n" + printException(context, exception));
+    public static void showError(Context context, String message, Exception exception, Runnable callback) {
+        showError(context, message + "\n\n" + context.getString(R.string.exception) + "\n" + printException(context, exception), callback);
     }
 
-    public static void showError(Context context, @StringRes int message, Exception exception) {
-        showError(context, context.getString(message), exception);
+    public static void showError(Context context, @StringRes int message, Exception exception, Runnable callback) {
+        showError(context, context.getString(message), exception, callback);
     }
 
-    public static void showError(Context context, String message) {
+    public static void showError(Context context, String message, Runnable callback) {
         new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.error))
                 .setMessage(message)
-                .setNeutralButton(R.string.dialog_ok, null)
+                .setNeutralButton(R.string.dialog_ok, callback == null ? null : (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    callback.run();
+                })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 
-    public static void showError(Context context, @StringRes int message) {
-        showError(context, context.getString(message));
+    public static void showError(Context context, @StringRes int message, Runnable callback) {
+        showError(context, context.getString(message), callback);
     }
 }

@@ -1,12 +1,6 @@
 package muzdima.mymoney.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import muzdima.mymoney.R;
 import muzdima.mymoney.repository.Repository;
@@ -15,7 +9,7 @@ import muzdima.mymoney.view.AccountGroupSelector;
 import muzdima.mymoney.view.AccountSelector;
 import muzdima.mymoney.view.CategorySelectorCurrentMonth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MenuActivity {
 
     private AccountSelector[] accountSelectors;
     private CategorySelectorCurrentMonth[] categorySelectors;
@@ -82,39 +76,5 @@ public class MainActivity extends AppCompatActivity {
             accountGroupSelector.update();
         }
         super.onResume();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_actions) {
-            Intent intent = new Intent(this, ActionsActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.menu_draft) {
-            Intent intent = new Intent(this, DraftActivity.class);
-            intent.putExtra("action", 0);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.menu_dictionaries) {
-            Intent intent = new Intent(this, DictionariesActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.menu_import_export) {
-            Intent intent = new Intent(this, ImportExportActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.menu_statistics_report) {
-            Intent intent = new Intent(this,  ActivityStatistics.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

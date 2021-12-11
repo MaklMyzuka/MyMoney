@@ -14,6 +14,7 @@ import muzdima.mymoney.repository.model.ExportResult;
 import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.repository.model.ImportResult;
 import muzdima.mymoney.repository.model.Money;
+import muzdima.mymoney.repository.model.MoneyListItem;
 import muzdima.mymoney.repository.model.SpinnerItem;
 
 public interface IRepository {
@@ -58,4 +59,11 @@ public interface IRepository {
     boolean deleteAccount(long accountId);
     boolean deleteCategory(long categoryId);
     boolean deleteAccountGroup(long accountGroupId);
+    List<MoneyListItem> getAccountMoneyListItems();
+    List<MoneyListItem> getAccountGroupMoneyListItems();
+    List<MoneyListItem> getAccountMoneyListItems(long fromUTC, long toUTC);
+    List<MoneyListItem> getCategoryMoneyListItems(long fromUTC, long toUTC);
+    List<MoneyListItem> getAccountGroupMoneyListItems(long fromUTC, long toUTC);
+    List<SpinnerItem> getCurrencySpinnerItemsByCategory(long categoryId, long fromUTC, long toUTC);
+    List<Money.MoneyItem> getCategorySumMonthlyByDays(long categoryId, long currencyId, int year, int month);
 }

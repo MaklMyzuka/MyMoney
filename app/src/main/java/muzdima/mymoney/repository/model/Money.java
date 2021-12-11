@@ -1,10 +1,16 @@
 package muzdima.mymoney.repository.model;
 
+import android.content.Context;
+import android.graphics.Color;
+
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import muzdima.mymoney.R;
 
 public class Money {
     public List<MoneyItem> items = new ArrayList<>();
@@ -35,6 +41,10 @@ public class Money {
     @NonNull
     @Override
     public String toString() {
+        return toHtmlString(new DisplayParams());
+    }
+
+    public String toHtmlString(DisplayParams params) {
         StringBuilder s = new StringBuilder();
         boolean first = true;
         for (MoneyItem item : items) {
@@ -56,8 +66,17 @@ public class Money {
             if (!first) {
                 s.append(", ");
             }
+            if (params.paint) {
+                s.append(String.format("<font color=\"%s\">", params.getColorHtml(item.sum10000)));
+            }
+            if (params.bold) {
+                s.append("<b>");
+            }
             if (negative) {
                 s.append("-");
+            }
+            if (!negative && sum > 0 && params.plus) {
+                s.append("+");
             }
             if (sum / 100000 != 0) {
                 s.append(sum / 100000);
@@ -74,9 +93,24 @@ public class Money {
             }
             s.append(" ");
             s.append(item.currencySymbol);
+
             first = false;
         }
-        if (s.length() == 0) s.append("0");
+        if (s.length() == 0) {
+            if (params.paint) {
+                s.append(String.format("<font color=\"%s\">", params.getColorHtml(0)));
+            }
+            if (params.bold) {
+                s.append("<b>");
+            }
+            s.append("0");
+            if (params.bold) {
+                s.append("</b>");
+            }
+            if (params.paint) {
+                s.append("</font>");
+            }
+        }
         return s.toString();
     }
 
@@ -104,6 +138,46 @@ public class Money {
             Money money = new Money();
             money.items.add(this);
             return money.toString();
+        }
+
+        public String toHtmlString(DisplayParams params) {
+            Money money = new Money();
+            money.items.add(this);
+            return money.toHtmlString(params);
+        }
+    }
+
+    public static class DisplayParams {
+        public boolean bold = false;
+        public boolean paint = false;
+        public boolean plus = false;
+        @ColorInt
+        public int colorPositive;
+        @ColorInt
+        public int colorNegative;
+        @ColorInt
+        public int colorZero;
+
+        public DisplayParams() {
+            colorPositive = Color.BLACK;
+            colorNegative = Color.BLACK;
+            colorZero = Color.BLACK;
+        }
+
+        public DisplayParams(Context context) {
+            colorPositive = context.getColor(R.color.sum_positive);
+            colorNegative = context.getColor(R.color.sum_negative);
+            colorZero = context.getColor(R.color.sum_zero);
+        }
+
+        private int getColor(long value) {
+            if (value > 0) return colorPositive;
+            if (value < 0) return colorNegative;
+            return colorZero;
+        }
+
+        private String getColorHtml(long value) {
+            return String.format("#%s", String.format("%X", getColor(value)).substring(2));
         }
     }
 }

@@ -9,24 +9,27 @@ import muzdima.mymoney.R;
 
 public class InfoDialog {
 
-    public static void show(Context context, String title, String message) {
+    public static void show(Context context, String title, String message, Runnable callback) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setNeutralButton(R.string.dialog_ok, null)
+                .setNeutralButton(R.string.dialog_ok, callback == null ? null : (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                    callback.run();
+                })
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .show();
     }
 
-    public static void show(Context context, @StringRes int title, String message) {
-        show(context, context.getString(title), message);
+    public static void show(Context context, @StringRes int title, String message, Runnable callback) {
+        show(context, context.getString(title), message, callback);
     }
 
-    public static void show(Context context, String title, @StringRes int message) {
-        show(context, title, context.getString(message));
+    public static void show(Context context, String title, @StringRes int message, Runnable callback) {
+        show(context, title, context.getString(message), callback);
     }
 
-    public static void show(Context context, @StringRes int title, @StringRes int message) {
-        show(context, context.getString(title), context.getString(message));
+    public static void show(Context context, @StringRes int title, @StringRes int message, Runnable callback) {
+        show(context, context.getString(title), context.getString(message), callback);
     }
 }

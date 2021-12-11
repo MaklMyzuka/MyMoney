@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import muzdima.mymoney.R;
 
-public class DictionariesActivity extends AppCompatActivity {
+public class DictionariesActivity extends MenuActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -17,6 +16,7 @@ import java.util.List;
 import muzdima.mymoney.R;
 import muzdima.mymoney.activity.DraftActivity;
 import muzdima.mymoney.repository.Repository;
+import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.Worker;
@@ -25,7 +25,7 @@ public class AccountSelector extends LinearLayout {
 
     private final List<SpinnerItem> items = new ArrayList<>();
     private HistorySpinner spinner;
-    private TextView textView;
+    private MoneyTextView textView;
     private long account_id;
 
     public AccountSelector(Context context) {
@@ -52,7 +52,7 @@ public class AccountSelector extends LinearLayout {
         inflate(getContext(), R.layout.account_selector, this);
         spinner = findViewById(R.id.accountSpinner);
         textView = findViewById(R.id.textViewAccountSum);
-        textView.setText("");
+        textView.setText();
         findViewById(R.id.buttonAccountAction).setOnClickListener(view -> {
             Context context = getContext();
             new AlertDialog.Builder(context)
@@ -77,8 +77,8 @@ public class AccountSelector extends LinearLayout {
         Activity activity = ActivitySolver.getActivity(getContext());
         account_id = spinner.getSelectedId();
         Worker.run(activity, () -> {
-            String sumLabel = Repository.getRepository().getAccountSum(account_id).toString();
-            activity.runOnUiThread(() -> textView.setText(sumLabel));
+            Money.MoneyItem sum = Repository.getRepository().getAccountSum(account_id);
+            activity.runOnUiThread(() -> textView.setText(sum));
         });
     }
 
@@ -90,11 +90,14 @@ public class AccountSelector extends LinearLayout {
     }
 
     private void updateData(Runnable callback) {
-        items.clear();
         Activity activity = ActivitySolver.getActivity(getContext());
         Worker.run(activity, () -> {
-            items.addAll(Repository.getRepository().getAccountSpinnerItems());
-            activity.runOnUiThread(callback);
+            List<SpinnerItem> spinnerItems = Repository.getRepository().getAccountSpinnerItems();
+            activity.runOnUiThread(()->{
+                items.clear();
+                items.addAll(spinnerItems);
+                callback.run();
+            });
         });
     }
 

@@ -26,6 +26,7 @@ import java.util.Set;
 
 import muzdima.mymoney.R;
 import muzdima.mymoney.repository.model.IActionItem;
+import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
 import muzdima.mymoney.utils.DateTime;
@@ -215,7 +216,7 @@ public abstract class ActionList extends RecyclerView {
             public CheckBox checkBox;
             public TextView product;
             public TextView category;
-            public TextView sum;
+            public MoneyTextView sum;
             public TextView account;
             public TextView time;
             public Button button;
@@ -251,10 +252,10 @@ public abstract class ActionList extends RecyclerView {
                 checkBox.setChecked(selected.contains(item));
                 product.setText(item.product);
                 category.setText(item.categoryName);
-                sum.setText(HtmlCompat.fromHtml(String.format(
-                        "<b>%s</b>",
-                        Html.escapeHtml(item.sum.toString())
-                ), HtmlCompat.FROM_HTML_MODE_COMPACT));
+                Money.DisplayParams params = sum.getDisplayParams();
+                params.bold = true;
+                sum.setDisplayParams(params);
+                sum.setText(item.sum);
                 account.setText(HtmlCompat.fromHtml(String.format(
                         "<b>%s</b>",
                         Html.escapeHtml(item.accountName)
@@ -269,7 +270,7 @@ public abstract class ActionList extends RecyclerView {
             public CheckBox checkBox;
             public TextView from;
             public TextView to;
-            public TextView sum;
+            public MoneyTextView sum;
             public TextView time;
             public Button button;
 
@@ -311,18 +312,10 @@ public abstract class ActionList extends RecyclerView {
                         Html.escapeHtml(context.getString(R.string.transfer_to)),
                         Html.escapeHtml(item.accountNameTo)
                 ), HtmlCompat.FROM_HTML_MODE_COMPACT));
-                String sumFrom = item.sumFrom.toString();
-                String sumTo = item.sumTo.toString();
-                sum.setText(HtmlCompat.fromHtml(
-                        (sumFrom.equals(sumTo) ?
-                                String.format("<b>%s</b>", Html.escapeHtml(sumFrom)) :
-                                String.format(
-                                        "<b>%s</b> %s <b>%s</b>",
-                                        Html.escapeHtml(sumFrom),
-                                        Html.escapeHtml("/"),
-                                        Html.escapeHtml(sumTo)
-                                )
-                        ), HtmlCompat.FROM_HTML_MODE_COMPACT));
+                Money.DisplayParams params = sum.getDisplayParams();
+                params.bold = true;
+                sum.setDisplayParams(params);
+                sum.setText(item.sumFrom, item.sumTo);
                 time.setText(DateTime.printUTCToLocal(item.createdAtUTC));
                 button.setOnClickListener(view -> onEdit(item));
             }

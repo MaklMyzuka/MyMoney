@@ -59,7 +59,7 @@ public class HistorySpinner extends LinearLayout {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                long id = adapter.getItem(i).id;
+                long id = i < adapter.getCount() ? adapter.getItem(i).id : -1;
                 Worker.run(getContext(), () -> {
                     if (historyKey != null) {
                         Repository.getRepository().setSettingsValue(historyKey, String.valueOf(id));

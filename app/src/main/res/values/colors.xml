@@ -12,4 +12,9 @@
     <color name="transaction_income">#A0FFA0</color>
     <color name="transaction_expense">#FFA0A0</color>
     <color name="transfer">#A0A0FF</color>
+    <color name="sum_positive">#008000</color>
+    <color name="sum_negative">#800000</color>
+    <color name="sum_zero">#000000</color>
+    <color name="bar_positive">#008000</color>
+    <color name="bar_negative">#800000</color>
 </resources>

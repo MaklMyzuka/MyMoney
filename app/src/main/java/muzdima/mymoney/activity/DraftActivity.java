@@ -20,7 +20,7 @@ import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.ChangeableActionList;
 
-public class DraftActivity extends AppCompatActivity {
+public class DraftActivity extends MenuActivity {
 
     private Button buttonToggle;
     private ChangeableActionList actionList;

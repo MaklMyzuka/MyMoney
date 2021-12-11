@@ -15,7 +15,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import muzdima.mymoney.R;
 import muzdima.mymoney.repository.model.AccountCard;
@@ -28,6 +30,7 @@ import muzdima.mymoney.repository.model.ExportResult;
 import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.repository.model.ImportResult;
 import muzdima.mymoney.repository.model.Money;
+import muzdima.mymoney.repository.model.MoneyListItem;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
@@ -338,8 +341,8 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public Money getCategorySum(long categoryId, long fromUTC, long toUTC){
-        return getMoney(R.string.sql_get_category_sum, new String[]{String.valueOf(categoryId), String.valueOf(fromUTC), String.valueOf(toUTC) });
+    public Money getCategorySum(long categoryId, long fromUTC, long toUTC) {
+        return getMoney(R.string.sql_get_category_sum, new String[]{String.valueOf(categoryId), String.valueOf(fromUTC), String.valueOf(toUTC)});
     }
 
     @Override
@@ -798,5 +801,93 @@ public class Repository implements IRepository {
         }
         initData();
         return true;
+    }
+
+    private List<MoneyListItem> getMoneyListItems(@NonNull String sql, String[] args) {
+        HashMap<Long, MoneyListItem> items = new HashMap<>();
+        try (Cursor cursor = querySQL(sql, args)) {
+            int columnTextId = cursor.getColumnIndex("text_id");
+            int columnText = cursor.getColumnIndex("text");
+            int columnCurrencyId = cursor.getColumnIndex("currency_id");
+            int columnCurrencySymbol = cursor.getColumnIndex("currency_symbol");
+            int columnSum10000 = cursor.getColumnIndex("sum10000");
+            while (cursor.moveToNext()) {
+                long textId = cursor.getLong(columnTextId);
+                Money.MoneyItem moneyItem = new Money.MoneyItem();
+                moneyItem.currencyId = cursor.getLong(columnCurrencyId);
+                moneyItem.currencySymbol = cursor.getString(columnCurrencySymbol);
+                moneyItem.sum10000 = cursor.getLong(columnSum10000);
+                if (items.containsKey(textId)) {
+                    Objects.requireNonNull(items.get(textId)).money.items.add(moneyItem);
+                } else {
+                    MoneyListItem listItem = new MoneyListItem();
+                    listItem.text = cursor.getString(columnText);
+                    listItem.money = new Money();
+                    listItem.money.items.add(moneyItem);
+                    items.put(textId, listItem);
+                }
+            }
+        }
+        return new ArrayList<>(items.values());
+    }
+
+    private List<MoneyListItem> getMoneyListItems(@StringRes int resId, String[] args) {
+        return getMoneyListItems(context.getString(resId), args);
+    }
+
+    private List<MoneyListItem> getMoneyListItems(@StringRes int resId) {
+        return getMoneyListItems(resId, new String[]{});
+    }
+
+    @Override
+    public List<MoneyListItem> getAccountMoneyListItems() {
+        return getMoneyListItems(R.string.sql_get_accounts_for_money_list_total);
+    }
+
+    @Override
+    public List<MoneyListItem> getAccountGroupMoneyListItems() {
+        return getMoneyListItems(R.string.sql_get_account_groups_for_money_list_total);
+    }
+
+    @Override
+    public List<MoneyListItem> getAccountMoneyListItems(long fromUTC, long toUTC) {
+        return getMoneyListItems(R.string.sql_get_accounts_for_money_list, new String[]{String.valueOf(fromUTC), String.valueOf(toUTC)});
+    }
+
+    @Override
+    public List<MoneyListItem> getCategoryMoneyListItems(long fromUTC, long toUTC) {
+        return getMoneyListItems(R.string.sql_get_categories_for_money_list, new String[]{String.valueOf(fromUTC), String.valueOf(toUTC)});
+    }
+
+    @Override
+    public List<MoneyListItem> getAccountGroupMoneyListItems(long fromUTC, long toUTC) {
+        return getMoneyListItems(R.string.sql_get_account_groups_for_money_list, new String[]{String.valueOf(fromUTC), String.valueOf(toUTC)});
+    }
+
+    @Override
+    public List<SpinnerItem> getCurrencySpinnerItemsByCategory(long categoryId, long fromUTC, long toUTC) {
+        return getSpinnerItems(R.string.sql_get_currencies_by_category_for_spinner, new String[]{String.valueOf(categoryId), String.valueOf(fromUTC), String.valueOf(toUTC)});
+    }
+
+    @Override
+    public List<Money.MoneyItem> getCategorySumMonthlyByDays(long categoryId, long currencyId, int year, int month) {
+        int days = DateTime.getLengthOfMonth(year, month);
+        List<Money.MoneyItem> result = new ArrayList<>();
+        long fromUTC = DateTime.getMonthStartUTC(year, month);
+        for (int day = 1; day <= days; day++) {
+            long toUTC = DateTime.addDays(fromUTC, 1);
+            Money sum = getMoney(R.string.sql_get_category_sum_by_currency, new String[]{String.valueOf(categoryId), String.valueOf(currencyId), String.valueOf(fromUTC), String.valueOf(toUTC)});
+            if (sum.items.isEmpty()) {
+                Money.MoneyItem item = new Money.MoneyItem();
+                item.sum10000 = 0;
+                item.currencyId = currencyId;
+                item.currencySymbol = "";
+                result.add(item);
+            } else {
+                result.add(sum.items.get(0));
+            }
+            fromUTC = toUTC;
+        }
+        return result;
     }
 }

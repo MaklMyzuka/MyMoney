@@ -13,49 +13,52 @@ import androidx.core.content.ContextCompat;
 import muzdima.mymoney.utils.InfoDialog;
 import muzdima.mymoney.utils.Loading;
 import muzdima.mymoney.R;
+import muzdima.mymoney.utils.Restart;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.repository.model.ExportResult;
 import muzdima.mymoney.repository.model.ImportResult;
 import muzdima.mymoney.utils.ErrorDialog;
 
-public class ImportExportActivity extends AppCompatActivity {
+public class ImportExportActivity extends MenuActivity {
 
     private final ActivityResultLauncher<String> requestExportPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted)
             Export();
         else
-            ErrorDialog.showError(this, R.string.permission_not_granted);
+            ErrorDialog.showError(this, R.string.permission_not_granted, null);
     });
 
     private final ActivityResultLauncher<String> requestImportPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted)
             Import();
         else
-            ErrorDialog.showError(this, R.string.permission_not_granted);
+            ErrorDialog.showError(this, R.string.permission_not_granted, null);
     });
 
     private void Export() {
         Worker.run(this, () -> {
             ExportResult result = Repository.getRepository().exportDatabase();
-            runOnUiThread(() -> showResult(getString(R.string.export_to) + result.filePath, result.exception));
+            runOnUiThread(() -> showResult(getString(R.string.export_to) + result.filePath, result.exception, null));
         });
     }
 
     private void Import() {
         Worker.run(this, () -> {
             ImportResult result = Repository.getRepository().importDatabase();
-            runOnUiThread(() -> showResult(getString(R.string.import_from) + result.filePath, result.exception));
+            runOnUiThread(() -> showResult(getString(R.string.import_from) + result.filePath, result.exception, ()->{
+                Restart.restart(this);
+            }));
         });
     }
 
-    private void showResult(String message, Exception exception) {
+    private void showResult(String message, Exception exception, Runnable callback) {
         Loading.dismiss();
         if (exception != null) {
-            ErrorDialog.showError(this, message, exception);
+            ErrorDialog.showError(this, message, exception, callback);
             return;
         }
-        InfoDialog.show(this, R.string.success, message);
+        InfoDialog.show(this, R.string.success, message, callback);
     }
 
     private void runWithPermission(Runnable runnable, String permission, ActivityResultLauncher<String> requestPermissionLauncher) {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -13,6 +12,7 @@ import java.util.List;
 
 import muzdima.mymoney.R;
 import muzdima.mymoney.repository.Repository;
+import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.Worker;
@@ -20,7 +20,7 @@ import muzdima.mymoney.utils.Worker;
 public class CategorySelector extends LinearLayout {
     private final List<SpinnerItem> items = new ArrayList<>();
     private HistorySpinner spinner;
-    private TextView textView;
+    private MoneyTextView textView;
     private long fromUTC;
     private long toUTC;
 
@@ -48,14 +48,14 @@ public class CategorySelector extends LinearLayout {
         inflate(getContext(), R.layout.category_selector, this);
         spinner = findViewById(R.id.categorySpinner);
         textView = findViewById(R.id.textViewCategorySum);
-        textView.setText("");
+        textView.setText();
     }
 
     private void updateSum() {
         Activity activity = ActivitySolver.getActivity(getContext());
         Worker.run(activity, () -> {
-            String sumLabel = Repository.getRepository().getCategorySum(spinner.getSelectedId(), fromUTC, toUTC).toString();
-            activity.runOnUiThread(() -> textView.setText(sumLabel));
+            Money sum = Repository.getRepository().getCategorySum(spinner.getSelectedId(), fromUTC, toUTC);
+            activity.runOnUiThread(() -> textView.setText(sum));
         });
     }
 
@@ -69,11 +69,15 @@ public class CategorySelector extends LinearLayout {
     }
 
     private void updateData(Runnable callback) {
-        items.clear();
+
         Activity activity = ActivitySolver.getActivity(getContext());
         Worker.run(activity, () -> {
-            items.addAll(Repository.getRepository().getCategorySpinnerItems());
-            activity.runOnUiThread(callback);
+            List<SpinnerItem> spinnerItems = Repository.getRepository().getCategorySpinnerItems();
+            activity.runOnUiThread(()->{
+                items.clear();
+                items.addAll(spinnerItems);
+                callback.run();
+            });
         });
     }
 

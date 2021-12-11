@@ -10,6 +10,8 @@
     <string name="menu_draft">Черновик</string>
     <string name="menu_dictionaries">Справочники</string>
     <string name="menu_import_export">Импорт/Експорт</string>
+    <string name="menu_statistics">Статистика</string>
+    <string name="menu_statistics_monthly">Статистика за месяц</string>
     <string name="import_button_label">Импорт файла БД</string>
     <string name="export_button_label">Експорт файла БД</string>
     <string name="error_open_destination_file">Невозможно открыть файл </string>
@@ -92,5 +94,9 @@
     <string name="parent">Родитель</string>
     <string name="null_parent">корневой элемент в иерархии</string>
     <string name="error_hierarchy_loop">Наличие циклов в иерархии недопустимо</string>
-    <string name="menu_statistics_report">Статистика</string>
+    <string name="statistics">Статистика</string>
+    <string name="statistics_monthly">Статистика за месяц</string>
+    <string name="daily">По дням</string>
+    <string name="no_data">Данные отсутствуют</string>
+    <string name="month_average">Среднее за месяц</string>
 </resources>

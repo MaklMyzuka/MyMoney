@@ -18,9 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BoringMoney">
         <activity
-            android:name=".activity.ActivityStatistics"
-            android:exported="false" />
-        <activity
             android:name=".activity.ImportExportActivity"
             android:exported="true" />
         <activity
@@ -55,6 +52,12 @@
             android:exported="true" />
         <activity
             android:name=".activity.AccountGroupCardActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.StatisticsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.StatisticsMonthlyActivity"
             android:exported="true" />
         <activity
             android:name=".activity.MainActivity"

@@ -1,6 +1,7 @@
 package muzdima.mymoney.utils;
 
 import java.time.Instant;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -18,21 +19,29 @@ public class DateTime {
         return Integer.parseInt(DateTimeFormatter.ofPattern("MM").withZone(ZoneId.from(ZoneOffset.UTC)).format(Instant.now()));
     }
 
-    public static long getCurrentMonthStartUTC() {
-        int year = getCurrentYear();
-        int month = getCurrentMonth();
+    public static long getMonthStartUTC(int year, int month) {
         return Instant.parse(String.format("%s-%s%s-01T00:00:00Z",year,month/10,month%10)).getEpochSecond();
     }
 
-    public static long getCurrentMonthEndUTC() {
-        int year = getCurrentYear();
-        int month = getCurrentMonth();
+    public static long getMonthEndUTC(int year, int month) {
         month++;
         if (month == 13){
             month = 1;
             year++;
         }
-        return Instant.parse(String.format("%s-%s%s-01T00:00:00Z",year,month/10,month%10)).getEpochSecond();
+        return getMonthStartUTC(year, month);
+    }
+
+    public static long getCurrentMonthStartUTC() {
+        return getMonthStartUTC(getCurrentYear(), getCurrentMonth());
+    }
+
+    public static long getCurrentMonthEndUTC() {
+        return getMonthEndUTC(getCurrentYear(), getCurrentMonth());
+    }
+
+    public static int getLengthOfMonth(int year, int month) {
+        return YearMonth.of(year, month).lengthOfMonth();
     }
 
     private static String printUTCToLocal(long utc, String pattern) {

@@ -21,7 +21,7 @@ import muzdima.mymoney.utils.ErrorDialog;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.HistorySpinner;
 
-public class CategoryCardActivity extends AppCompatActivity {
+public class CategoryCardActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class CategoryCardActivity extends AppCompatActivity {
                     Repository.getRepository().insertCategory(name, parentId, isVisible, comment);
                 } else {
                     if (!Repository.getRepository().updateCategory(categoryId, name, parentId, isVisible, comment)) {
-                        runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_hierarchy_loop));
+                        runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_hierarchy_loop, null));
                         return;
                     }
                 }
@@ -102,7 +102,7 @@ public class CategoryCardActivity extends AppCompatActivity {
                 ConfirmDialog.show(this, R.string.dialog_delete_title, String.format(getString(R.string.dialog_delete_message), 1), () ->
                         Worker.run(this, () -> {
                             if (!Repository.getRepository().deleteCategory(categoryId)) {
-                                runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_category_delete));
+                                runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_category_delete, null));
                             } else {
                                 runOnUiThread(this::finish);
                             }

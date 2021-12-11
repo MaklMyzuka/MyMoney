@@ -111,11 +111,11 @@ public class ActionEditor extends LinearLayout {
             try {
                 sum10000 = Math.round(Double.parseDouble(sum.getText().toString()) * 10000.0d);
             } catch (NumberFormatException exception) {
-                ErrorDialog.showError(activity, R.string.error_sum_parse);
+                ErrorDialog.showError(activity, R.string.error_sum_parse, null);
                 return;
             }
             if (sum10000 < 0) {
-                ErrorDialog.showError(activity, R.string.error_sum_negative);
+                ErrorDialog.showError(activity, R.string.error_sum_negative, null);
                 return;
             }
             long sum1000Final = isIncome ? sum10000 : -sum10000;
@@ -223,11 +223,11 @@ public class ActionEditor extends LinearLayout {
                 sum10000From = Math.round(Double.parseDouble(sumFrom.getText().toString()) * 10000.0d);
                 sum10000To = sumTo.getVisibility() == VISIBLE ? Math.round(Double.parseDouble(sumTo.getText().toString()) * 10000.0d) : sum10000From;
             } catch (NumberFormatException exception) {
-                ErrorDialog.showError(activity, R.string.error_sum_parse);
+                ErrorDialog.showError(activity, R.string.error_sum_parse, null);
                 return;
             }
             if (sum10000From < 0 || sum10000To < 0) {
-                ErrorDialog.showError(activity, R.string.error_sum_negative);
+                ErrorDialog.showError(activity, R.string.error_sum_negative, null);
                 return;
             }
             long createdAtUTC = DateTime.parseUTCFromLocal(date.getText().toString(), time.getText().toString());

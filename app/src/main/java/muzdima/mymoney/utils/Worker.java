@@ -14,7 +14,7 @@ public class Worker {
             try {
                 runnable.run();
             } catch (Exception exception) {
-                activity.runOnUiThread(() -> ErrorDialog.showError(activity, exception));
+                activity.runOnUiThread(() -> ErrorDialog.showError(activity, exception, null));
             } finally {
                 activity.runOnUiThread(() -> {
                     running--;

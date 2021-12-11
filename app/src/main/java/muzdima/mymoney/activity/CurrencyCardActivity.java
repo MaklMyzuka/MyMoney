@@ -17,7 +17,7 @@ import muzdima.mymoney.utils.ConfirmDialog;
 import muzdima.mymoney.utils.ErrorDialog;
 import muzdima.mymoney.utils.Worker;
 
-public class CurrencyCardActivity extends AppCompatActivity {
+public class CurrencyCardActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class CurrencyCardActivity extends AppCompatActivity {
                 ConfirmDialog.show(this, R.string.dialog_delete_title, String.format(getString(R.string.dialog_delete_message), 1), () ->
                         Worker.run(this, () -> {
                             if (!Repository.getRepository().deleteCurrency(currencyId)) {
-                                runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_currency_delete));
+                                runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_currency_delete, null));
                             } else {
                                 runOnUiThread(this::finish);
                             }

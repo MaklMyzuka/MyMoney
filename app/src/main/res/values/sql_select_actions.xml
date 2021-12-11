@@ -8,7 +8,7 @@
                 [category].[name] AS [name],
                 [category].[parent_id] AS [parent_id]
             FROM [category] WHERE [category].[is_visible] = 1
-                UNION
+                UNION ALL
             SELECT
                 [categories_recursive].[id] AS [id],
                 [category].[name] || \'>\' || [categories_recursive].[name] AS [name],
@@ -86,7 +86,7 @@
                 [category].[name] AS [name],
                 [category].[parent_id] AS [parent_id]
             FROM [category] WHERE [category].[is_visible] = 1
-                UNION
+                UNION ALL
             SELECT
                 [categories_recursive].[id] AS [id],
                 [category].[name] || \'>\' || [categories_recursive].[name] AS [name],

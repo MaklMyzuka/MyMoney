@@ -23,7 +23,7 @@ import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.HistorySpinner;
 import muzdima.mymoney.view.MultiSelect;
 
-public class AccountCardActivity extends AppCompatActivity {
+public class AccountCardActivity extends MenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class AccountCardActivity extends AppCompatActivity {
             try {
                 sum10000 = Math.round(Double.parseDouble(editTextSum.getText().toString()) * 10000.0d);
             } catch (NumberFormatException exception) {
-                ErrorDialog.showError(this, R.string.error_sum_parse);
+                ErrorDialog.showError(this, R.string.error_sum_parse, null);
                 return;
             }
             boolean isVisible = !checkBoxHide.isChecked();
@@ -94,7 +94,7 @@ public class AccountCardActivity extends AppCompatActivity {
                 ConfirmDialog.show(this, R.string.dialog_delete_title, String.format(getString(R.string.dialog_delete_message), 1), () ->
                         Worker.run(this, () -> {
                             if (!Repository.getRepository().deleteAccount(accountId)) {
-                                runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_account_delete));
+                                runOnUiThread(() -> ErrorDialog.showError(this, R.string.error_account_delete, null));
                             } else {
                                 runOnUiThread(this::finish);
                             }

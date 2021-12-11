@@ -14,6 +14,9 @@
         android:id="@+id/menu_import_export"
         android:title="@string/menu_import_export" />
     <item
-        android:id="@+id/menu_statistics_report"
-        android:title="@string/menu_statistics_report" />
+        android:id="@+id/menu_statistics"
+        android:title="@string/menu_statistics" />
+    <item
+        android:id="@+id/menu_statistics_monthly"
+        android:title="@string/menu_statistics_monthly" />
 </menu>
