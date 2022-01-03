@@ -1,16 +1,15 @@
 package muzdima.mymoney.repository.model;
 
 import android.content.Context;
-import android.graphics.Color;
 
 import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import muzdima.mymoney.R;
+import muzdima.mymoney.utils.ConfigurationPreferences;
 
 public class Money {
     public List<MoneyItem> items = new ArrayList<>();
@@ -23,6 +22,20 @@ public class Money {
         }
         b.append(s);
         return b.toString();
+    }
+
+    private static String insertThousands(String s, String dividerReverse) {
+        StringBuilder result = new StringBuilder();
+        int n = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (n == 3) {
+                n = 0;
+                result.append(dividerReverse);
+            }
+            result.append(s.charAt(i));
+            n++;
+        }
+        return result.reverse().toString();
     }
 
     @Override
@@ -38,13 +51,45 @@ public class Money {
         return Objects.hash(items);
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return toHtmlString(new DisplayParams());
-    }
-
-    public String toHtmlString(DisplayParams params) {
+    public String toHtmlString(Context context, DisplayParams params) {
+        ConfigurationPreferences.FormatPreferences preferences = ConfigurationPreferences.getFormatPreferences(context);
+        int decimals;
+        switch (preferences.formatNumberDecimal) {
+            case Point2:
+            case Comma2:
+            default:
+                decimals = 2;
+                break;
+            case Point1:
+            case Comma1:
+                decimals = 1;
+                break;
+            case Zero:
+                decimals = 0;
+                break;
+        }
+        long decimalsMod = 10000;
+        for (int i = 0; i < decimals; i++) decimalsMod /= 10;
+        long decimalsDiv = 1;
+        for (int i = 0; i < decimals; i++) decimalsDiv *= 10;
+        String spaceHtml = "&nbsp;";
+        String thousand;
+        switch (preferences.formatNumberThousand) {
+            case Space:
+            default:
+                thousand = spaceHtml;
+                break;
+            case None:
+                thousand = "";
+                break;
+            case Comma:
+                thousand = ",";
+                break;
+            case Delta:
+                thousand = "`";
+                break;
+        }
+        String thousandReverse = new StringBuilder(thousand).reverse().toString();
         StringBuilder s = new StringBuilder();
         boolean first = true;
         for (MoneyItem item : items) {
@@ -54,11 +99,11 @@ public class Money {
                 negative = true;
                 sum = -sum;
             }
-            if (sum % 100 >= 50) {
-                sum /= 100;
+            if (sum % decimalsMod >= decimalsMod / 2) {
+                sum /= decimalsMod;
                 sum++;
             } else {
-                sum /= 100;
+                sum /= decimalsMod;
             }
             if (sum == 0) {
                 continue;
@@ -78,22 +123,15 @@ public class Money {
             if (!negative && sum > 0 && params.plus) {
                 s.append("+");
             }
-            if (sum / 100000 != 0) {
-                s.append(sum / 100000);
-                s.append(" ");
-                sum %= 100000;
-                s.append(leftPad0(String.valueOf(sum / 100), 3));
-            } else {
-                s.append(sum / 100);
-            }
-            sum %= 100;
-            if (sum != 0) {
+            long sumInteger = sum / decimalsDiv;
+            s.append(insertThousands(String.valueOf(sumInteger), thousandReverse));
+            long sumDecimal = sum % decimalsDiv;
+            if (sumDecimal != 0) {
                 s.append(".");
-                s.append(leftPad0(String.valueOf(sum), 2));
+                s.append(leftPad0(String.valueOf(sumDecimal), decimals));
             }
-            s.append(" ");
+            s.append(spaceHtml);
             s.append(item.currencySymbol);
-
             first = false;
         }
         if (s.length() == 0) {
@@ -132,18 +170,10 @@ public class Money {
             return Objects.hash(currencyId, sum10000);
         }
 
-        @NonNull
-        @Override
-        public String toString() {
+        public String toHtmlString(Context context, DisplayParams params) {
             Money money = new Money();
             money.items.add(this);
-            return money.toString();
-        }
-
-        public String toHtmlString(DisplayParams params) {
-            Money money = new Money();
-            money.items.add(this);
-            return money.toHtmlString(params);
+            return money.toHtmlString(context, params);
         }
     }
 
@@ -157,12 +187,6 @@ public class Money {
         public int colorNegative;
         @ColorInt
         public int colorZero;
-
-        public DisplayParams() {
-            colorPositive = Color.BLACK;
-            colorNegative = Color.BLACK;
-            colorZero = Color.BLACK;
-        }
 
         public DisplayParams(Context context) {
             colorPositive = context.getColor(R.color.sum_positive);

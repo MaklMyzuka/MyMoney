@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#290085</color>
+    <color name="primary_variant">#380088</color>
+    <color name="secondary">#290085</color>
+    <color name="secondary_variant">#380088</color>
+    <color name="on_secondary">#FFFFFFFF</color>
+    <color name="on_primary">#FFFFFFFF</color>
+    <color name="icon">#FFFFFFFF</color>
+    <color name="header">#FFFFFFFF</color>
+    <color name="hint">#757575</color>
+    <color name="transaction_income">#406640</color>
+    <color name="transaction_expense">#664040</color>
+    <color name="transfer">#404066</color>
+    <color name="sum_positive">#008000</color>
+    <color name="sum_negative">#800000</color>
+    <color name="sum_zero">#FFFFFF</color>
+    <color name="bar_positive">#008000</color>
+    <color name="bar_negative">#800000</color>
+</resources>

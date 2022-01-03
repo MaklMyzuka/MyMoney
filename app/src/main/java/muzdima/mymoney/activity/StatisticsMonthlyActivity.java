@@ -23,7 +23,7 @@ import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.MoneyList;
 import muzdima.mymoney.view.StatisticsMonthlyByDays;
 
-public class StatisticsMonthlyActivity extends MenuActivity {
+public class StatisticsMonthlyActivity extends BaseActivity {
 
     private ViewGroup layout;
     private TabLayout tabs;
@@ -31,6 +31,11 @@ public class StatisticsMonthlyActivity extends MenuActivity {
     private int year;
     private int month;
     private IObserver observer;
+
+    @Override
+    protected String getMenuTitle() {
+        return getString(R.string.statistics_monthly);
+    }
 
     private void setMoneyListView(int position) {
         @SuppressLint("InflateParams")
@@ -59,11 +64,11 @@ public class StatisticsMonthlyActivity extends MenuActivity {
     }
 
     private long fromUTC() {
-        return DateTime.getMonthStartUTC(year, month);
+        return DateTime.getMonthStartUTCFromLocal(year, month);
     }
 
     private long toUTC() {
-        return DateTime.getMonthEndUTC(year, month);
+        return DateTime.getMonthEndUTCFromLocal(year, month);
     }
 
     private void update() {
@@ -83,7 +88,7 @@ public class StatisticsMonthlyActivity extends MenuActivity {
     }
 
     private void updateText() {
-        textViewDate.setText(String.format("%s%s.%s", month / 10, month % 10, year));
+        textViewDate.setText(DateTime.printYearMonth(this, year, month));
     }
 
     @Override
@@ -92,8 +97,9 @@ public class StatisticsMonthlyActivity extends MenuActivity {
         setContentView(R.layout.activity_statistics_monthly);
         layout = findViewById(R.id.layoutStatisticsMonthly);
         textViewDate = findViewById(R.id.textViewDateStatisticsMonthly);
-        year = DateTime.getCurrentYear();
-        month = DateTime.getCurrentMonth();
+        DateTime now = DateTime.convertUTCToLocal(DateTime.getNowUTC());
+        year = now.year;
+        month = now.month;
         updateText();
         tabs = findViewById(R.id.tabLayoutStatisticsMonthly);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -136,6 +142,7 @@ public class StatisticsMonthlyActivity extends MenuActivity {
     @Override
     public void onResume() {
         super.onResume();
+        updateText();
         update();
     }
 

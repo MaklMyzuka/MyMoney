@@ -9,12 +9,17 @@ import muzdima.mymoney.view.AccountGroupSelector;
 import muzdima.mymoney.view.AccountSelector;
 import muzdima.mymoney.view.CategorySelectorCurrentMonth;
 
-public class MainActivity extends MenuActivity {
+public class MainActivity extends BaseActivity {
 
     private AccountSelector[] accountSelectors;
     private CategorySelectorCurrentMonth[] categorySelectors;
     private AccountGroupSelector[] accountGroupSelectors;
     private boolean firstResume = true;
+
+    @Override
+    protected boolean isBackButtonSupported() {
+        return false;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

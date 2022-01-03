@@ -1,4 +1,4 @@
-package muzdima.mymoney.activity;
+package muzdima.mymoney.activity.dictionary.cards;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import muzdima.mymoney.R;
+import muzdima.mymoney.activity.BaseActivity;
 import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.repository.model.AccountCard;
 import muzdima.mymoney.repository.model.SpinnerItem;
@@ -23,7 +24,14 @@ import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.HistorySpinner;
 import muzdima.mymoney.view.MultiSelect;
 
-public class AccountCardActivity extends MenuActivity {
+public class AccountCardActivity extends BaseActivity {
+
+    private long accountId = -1;
+
+    @Override
+    protected String getMenuTitle() {
+        return getString(accountId == -1 ? R.string.account_add : R.string.account_edit);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +40,7 @@ public class AccountCardActivity extends MenuActivity {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        long accountId = extras.getLong("account_id", -1);
+        accountId = extras.getLong("account_id", -1);
 
         CheckBox checkBoxHide = findViewById(R.id.checkBoxHideAccountCard);
         EditText editTextName = findViewById(R.id.editTextNameAccountCard);
@@ -62,8 +70,6 @@ public class AccountCardActivity extends MenuActivity {
             }
         });
 
-
-        ((TextView) findViewById(R.id.textViewTitleAccountCard)).setText(accountId == -1 ? R.string.account_add : R.string.account_edit);
         Button buttonAccept = findViewById(R.id.buttonAcceptAccountCard);
         buttonAccept.setText(getString(accountId == -1 ? R.string.add_button_label : R.string.edit_button_label));
         buttonAccept.setOnClickListener(view -> {

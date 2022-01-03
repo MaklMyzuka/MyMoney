@@ -1,22 +1,12 @@
 package muzdima.mymoney.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.util.Pair;
 
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import muzdima.mymoney.R;
-import muzdima.mymoney.repository.Repository;
-import muzdima.mymoney.repository.model.SpinnerItem;
-import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.DateTime;
-import muzdima.mymoney.utils.Worker;
 
 public class CategorySelectorCurrentMonth extends CategorySelector {
 
@@ -37,14 +27,12 @@ public class CategorySelectorCurrentMonth extends CategorySelector {
     }
 
     public void init(String history_key) {
-        long monthStartUTC = DateTime.getCurrentMonthStartUTC();
-        long monthEndUTC = DateTime.getCurrentMonthEndUTC();
-        super.init(history_key, monthStartUTC, monthEndUTC);
+        DateTime now = DateTime.convertUTCToLocal(DateTime.getNowUTC());
+        super.init(history_key, DateTime.getMonthStartUTCFromLocal(now.year, now.month), DateTime.getMonthEndUTCFromLocal(now.year, now.month));
     }
 
     public void update() {
-        long monthStartUTC = DateTime.getCurrentMonthStartUTC();
-        long monthEndUTC = DateTime.getCurrentMonthEndUTC();
-        super.update(monthStartUTC, monthEndUTC);
+        DateTime now = DateTime.convertUTCToLocal(DateTime.getNowUTC());
+        super.update(DateTime.getMonthStartUTCFromLocal(now.year, now.month), DateTime.getMonthEndUTCFromLocal(now.year, now.month));
     }
 }

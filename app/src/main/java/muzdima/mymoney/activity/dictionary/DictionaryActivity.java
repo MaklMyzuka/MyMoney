@@ -1,4 +1,4 @@
-package muzdima.mymoney.activity;
+package muzdima.mymoney.activity.dictionary;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,15 +12,14 @@ import androidx.appcompat.widget.SwitchCompat;
 import java.util.List;
 
 import muzdima.mymoney.R;
+import muzdima.mymoney.activity.BaseActivity;
 import muzdima.mymoney.repository.model.DictionaryItem;
 import muzdima.mymoney.utils.Worker;
 
-public abstract class DictionaryActivity extends MenuActivity {
+public abstract class DictionaryActivity extends BaseActivity {
 
     private ViewGroup layoutDictionaryItems;
     private SwitchCompat switchShowHidden;
-
-    protected abstract String getTitleName();
 
     protected abstract List<DictionaryItem> getItems(boolean include_hidden);
 
@@ -32,7 +31,6 @@ public abstract class DictionaryActivity extends MenuActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
-        ((TextView) findViewById(R.id.textViewDictionaryTitle)).setText(getTitleName());
         findViewById(R.id.buttonAddDictionary).setOnClickListener(view -> onCreate());
         layoutDictionaryItems = findViewById(R.id.layoutDictionaryItems);
         switchShowHidden = findViewById(R.id.switchShowHidden);

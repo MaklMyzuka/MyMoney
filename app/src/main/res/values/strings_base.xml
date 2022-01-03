@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">MyMoney</string>
+    <string name="repository_file_name" translatable="false">db.sqlite</string>
+    <string name="button_prev_day_label" translatable="false"><![CDATA[<]]></string>
+    <string name="button_next_day_label" translatable="false"><![CDATA[>]]></string>
+    <string name="action_button_label" translatable="false">+</string>
+    <string name="dictionary_edit_button_label" translatable="false">#</string>
+    <string name="action_button_transaction_item_label" translatable="false">#</string>
+    <string name="action_button_transfer_item_label" translatable="false">#</string>
+    <string name="preference_language" translatable="false">preference_language</string>
+    <string name="preference_night_mode" translatable="false">preference_night_mode</string>
+    <string name="preference_format_number_decimal" translatable="false">preference_format_number_decimal</string>
+    <string name="preference_format_number_thousand" translatable="false">preference_format_number_thousand</string>
+    <string name="preference_format_date" translatable="false">preference_format_date</string>
+    <string name="preference_format_time" translatable="false">preference_format_time</string>
+    <string name="preference_night_mode_system_value" translatable="false">-1</string>
+    <string name="preference_night_mode_on_value" translatable="false">1</string>
+    <string name="preference_night_mode_off_value" translatable="false">0</string>
+    <string-array name="preference_night_mode_values">
+        <item>@string/preference_night_mode_system_value</item>
+        <item>@string/preference_night_mode_on_value</item>
+        <item>@string/preference_night_mode_off_value</item>
+    </string-array>
+    <string name="language_system_value" translatable="false">system</string>
+    <string-array name="language_values">
+        <item>@string/language_system_value</item>
+        <item>en</item>
+        <item>ru</item>
+        <item>uk</item>
+    </string-array>
+    <string name="preference_format_number_decimal_point2_value" translatable="false">0.00</string>
+    <string name="preference_format_number_decimal_comma2_value" translatable="false">0,00</string>
+    <string name="preference_format_number_decimal_point1_value" translatable="false">0.0</string>
+    <string name="preference_format_number_decimal_comma1_value" translatable="false">0,0</string>
+    <string name="preference_format_number_decimal_zero_value" translatable="false">0</string>
+    <string-array name="preference_format_number_decimal_values">
+        <item>@string/preference_format_number_decimal_point2_value</item>
+        <item>@string/preference_format_number_decimal_comma2_value</item>
+        <item>@string/preference_format_number_decimal_point1_value</item>
+        <item>@string/preference_format_number_decimal_comma1_value</item>
+        <item>@string/preference_format_number_decimal_zero_value</item>
+    </string-array>
+    <string name="preference_format_number_thousand_space_value" translatable="false">000 000</string>
+    <string name="preference_format_number_thousand_none_value" translatable="false">000000</string>
+    <string name="preference_format_number_thousand_comma_value" translatable="false">000,000</string>
+    <string name="preference_format_number_thousand_delta_value" translatable="false">000`000</string>
+    <string-array name="preference_format_number_thousand_values">
+        <item>@string/preference_format_number_thousand_space_value</item>
+        <item>@string/preference_format_number_thousand_none_value</item>
+        <item>@string/preference_format_number_thousand_comma_value</item>
+        <item>@string/preference_format_number_thousand_delta_value</item>
+    </string-array>
+    <string name="preference_format_date_dd_mm_yyyy_value" translatable="false">31.12.2000</string>
+    <string name="preference_format_date_mm_dd_yyyy_value" translatable="false">12.31.2000</string>
+    <string name="preference_format_date_yyyy_mm_dd_value" translatable="false">2000.12.31</string>
+    <string-array name="preference_format_date_values">
+        <item>@string/preference_format_date_dd_mm_yyyy_value</item>
+        <item>@string/preference_format_date_mm_dd_yyyy_value</item>
+        <item>@string/preference_format_date_yyyy_mm_dd_value</item>
+    </string-array>
+    <string name="preference_format_time_hh_mm_value" translatable="false">22:30</string>
+    <string name="preference_format_time_hh_mm_ss_value" translatable="false">22:30:59</string>
+    <string name="preference_format_time_none_value" translatable="false">-</string>
+    <string-array name="preference_format_time_values">
+        <item>@string/preference_format_time_hh_mm_value</item>
+        <item>@string/preference_format_time_hh_mm_ss_value</item>
+        <item>@string/preference_format_time_none_value</item>
+    </string-array>
+</resources>

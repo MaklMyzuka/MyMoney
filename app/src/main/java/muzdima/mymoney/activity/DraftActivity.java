@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.List;
 
 import muzdima.mymoney.R;
@@ -20,15 +18,26 @@ import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.ChangeableActionList;
 
-public class DraftActivity extends MenuActivity {
+public class DraftActivity extends BaseActivity {
 
     private Button buttonToggle;
     private ChangeableActionList actionList;
 
+    @Override
+    protected String getMenuTitle() {
+        return getString(R.string.draft);
+    }
+
     // CALL FROM WORKER THREAD
-    private void update() {
+    private void update(boolean forceRedraw) {
         List<IActionItem> items = Repository.getRepository().getDraftActionItems();
-        runOnUiThread(() -> actionList.update(items));
+        runOnUiThread(() -> actionList.update(items, forceRedraw));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Worker.run(this, () -> update(true));
     }
 
     @Override
@@ -124,7 +133,7 @@ public class DraftActivity extends MenuActivity {
             List<IActionItem> items = Repository.getRepository().getDraftActionItems();
             IActionItem editItemFinal = editItem;
             runOnUiThread(() -> {
-                actionList.init(true, items, editItemFinal, () -> Worker.run(this, this::update));
+                actionList.init(true, items, editItemFinal, () -> Worker.run(this, () -> update(false)));
                 actionList.setOnCheckedChangeListener(selectedAll -> buttonToggle.setText(selectedAll ? R.string.toggle_none_button_label : R.string.toggle_all_button_label));
                 findViewById(R.id.buttonToggleDraft).setOnClickListener(view -> actionList.toggleSelected());
                 findViewById(R.id.buttonCommitDraft).setOnClickListener(view -> {
@@ -132,7 +141,7 @@ public class DraftActivity extends MenuActivity {
                     ConfirmDialog.show(this, R.string.dialog_commit_title, String.format(getString(R.string.dialog_commit_message), selected.size()), () ->
                             Worker.run(this, () -> {
                                 Repository.getRepository().commitActionItems(selected);
-                                update();
+                                update(false);
                             })
                     );
                 });
@@ -141,7 +150,7 @@ public class DraftActivity extends MenuActivity {
                     ConfirmDialog.show(this, R.string.dialog_delete_title, String.format(getString(R.string.dialog_delete_message), selected.size()), () ->
                             Worker.run(this, () -> {
                                 Repository.getRepository().deleteActionItems(selected);
-                                update();
+                                update(false);
                             })
                     );
                 });

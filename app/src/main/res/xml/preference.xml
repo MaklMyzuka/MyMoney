@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="@string/language_system_value"
+        android:entries="@array/languages"
+        android:entryValues="@array/language_values"
+        android:icon="@drawable/ic_preference_language"
+        android:key="@string/preference_language"
+        android:title="@string/language"
+        app:useSimpleSummaryProvider="true" />
+    <ListPreference
+        android:defaultValue="@string/preference_night_mode_system_value"
+        android:entries="@array/night_modes"
+        android:entryValues="@array/preference_night_mode_values"
+        android:icon="@drawable/ic_preference_night_mode"
+        android:key="@string/preference_night_mode"
+        android:title="@string/night_mode"
+        app:useSimpleSummaryProvider="true"/>
+    <PreferenceCategory android:title="@string/format_date_time_number">
+
+        <ListPreference
+            android:defaultValue="@string/preference_format_number_decimal_point2_value"
+            android:entries="@array/preference_format_number_decimal_values"
+            android:entryValues="@array/preference_format_number_decimal_values"
+            android:icon="@drawable/ic_preference_format_number"
+            android:key="@string/preference_format_number_decimal"
+            android:title="@string/format_number_decimal"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/preference_format_number_thousand_space_value"
+            android:entries="@array/preference_format_number_thousand_values"
+            android:entryValues="@array/preference_format_number_thousand_values"
+            android:icon="@drawable/ic_preference_format_number"
+            android:key="@string/preference_format_number_thousand"
+            android:title="@string/format_number_thousand"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/preference_format_date_dd_mm_yyyy_value"
+            android:entries="@array/preference_format_date_values"
+            android:entryValues="@array/preference_format_date_values"
+            android:icon="@drawable/ic_preference_format_datetime"
+            android:key="@string/preference_format_date"
+            android:title="@string/format_date"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/preference_format_time_hh_mm_value"
+            android:entries="@array/preference_format_time_values"
+            android:entryValues="@array/preference_format_time_values"
+            android:icon="@drawable/ic_preference_format_datetime"
+            android:key="@string/preference_format_time"
+            android:title="@string/format_time"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+</PreferenceScreen>

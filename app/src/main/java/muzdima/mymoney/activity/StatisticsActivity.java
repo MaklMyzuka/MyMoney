@@ -24,9 +24,14 @@ import muzdima.mymoney.view.AccountSelector;
 import muzdima.mymoney.view.CategorySelectorCurrentMonth;
 import muzdima.mymoney.view.MoneyList;
 
-public class StatisticsActivity extends MenuActivity {
+public class StatisticsActivity extends BaseActivity {
     private ViewGroup layout;
     private TabLayout tabs;
+
+    @Override
+    protected String getMenuTitle() {
+        return getString(R.string.statistics);
+    }
 
     private void setMoneyListView(int position) {
         @SuppressLint("InflateParams")

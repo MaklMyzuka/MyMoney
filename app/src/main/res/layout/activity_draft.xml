@@ -29,19 +29,6 @@
         app:layout_constraintEnd_toEndOf="@+id/buttonDeleteDraft"
         app:layout_constraintStart_toStartOf="@+id/buttonDeleteDraft" />
 
-    <TextView
-        android:id="@+id/textViewDraft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/draft"
-        android:textColor="@color/header"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <muzdima.mymoney.view.ChangeableActionList
         android:id="@+id/changeableActionListDraft"
         android:layout_width="0dp"
@@ -53,7 +40,7 @@
         app:layout_constraintBottom_toTopOf="@+id/barrierButtonsDraft"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDraft" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonToggleDraft"

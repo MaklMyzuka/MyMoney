@@ -1,14 +1,23 @@
-package muzdima.mymoney.activity;
+package muzdima.mymoney.activity.dictionary;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import muzdima.mymoney.R;
+import muzdima.mymoney.activity.BaseActivity;
+import muzdima.mymoney.activity.dictionary.dictionaries.AccountGroupsDictionaryActivity;
+import muzdima.mymoney.activity.dictionary.dictionaries.AccountsDictionaryActivity;
+import muzdima.mymoney.activity.dictionary.dictionaries.CategoriesDictionaryActivity;
+import muzdima.mymoney.activity.dictionary.dictionaries.CurrenciesDictionaryActivity;
 
-public class DictionariesActivity extends MenuActivity {
+public class DictionariesActivity extends BaseActivity {
+
+    @Override
+    protected String getMenuTitle() {
+        return getString(R.string.dictionaries);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,17 +1,19 @@
-package muzdima.mymoney.activity;
+package muzdima.mymoney.activity.dictionary.dictionaries;
 
 import android.content.Intent;
 
 import java.util.List;
 
 import muzdima.mymoney.R;
+import muzdima.mymoney.activity.dictionary.cards.CurrencyCardActivity;
+import muzdima.mymoney.activity.dictionary.DictionaryActivity;
 import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.repository.model.DictionaryItem;
 
 public class CurrenciesDictionaryActivity extends DictionaryActivity {
 
     @Override
-    protected String getTitleName() {
+    protected String getMenuTitle() {
         return getString(R.string.currencies);
     }
 

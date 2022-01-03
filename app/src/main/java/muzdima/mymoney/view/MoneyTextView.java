@@ -13,6 +13,7 @@ import muzdima.mymoney.repository.model.Money;
 @SuppressLint("AppCompatCustomView")
 public class MoneyTextView extends TextView implements IMoneyVIew {
 
+    private Context context;
     private Money.DisplayParams params;
 
     public MoneyTextView(Context context) {
@@ -36,7 +37,8 @@ public class MoneyTextView extends TextView implements IMoneyVIew {
     }
 
     private void init() {
-        params = new Money.DisplayParams(getContext());
+        context = getContext();
+        params = new Money.DisplayParams(context);
     }
 
     public void setText() {
@@ -48,16 +50,16 @@ public class MoneyTextView extends TextView implements IMoneyVIew {
     }
 
     public void setText(Money.MoneyItem value) {
-        setHtml(value.toHtmlString(params));
+        setHtml(value.toHtmlString(context, params));
     }
 
     public void setText(Money value) {
-        setHtml(value.toHtmlString(params));
+        setHtml(value.toHtmlString(context, params));
     }
 
     public void setText(Money.MoneyItem a, Money.MoneyItem b) {
-        String sa = a.toHtmlString(params);
-        String sb = b.toHtmlString(params);
+        String sa = a.toHtmlString(context, params);
+        String sb = b.toHtmlString(context, params);
         setHtml(sa.equals(sb) ? sa : String.format("%s / %s", sa, sb));
     }
 

@@ -30,6 +30,8 @@ import muzdima.mymoney.utils.Worker;
 
 public class ActionEditor extends LinearLayout {
 
+    private long createdAtUTC;
+
     public ActionEditor(Context context) {
         super(context);
     }
@@ -46,6 +48,38 @@ public class ActionEditor extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    private void setDateTextView(TextView date) {
+        date.setText(DateTime.printDate(getContext(), DateTime.convertUTCToLocal(createdAtUTC)));
+        date.setOnClickListener(view -> {
+            DateTime localInit = DateTime.convertUTCToLocal(createdAtUTC);
+            new DatePickerDialog(getContext(), (datePicker, year, month, dayOfMonth) -> {
+                DateTime local = DateTime.convertUTCToLocal(createdAtUTC);
+                createdAtUTC = DateTime.convertLocalToUTC(new DateTime(year, month + 1, dayOfMonth, local.hours, local.minutes, local.seconds));
+                date.setText(DateTime.printDate(getContext(), DateTime.convertUTCToLocal(createdAtUTC)));
+            },
+                    localInit.year,
+                    localInit.month - 1,
+                    localInit.day)
+                    .show();
+        });
+    }
+
+    private void setTimeTextView(TextView time) {
+        time.setText(DateTime.printTime(getContext(), DateTime.convertUTCToLocal(createdAtUTC)));
+        time.setOnClickListener(view -> {
+            DateTime localInit = DateTime.convertUTCToLocal(createdAtUTC);
+            new TimePickerDialog(getContext(), (datePicker, hourOfDay, minute) -> {
+                DateTime local = DateTime.convertUTCToLocal(createdAtUTC);
+                createdAtUTC = DateTime.convertLocalToUTC(new DateTime(local.year, local.month, local.day, hourOfDay, minute, 0));
+                time.setText(DateTime.printTime(getContext(), DateTime.convertUTCToLocal(createdAtUTC)));
+            },
+                    localInit.hours,
+                    localInit.minutes,
+                    true)
+                    .show();
+        });
+    }
+
     // DON'T MODIFY item
     private void updateTransactionItem(TransactionItem item, Runnable update) {
         inflate(getContext(), R.layout.action_editor_transaction, this);
@@ -53,27 +87,10 @@ public class ActionEditor extends LinearLayout {
         boolean isIncome = item.sum.sum10000 > 0;
         setBackgroundColor(ContextCompat.getColor(getContext(), isIncome ? R.color.transaction_income : R.color.transaction_expense));
 
+        createdAtUTC = item.createdAtUTC;
         ((TextView) findViewById(R.id.textViewTitleTransactionEditor)).setText(isIncome ? R.string.action_income : R.string.action_expense);
-        TextView date = findViewById(R.id.textViewDateTransactionEditor);
-        date.setText(DateTime.printUTCToLocalDate(item.createdAtUTC));
-        date.setOnClickListener(view ->
-                new DatePickerDialog(getContext(), (datePicker, year, month, dayOfMonth) ->
-                        date.setText(DateTime.printLocalDate(year, month + 1, dayOfMonth)),
-                        DateTime.getLocalYear(item.createdAtUTC),
-                        DateTime.getLocalMonth(item.createdAtUTC) - 1,
-                        DateTime.getLocalDayOfMonth(item.createdAtUTC))
-                        .show()
-        );
-        TextView time = findViewById(R.id.textViewTimeTransactionEditor);
-        time.setText(DateTime.printUTCToLocalTime(item.createdAtUTC));
-        time.setOnClickListener(view ->
-                new TimePickerDialog(getContext(), (datePicker, hourOfDay, minute) ->
-                        time.setText(DateTime.printLocalTime(hourOfDay, minute)),
-                        DateTime.getLocalHourOfDay(item.createdAtUTC),
-                        DateTime.getLocalMinute(item.createdAtUTC),
-                        true)
-                        .show()
-        );
+        setDateTextView(findViewById(R.id.textViewDateTransactionEditor));
+        setTimeTextView(findViewById(R.id.textViewTimeTransactionEditor));
         TextView currency = findViewById(R.id.textViewCurrencyTransactionEditor);
         currency.setText(item.sum.currencySymbol);
         HistorySpinner account = findViewById(R.id.accountTransactionEditor);
@@ -81,10 +98,10 @@ public class ActionEditor extends LinearLayout {
             List<SpinnerItem> accounts = Repository.getRepository().getAccountSpinnerItems();
             activity.runOnUiThread(() -> {
                 account.setOnItemSelectedListener(id ->
-                    Worker.run(activity, () -> {
-                        String currencySymbol = Repository.getRepository().getAccountInfo(id).currencySymbol;
-                        activity.runOnUiThread(() -> currency.setText(currencySymbol));
-                    })
+                        Worker.run(activity, () -> {
+                            String currencySymbol = Repository.getRepository().getAccountInfo(id).currencySymbol;
+                            activity.runOnUiThread(() -> currency.setText(currencySymbol));
+                        })
                 );
                 account.init(String.format("history_account_selector_on_edit_transaction_on_%s", isIncome ? "income" : "expense"), accounts, item.accountId);
             });
@@ -99,7 +116,7 @@ public class ActionEditor extends LinearLayout {
         Worker.run(activity, () -> {
             List<SpinnerItem> categories = Repository.getRepository().getCategorySpinnerItems();
             activity.runOnUiThread(() ->
-                category.init(String.format("history_category_selector_on_edit_transaction_on_%s", isIncome ? "income" : "expense"), categories, item.categoryId)
+                    category.init(String.format("history_category_selector_on_edit_transaction_on_%s", isIncome ? "income" : "expense"), categories, item.categoryId)
             );
         });
         Button buttonAccept = findViewById(R.id.buttonAcceptTransactionEditor);
@@ -120,7 +137,6 @@ public class ActionEditor extends LinearLayout {
             }
             long sum1000Final = isIncome ? sum10000 : -sum10000;
             String productValue = product.getText().toString();
-            long createdAtUTC = DateTime.parseUTCFromLocal(date.getText().toString(), time.getText().toString());
             Worker.run(activity, () -> {
                 if (item.id == -1) {
                     Repository.getRepository().insertTransaction(categoryId, accountId, sum1000Final, productValue, createdAtUTC);
@@ -149,27 +165,10 @@ public class ActionEditor extends LinearLayout {
         Activity activity = ActivitySolver.getActivity(getContext());
         setBackgroundColor(ContextCompat.getColor(getContext(), R.color.transfer));
 
+        createdAtUTC = item.createdAtUTC;
         ((TextView) findViewById(R.id.textViewTitleTransferEditor)).setText(R.string.action_transfer);
-        TextView date = findViewById(R.id.textViewDateTransferEditor);
-        date.setText(DateTime.printUTCToLocalDate(item.createdAtUTC));
-        date.setOnClickListener(view ->
-                new DatePickerDialog(getContext(), (datePicker, year, month, dayOfMonth) ->
-                        date.setText(DateTime.printLocalDate(year, month + 1, dayOfMonth)),
-                        DateTime.getLocalYear(item.createdAtUTC),
-                        DateTime.getLocalMonth(item.createdAtUTC) - 1,
-                        DateTime.getLocalDayOfMonth(item.createdAtUTC))
-                        .show()
-        );
-        TextView time = findViewById(R.id.textViewTimeTransferEditor);
-        time.setText(DateTime.printUTCToLocalTime(item.createdAtUTC));
-        time.setOnClickListener(view ->
-                new TimePickerDialog(getContext(), (datePicker, hourOfDay, minute) ->
-                        time.setText(DateTime.printLocalTime(hourOfDay, minute)),
-                        DateTime.getLocalHourOfDay(item.createdAtUTC),
-                        DateTime.getLocalMinute(item.createdAtUTC),
-                        true)
-                        .show()
-        );
+        setDateTextView(findViewById(R.id.textViewDateTransferEditor));
+        setTimeTextView(findViewById(R.id.textViewTimeTransferEditor));
         TextView currencyFrom = findViewById(R.id.textViewCurrencyTransferEditorFrom);
         currencyFrom.setText(item.sumFrom.currencySymbol);
         TextView currencyTo = findViewById(R.id.textViewCurrencyTransferEditorTo);
@@ -230,7 +229,6 @@ public class ActionEditor extends LinearLayout {
                 ErrorDialog.showError(activity, R.string.error_sum_negative, null);
                 return;
             }
-            long createdAtUTC = DateTime.parseUTCFromLocal(date.getText().toString(), time.getText().toString());
             Worker.run(activity, () -> {
                 if (item.id == -1) {
                     Repository.getRepository().insertTransfer(accountIdFrom, accountIdTo, sum10000From, sum10000To, createdAtUTC);

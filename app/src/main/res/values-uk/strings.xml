@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading_dialog_text">Очікуйте завершення операції</string>
+    <string name="permission_not_granted">Дозвіл не отримано</string>
+    <string name="success">Успіх</string>
+    <string name="export_to">Експорт в </string>
+    <string name="import_from">Імпорт з </string>
+    <string name="menu_actions">Транзакції</string>
+    <string name="menu_draft">Чернетка</string>
+    <string name="menu_dictionaries">Довідники</string>
+    <string name="menu_import_export">Імпорт/Експорт</string>
+    <string name="menu_statistics">Статистика</string>
+    <string name="menu_statistics_monthly">Статистика за місяць</string>
+    <string name="menu_settings">Налаштування</string>
+    <string name="import_button_label">Імпорт файла БД</string>
+    <string name="export_button_label">Експорт файла БД</string>
+    <string name="error_open_destination_file">Неможливо відкрити файл </string>
+    <string name="error_create_destination_directories">Неможливо створити директорію </string>
+    <string name="cause">Причина:</string>
+    <string name="exception">Помилка:</string>
+    <string name="error">Помилка</string>
+    <string name="account_group">група рахунків</string>
+    <string name="currencies">Валюти</string>
+    <string name="accounts">Рахунки</string>
+    <string name="categories">Категорії</string>
+    <string name="categories_month">Категорії с початку місяця</string>
+    <string name="account_groups">Групи рахунків</string>
+    <string name="dictionaries">Довідники</string>
+    <string name="show_hidden_items">відображати приховані</string>
+    <string name="hidden">приховано</string>
+    <string name="add_dictionary_button_label">Додати</string>
+    <string name="account_action">Дії з рахунком</string>
+    <string name="account_action_expense">Витрата</string>
+    <string name="account_action_income">Дохід</string>
+    <string name="account_action_transfer_from">Перевод з</string>
+    <string name="account_action_transfer_to">Перевод на</string>
+    <string name="transfer_from">З </string>
+    <string name="transfer_to">В </string>
+    <string name="draft">Чернетка</string>
+    <string name="toggle_all_button_label">Вибрати &#10;всі</string>
+    <string name="toggle_none_button_label">Очистити</string>
+    <string name="commit_button_label">Зберегти</string>
+    <string name="delete_button_label">Видалити</string>
+    <string name="action_list">Список транзакцій</string>
+    <string name="dialog_commit_title">Збереження</string>
+    <string name="dialog_delete_title">Видалення</string>
+    <string name="dialog_commit_message">Зберегти %d запись(-ів)?</string>
+    <string name="dialog_delete_message">Видалити %d запись(-ів)?</string>
+    <string name="product_hint">Опис товара чи послуги</string>
+    <string name="sum_hint">Сума</string>
+    <string name="add_button_label">Додати</string>
+    <string name="edit_button_label">Редагувати</string>
+    <string name="cancel_button_label">Відміна</string>
+    <string name="account_from">рахунок з</string>
+    <string name="account_to">рахунок в</string>
+    <string name="sum_from_hint">Сума списання</string>
+    <string name="sum_to_hint">Сума зачислення</string>
+    <string name="dialog_yes">Так</string>
+    <string name="dialog_no">Ні</string>
+    <string name="dialog_ok">ОК</string>
+    <string name="action_expense">Витрата</string>
+    <string name="action_income">Дохід</string>
+    <string name="action_transfer">Переведення</string>
+    <string name="error_sum_parse">Невірний формат суми</string>
+    <string name="error_sum_negative">Сума не може буть від\'ємною</string>
+    <string name="actions">Транзакції</string>
+    <string name="date">Дата</string>
+    <string name="currency_edit">Валюта - Редагування</string>
+    <string name="currency_add">Валюта - Додавання</string>
+    <string name="account_edit">Рахунок - Редагування</string>
+    <string name="account_add">Рахунок - Додавання</string>
+    <string name="category_edit">Категорія - Редагування</string>
+    <string name="category_add">Категорія - Додавання</string>
+    <string name="account_group_edit">Група рахунків - Редагування</string>
+    <string name="account_group_add">Група рахунків - Додавання</string>
+    <string name="error_currency_delete">Видалення заборонено. Необхідно видалити звязані рахунки.</string>
+    <string name="error_account_delete">Видалення заборонено. Необхідно удалить звязані транзакції и відвязати звязані групи рахунків.</string>
+    <string name="error_category_delete">Видалення заборонено. Необхідно удалить звязані транзакції и категорії-потомки.</string>
+    <string name="error_account_group_delete">Видалення заборонено. Необхідно відвязати звязані рахунки.</string>
+    <string name="name">Назва</string>
+    <string name="symbol">Скорочене позначення</string>
+    <string name="is_not_visible">приховано</string>
+    <string name="comment">Опис</string>
+    <string name="currency">Валюта</string>
+    <string name="account">Рахунок</string>
+    <string name="category">Категорія</string>
+    <string name="sum_account">Початкова сума</string>
+    <string name="parent">Потомок</string>
+    <string name="null_parent">корневий элемент в іерархії</string>
+    <string name="error_hierarchy_loop">Наявність циклів в ієрархії неприпустимо</string>
+    <string name="statistics">Статистика</string>
+    <string name="statistics_monthly">Статистика за місяць</string>
+    <string name="daily">По дням</string>
+    <string name="no_data">Даних немає</string>
+    <string name="month_average">Среднє за місяць</string>
+    <string name="settings">Налаштування</string>
+    <string name="language">Мова</string>
+    <string name="night_mode">Нічний режим</string>
+    <string name="format_date_time_number">Формат відображення</string>
+    <string name="format_number_decimal">Десятковий дільник</string>
+    <string name="format_number_thousand">Дільник тисяч</string>
+    <string name="format_date">Формат дати</string>
+    <string name="format_time">Формат часу</string>
+    <string-array name="languages">
+        <item>Авто</item>
+        <item>Англійська (English)</item>
+        <item>Російська (Русский)</item>
+        <item>Українська</item>
+    </string-array>
+    <string-array name="night_modes">
+        <item>Авто</item>
+        <item>Увімкнено</item>
+        <item>Вимкнено</item>
+    </string-array>
+</resources>

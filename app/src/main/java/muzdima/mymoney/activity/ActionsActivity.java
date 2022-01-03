@@ -5,11 +5,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-
-
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.List;
 
 import muzdima.mymoney.R;
@@ -21,28 +16,40 @@ import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.CategorySelector;
 import muzdima.mymoney.view.ChangeableActionList;
 
-public class ActionsActivity extends MenuActivity {
+public class ActionsActivity extends BaseActivity {
     private long dateStartUTC;
     private TextView textViewDate;
     private Button buttonToggle;
     private ChangeableActionList actionList;
     private CategorySelector categorySelector;
 
+    @Override
+    protected String getMenuTitle() {
+        return getString(R.string.actions);
+    }
+
     // CALL FROM WORKER THREAD
-    private void update() {
+    private void update(boolean forceRedraw) {
         List<IActionItem> items = Repository.getRepository().getActionItems(fromUTC(), toUTC());
         runOnUiThread(() -> {
-            actionList.update(items);
+            actionList.update(items, forceRedraw);
             categorySelector.update(fromUTC(), toUTC());
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setDate();
+        Worker.run(this, () -> update(true));
+    }
+
     private long dateUTC() {
-        return dateStartUTC / 2 + DateTime.addDays(dateStartUTC, 1) / 2;
+        return dateStartUTC / 2 + DateTime.addDaysToUTC(dateStartUTC, 1) / 2;
     }
 
     private void setDate() {
-        textViewDate.setText(DateTime.printUTCToLocalDate(dateUTC()));
+        textViewDate.setText(DateTime.printDate(this, DateTime.convertUTCToLocal(dateUTC())));
     }
 
     private long fromUTC() {
@@ -50,7 +57,7 @@ public class ActionsActivity extends MenuActivity {
     }
 
     private long toUTC() {
-        return DateTime.addDays(dateStartUTC, 1);
+        return DateTime.addDaysToUTC(dateStartUTC, 1);
     }
 
     @Override
@@ -61,14 +68,15 @@ public class ActionsActivity extends MenuActivity {
         actionList = findViewById(R.id.changeableActionListActions);
         textViewDate = findViewById(R.id.textViewDateActions);
         categorySelector = findViewById(R.id.categorySelectorActions);
-        dateStartUTC = DateTime.getLocalDayStartUTC(DateTime.getNowUTC());
+        DateTime now = DateTime.convertUTCToLocal(DateTime.getNowUTC());
+        dateStartUTC = DateTime.convertLocalToUTC(new DateTime(now.year, now.month, now.day, 0, 0, 0));
         categorySelector.init("history_category_selector_on_actions", fromUTC(), toUTC());
         setDate();
 
         Worker.run(this, () -> {
             List<IActionItem> items = Repository.getRepository().getActionItems(fromUTC(), toUTC());
             runOnUiThread(() -> {
-                actionList.init(true, items, null, () -> Worker.run(this, this::update));
+                actionList.init(true, items, null, () -> Worker.run(this,  () -> update(false)));
                 actionList.setOnCheckedChangeListener(selectedAll -> buttonToggle.setText(selectedAll ? R.string.toggle_none_button_label : R.string.toggle_all_button_label));
                 findViewById(R.id.buttonToggleActions).setOnClickListener(view -> actionList.toggleSelected());
                 findViewById(R.id.buttonDeleteActions).setOnClickListener(view -> {
@@ -76,31 +84,31 @@ public class ActionsActivity extends MenuActivity {
                     ConfirmDialog.show(this, R.string.dialog_delete_title, String.format(getString(R.string.dialog_delete_message), selected.size()), () ->
                             Worker.run(this, () -> {
                                 Repository.getRepository().deleteActionItems(selected);
-                                update();
+                                update(false);
                             })
                     );
                 });
                 textViewDate.setOnClickListener(view -> {
-                    long dateUTC = dateUTC();
+                    DateTime local = DateTime.convertUTCToLocal(dateUTC());
                     new DatePickerDialog(this, (datePicker, year, month, dayOfMonth) -> {
-                        dateStartUTC = DateTime.parseUTCFromLocal(DateTime.printLocalDate(year, month + 1, dayOfMonth), "00:00");
+                        dateStartUTC = DateTime.convertLocalToUTC(new DateTime(year, month + 1, dayOfMonth, 0, 0, 0));
                         setDate();
-                        Worker.run(this, this::update);
+                        Worker.run(this, () -> update(false));
                     },
-                            DateTime.getLocalYear(dateUTC),
-                            DateTime.getLocalMonth(dateUTC) - 1,
-                            DateTime.getLocalDayOfMonth(dateUTC))
+                            local.year,
+                            local.month - 1,
+                            local.day)
                             .show();
                 });
                 findViewById(R.id.buttonPrevActions).setOnClickListener(view -> {
-                    dateStartUTC = DateTime.addDays(dateStartUTC, -1);
+                    dateStartUTC = DateTime.addDaysToUTC(dateStartUTC, -1);
                     setDate();
-                    Worker.run(this, this::update);
+                    Worker.run(this, () -> update(false));
                 });
                 findViewById(R.id.buttonNextActions).setOnClickListener(view -> {
-                    dateStartUTC = DateTime.addDays(dateStartUTC, 1);
+                    dateStartUTC = DateTime.addDaysToUTC(dateStartUTC, 1);
                     setDate();
-                    Worker.run(this, this::update);
+                    Worker.run(this, () -> update(false));
                 });
             });
         });

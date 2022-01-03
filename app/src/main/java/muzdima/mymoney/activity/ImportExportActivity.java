@@ -20,7 +20,12 @@ import muzdima.mymoney.repository.model.ExportResult;
 import muzdima.mymoney.repository.model.ImportResult;
 import muzdima.mymoney.utils.ErrorDialog;
 
-public class ImportExportActivity extends MenuActivity {
+public class ImportExportActivity extends BaseActivity {
+
+    @Override
+    protected String getMenuTitle() {
+        return getString(R.string.menu_import_export);
+    }
 
     private final ActivityResultLauncher<String> requestExportPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
         if (isGranted)

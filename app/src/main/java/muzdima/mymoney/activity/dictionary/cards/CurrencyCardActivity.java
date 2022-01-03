@@ -1,4 +1,4 @@
-package muzdima.mymoney.activity;
+package muzdima.mymoney.activity.dictionary.cards;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,13 +11,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import muzdima.mymoney.R;
+import muzdima.mymoney.activity.BaseActivity;
 import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.repository.model.CurrencyCard;
 import muzdima.mymoney.utils.ConfirmDialog;
 import muzdima.mymoney.utils.ErrorDialog;
 import muzdima.mymoney.utils.Worker;
 
-public class CurrencyCardActivity extends MenuActivity {
+public class CurrencyCardActivity extends BaseActivity {
+
+    private long currencyId = -1;
+
+    @Override
+    protected String getMenuTitle() {
+        return getString(currencyId == -1 ? R.string.currency_add : R.string.currency_edit);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +34,7 @@ public class CurrencyCardActivity extends MenuActivity {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        long currencyId = extras.getLong("currency_id", -1);
+        currencyId = extras.getLong("currency_id", -1);
 
         CheckBox checkBoxHide = findViewById(R.id.checkBoxHideCurrencyCard);
         EditText editTextName = findViewById(R.id.editTextNameCurrencyCard);
@@ -45,7 +53,6 @@ public class CurrencyCardActivity extends MenuActivity {
             });
         }
 
-        ((TextView) findViewById(R.id.textViewTitleCurrencyCard)).setText(currencyId == -1 ? R.string.currency_add : R.string.currency_edit);
         Button buttonAccept = findViewById(R.id.buttonAcceptCurrencyCard);
         buttonAccept.setText(getString(currencyId == -1 ? R.string.add_button_label : R.string.edit_button_label));
         buttonAccept.setOnClickListener(view -> {

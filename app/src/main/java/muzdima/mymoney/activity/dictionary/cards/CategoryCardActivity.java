@@ -1,4 +1,4 @@
-package muzdima.mymoney.activity;
+package muzdima.mymoney.activity.dictionary.cards;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 import muzdima.mymoney.R;
+import muzdima.mymoney.activity.BaseActivity;
 import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.repository.model.CategoryCard;
 import muzdima.mymoney.repository.model.SpinnerItem;
@@ -21,7 +22,14 @@ import muzdima.mymoney.utils.ErrorDialog;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.HistorySpinner;
 
-public class CategoryCardActivity extends MenuActivity {
+public class CategoryCardActivity extends BaseActivity {
+
+    private long categoryId = -1;
+
+    @Override
+    protected String getMenuTitle() {
+        return getString(categoryId == -1 ? R.string.category_add : R.string.category_edit);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +38,7 @@ public class CategoryCardActivity extends MenuActivity {
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        long categoryId = extras.getLong("category_id", -1);
+        categoryId = extras.getLong("category_id", -1);
 
         CheckBox checkBoxHide = findViewById(R.id.checkBoxHideCategoryCard);
         EditText editTextName = findViewById(R.id.editTextNameCategoryCard);
@@ -76,7 +84,6 @@ public class CategoryCardActivity extends MenuActivity {
             }
         });
 
-        ((TextView) findViewById(R.id.textViewTitleCategoryCard)).setText(categoryId == -1 ? R.string.category_add : R.string.category_edit);
         Button buttonAccept = findViewById(R.id.buttonAcceptCategoryCard);
         buttonAccept.setText(getString(categoryId == -1 ? R.string.add_button_label : R.string.edit_button_label));
         buttonAccept.setOnClickListener(view -> {

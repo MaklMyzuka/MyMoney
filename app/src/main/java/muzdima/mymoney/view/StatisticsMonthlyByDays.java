@@ -139,8 +139,8 @@ public class StatisticsMonthlyByDays extends LinearLayout {
         Worker.run(activity, () -> {
             List<SpinnerItem> items = Repository.getRepository().getCurrencySpinnerItemsByCategory(
                     categoryId,
-                    DateTime.getMonthStartUTC(year, month),
-                    DateTime.getMonthEndUTC(year, month));
+                    DateTime.getMonthStartUTCFromLocal(year, month),
+                    DateTime.getMonthEndUTCFromLocal(year, month));
             activity.runOnUiThread(() -> {
                 currencyItems.clear();
                 currencyItems.addAll(items);

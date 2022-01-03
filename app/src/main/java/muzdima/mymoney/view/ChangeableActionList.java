@@ -42,8 +42,8 @@ public class ChangeableActionList extends LinearLayout {
         actionEditor.updateItem(editItem, update);
     }
 
-    public void update(List<IActionItem> items) {
-        actionList.update(items);
+    public void update(List<IActionItem> items, boolean forceRedraw) {
+        actionList.update(items, forceRedraw);
     }
 
     public List<IActionItem> getSelected() {

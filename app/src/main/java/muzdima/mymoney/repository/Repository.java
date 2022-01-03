@@ -873,9 +873,9 @@ public class Repository implements IRepository {
     public List<Money.MoneyItem> getCategorySumMonthlyByDays(long categoryId, long currencyId, int year, int month) {
         int days = DateTime.getLengthOfMonth(year, month);
         List<Money.MoneyItem> result = new ArrayList<>();
-        long fromUTC = DateTime.getMonthStartUTC(year, month);
         for (int day = 1; day <= days; day++) {
-            long toUTC = DateTime.addDays(fromUTC, 1);
+            long fromUTC = DateTime.convertLocalToUTC(new DateTime(year, month, day, 0,0,0));
+            long toUTC = DateTime.addDaysToUTC(fromUTC, 1);
             Money sum = getMoney(R.string.sql_get_category_sum_by_currency, new String[]{String.valueOf(categoryId), String.valueOf(currencyId), String.valueOf(fromUTC), String.valueOf(toUTC)});
             if (sum.items.isEmpty()) {
                 Money.MoneyItem item = new Money.MoneyItem();

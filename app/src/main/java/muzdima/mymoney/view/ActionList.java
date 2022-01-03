@@ -57,8 +57,8 @@ public abstract class ActionList extends RecyclerView {
         setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    public void update(List<IActionItem> items) {
-        adapter.update(items);
+    public void update(List<IActionItem> items, boolean forceRedraw) {
+        adapter.update(items, forceRedraw);
     }
 
     protected abstract void onEdit(IActionItem item);
@@ -149,8 +149,8 @@ public abstract class ActionList extends RecyclerView {
             return items.size();
         }
 
-        public void update(List<IActionItem> items) {
-            DiffCallback diffCallback = new DiffCallback(this.items, items, selected);
+        public void update(List<IActionItem> items, boolean forceRedraw) {
+            DiffCallback diffCallback = new DiffCallback(this.items, items, selected, forceRedraw);
             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
             this.items.clear();
             this.items.addAll(items);
@@ -161,15 +161,17 @@ public abstract class ActionList extends RecyclerView {
         }
 
         public class DiffCallback extends DiffUtil.Callback {
-            private final List<IActionItem> oldList;
-            private final List<IActionItem> newList;
             public final Set<IActionItem> selectedOld;
             public final List<IActionItem> selectedNew = new ArrayList<>();
+            private final List<IActionItem> oldList;
+            private final List<IActionItem> newList;
+            private final boolean forceRedraw;
 
-            public DiffCallback(List<IActionItem> oldList, List<IActionItem> newList, Set<IActionItem> selectedOld) {
+            public DiffCallback(List<IActionItem> oldList, List<IActionItem> newList, Set<IActionItem> selectedOld, boolean forceRedraw) {
                 this.oldList = oldList;
                 this.newList = newList;
                 this.selectedOld = selectedOld;
+                this.forceRedraw = forceRedraw;
             }
 
             @Override
@@ -201,6 +203,9 @@ public abstract class ActionList extends RecyclerView {
                 IActionItem newItem = newList.get(newItemPosition);
                 if (selectedOld.contains(oldItem)) {
                     selectedNew.add(newItem);
+                }
+                if (forceRedraw) {
+                    return false;
                 }
                 if (oldItem.getType() == IActionItem.TRANSACTION && newItem.getType() == IActionItem.TRANSACTION) {
                     return TransactionItem.areContentsTheSame((TransactionItem) oldItem, (TransactionItem) newItem);
@@ -260,7 +265,7 @@ public abstract class ActionList extends RecyclerView {
                         "<b>%s</b>",
                         Html.escapeHtml(item.accountName)
                 ), HtmlCompat.FROM_HTML_MODE_COMPACT));
-                time.setText(DateTime.printUTCToLocal(item.createdAtUTC));
+                time.setText(DateTime.printDateTime(getContext(), DateTime.convertUTCToLocal(item.createdAtUTC)));
                 button.setOnClickListener(view -> onEdit(item));
             }
         }
@@ -316,7 +321,7 @@ public abstract class ActionList extends RecyclerView {
                 params.bold = true;
                 sum.setDisplayParams(params);
                 sum.setText(item.sumFrom, item.sumTo);
-                time.setText(DateTime.printUTCToLocal(item.createdAtUTC));
+                time.setText(DateTime.printDateTime(getContext(), DateTime.convertUTCToLocal(item.createdAtUTC)));
                 button.setOnClickListener(view -> onEdit(item));
             }
         }
