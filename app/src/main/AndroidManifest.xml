@@ -39,6 +39,9 @@
             android:name=".activity.ActionsActivity"
             android:exported="true" />
         <activity
+            android:name=".activity.ActionEditorActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.dictionaries.card.CurrencyCardActivity"
             android:exported="true" />
         <activity

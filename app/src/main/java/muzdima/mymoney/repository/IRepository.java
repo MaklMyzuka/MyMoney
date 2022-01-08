@@ -1,5 +1,6 @@
 package muzdima.mymoney.repository;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.util.List;
@@ -18,9 +19,9 @@ import muzdima.mymoney.repository.model.MoneyListItem;
 import muzdima.mymoney.repository.model.SpinnerItem;
 
 public interface IRepository {
-    void init(Context context);
-    ImportResult importDatabase();
-    ExportResult exportDatabase();
+    void init(Context context, Activity activity);
+    ImportResult importDatabase(Activity activity);
+    ExportResult exportDatabase(Activity activity);
     String getSettingsValue(String key);
     void setSettingsValue(String key, String value);
     List<SpinnerItem> getCurrencySpinnerItems();

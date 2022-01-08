@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_commit_transaction">
+    <string name="sql_commit_transaction" translatable="false">
         UPDATE [transaction] SET [is_committed] = 1 WHERE [transaction].[id] = ?1;
     </string>
-    <string name="sql_commit_transfer">
+    <string name="sql_commit_transfer" translatable="false">
         UPDATE [transfer] SET [is_committed] = 1 WHERE [transfer].[id] = ?1;
     </string>
 </resources>

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_insert_transaction">
+    <string name="sql_insert_transaction" translatable="false">
         INSERT INTO [transaction] ([category_id], [account_id], [sum10000], [product], [created_at_utc], [is_committed])
         VALUES (?1, ?2, ?3, ?4, ?5, 0);
     </string>
-    <string name="sql_insert_transfer">
+    <string name="sql_insert_transfer" translatable="false">
         INSERT INTO [transfer] ([account_id_from], [account_id_to], [sum10000_from], [sum10000_to], [created_at_utc], [is_committed])
         VALUES (?1, ?2, ?3, ?4, ?5, 0);
     </string>
-    <string name="sql_insert_currency">
+    <string name="sql_insert_currency" translatable="false">
         INSERT INTO [currency] ([name], [symbol], [is_visible], [comment])
         VALUES (?1, ?2, ?3, ?4);
     </string>
-    <string name="sql_insert_account">
+    <string name="sql_insert_account" translatable="false">
         INSERT INTO [account] ([name], [currency_id], [sum10000], [is_visible], [comment])
         VALUES (?1, ?2, ?3, ?4, ?5);
     </string>
-    <string name="sql_insert_category">
+    <string name="sql_insert_category" translatable="false">
         INSERT INTO [category] ([name], [parent_id], [is_visible], [comment])
         VALUES (?1, ?2, ?3, ?4);
     </string>
-    <string name="sql_insert_account_group">
+    <string name="sql_insert_account_group" translatable="false">
         INSERT INTO [account_group] ([name], [is_visible], [comment])
         VALUES (?1, ?2, ?3);
     </string>
-    <string name="sql_insert_account_group_account">
+    <string name="sql_insert_account_group_account" translatable="false">
         INSERT INTO [account_group_accounts] ([account_group_id], [account_id])
         VALUES (?1, ?2);
     </string>

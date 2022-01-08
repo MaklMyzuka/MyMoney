@@ -56,7 +56,7 @@
         app:constraint_referenced_ids="buttonPrevActions,textViewDateActions,buttonNextActions"
         tools:layout_editor_absoluteY="43dp" />
 
-    <muzdima.mymoney.view.ChangeableActionList
+    <muzdima.mymoney.view.ActionList
         android:id="@+id/changeableActionListActions"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categorySelectorActions">
 
-    </muzdima.mymoney.view.ChangeableActionList>
+    </muzdima.mymoney.view.ActionList>
 
     <muzdima.mymoney.view.selector.CategorySelector
         android:id="@+id/categorySelectorActions"

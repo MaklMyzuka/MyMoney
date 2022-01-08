@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_get_currencies_for_dictionary" formatted="false">
+    <string name="sql_get_currencies_for_dictionary" formatted="false" translatable="false">
         SELECT
             [currency].[id] AS [id],
             [currency].[name] AS [name],
@@ -8,7 +8,7 @@
             [currency].[comment] AS [comment]
         FROM [currency] WHERE %condition%;
     </string>
-    <string name="sql_get_accounts_for_dictionary" formatted="false">
+    <string name="sql_get_accounts_for_dictionary" formatted="false" translatable="false">
         SELECT
             [account].[id] AS [id],
             [account].[name] AS [name],
@@ -16,7 +16,7 @@
             [account].[comment] AS [comment]
         FROM [account] WHERE %condition%;
     </string>
-    <string name="sql_get_categories_for_dictionary" formatted="false">
+    <string name="sql_get_categories_for_dictionary" formatted="false" translatable="false">
         WITH RECURSIVE [categories]([id], [name], [parent_id], [is_visible], [comment]) AS
         (
             SELECT
@@ -43,7 +43,7 @@
             [categories].[comment] AS [comment]
         FROM [categories] WHERE [categories].[parent_id] IS NULL;
     </string>
-    <string name="sql_get_account_groups_for_dictionary" formatted="false">
+    <string name="sql_get_account_groups_for_dictionary" formatted="false" translatable="false">
         SELECT
             [account_group].[id] AS [id],
             [account_group].[name] AS [name],

@@ -1,5 +1,10 @@
 package muzdima.mymoney.repository;
 
+import static android.database.sqlite.SQLiteDatabase.CREATE_IF_NECESSARY;
+import static android.database.sqlite.SQLiteDatabase.NO_LOCALIZED_COLLATORS;
+import static android.database.sqlite.SQLiteDatabase.OPEN_READWRITE;
+
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -18,7 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Stack;
 
+import muzdima.mymoney.BuildConfig;
 import muzdima.mymoney.R;
 import muzdima.mymoney.repository.model.AccountCard;
 import muzdima.mymoney.repository.model.AccountGroupCard;
@@ -34,7 +41,9 @@ import muzdima.mymoney.repository.model.MoneyListItem;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
+import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.DateTime;
+import muzdima.mymoney.utils.ErrorDialog;
 
 public class Repository implements IRepository {
     private static final IRepository repository = new Repository();
@@ -82,14 +91,14 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public ImportResult importDatabase() {
+    public ImportResult importDatabase(Activity activity) {
         ImportResult result = new ImportResult();
         result.exception = null;
         result.filePath = getExternalFilePath();
         try {
             database.close();
             copyFile(getExternalFilePath(), getInternalFilePath());
-            initDatabase();
+            initDatabase(activity);
         } catch (Exception exception) {
             result.exception = exception;
         }
@@ -97,52 +106,18 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public ExportResult exportDatabase() {
+    public ExportResult exportDatabase(Activity activity) {
         ExportResult result = new ExportResult();
         result.exception = null;
         result.filePath = getExternalFilePath();
         try {
             database.close();
             copyFile(getInternalFilePath(), getExternalFilePath());
-            initDatabase();
+            initDatabase(activity);
         } catch (Exception exception) {
             result.exception = exception;
         }
         return result;
-    }
-
-    private void initCategory() {
-        long parent_id;
-        SQLiteStatement statement = database.compileStatement(context.getString(R.string.sql_init_category));
-        statement.bindString(1, "Расходы");
-        statement.bindNull(2);
-        parent_id = statement.executeInsert();
-        statement.bindLong(2, parent_id);
-        statement.bindString(1, "Питание");
-        statement.executeInsert();
-        statement.bindString(1, "Коммуналка");
-        statement.executeInsert();
-        statement.bindString(1, "Медицина");
-        statement.executeInsert();
-        statement.bindString(1, "Авто");
-        parent_id = statement.executeInsert();
-        statement.bindLong(2, parent_id);
-        statement.bindString(1, "Топливо");
-        statement.executeInsert();
-        statement.bindString(1, "Ремонты");
-        statement.executeInsert();
-        statement.bindString(1, "Доходы");
-        statement.bindNull(2);
-        parent_id = statement.executeInsert();
-        statement.bindLong(2, parent_id);
-        statement.bindString(1, "Пенсия");
-        statement.executeInsert();
-        statement.bindString(1, "Зарплата");
-        statement.executeInsert();
-        statement.bindString(1, "Подарки");
-        statement.executeInsert();
-        statement.bindString(1, "Аренда");
-        statement.executeInsert();
     }
 
     private void execSQL(@NonNull String sql, Object[] bindArgs) {
@@ -220,6 +195,33 @@ public class Repository implements IRepository {
         return querySQL(resId, new String[]{});
     }
 
+    private void initCategory() {
+        Stack<Long> parentId = new Stack<>();
+        parentId.add(null);
+        SQLiteStatement statement = database.compileStatement(context.getString(R.string.sql_init_category));
+        String down = context.getString(R.string.sql_init_category_values_divider_down);
+        String up = context.getString(R.string.sql_init_category_values_divider_up);
+        String[] values = context.getResources().getStringArray(R.array.sql_init_category_values);
+        for (String value : values) {
+            if (up.equals(value)) {
+                parentId.pop();
+                continue;
+            }
+            if (down.equals(value)) {
+                parentId.push(parentId.peek());
+                continue;
+            }
+            parentId.pop();
+            statement.bindString(1, value);
+            if (parentId.peek() == null)
+                statement.bindNull(2);
+            else
+                statement.bindLong(2, parentId.peek());
+            long id = statement.executeInsert();
+            parentId.push(id);
+        }
+    }
+
     private void initData() {
         execSQL(R.string.sql_init);
         if (checkSQLFalse(R.string.sql_check_currency)) {
@@ -232,22 +234,96 @@ public class Repository implements IRepository {
             execSQL(R.string.sql_init_account_group);
         }
         if (checkSQLFalse(R.string.sql_check_category)) {
-            initCategory();
+            try {
+                initCategory();
+            } catch (Exception ignored) {
+            }
+        }
+        initVersion();
+    }
+
+    private void initVersion() {
+        setSettingsValue(context.getString(R.string.settings_version), String.valueOf(BuildConfig.VERSION_CODE));
+    }
+
+    private boolean isDatabaseEmpty() {
+        return checkSQLFalse(R.string.sql_check_database_empty);
+    }
+
+    private int getDatabaseVersion() {
+        String versionStr = null;
+        try {
+            versionStr = getSettingsValue(context.getString(R.string.settings_version));
+        } catch (Exception ignored) {
+        }
+        if (versionStr == null) versionStr = "";
+        int version = 1000000;
+        try {
+            version = Integer.parseInt(versionStr);
+        } catch (NumberFormatException ignored) {
+        }
+        return version;
+    }
+
+    private void updateDatabase() {
+        int version = getDatabaseVersion();
+        int versionMajor = version / 1000000;
+        int versionMinor = (version / 1000) % 1000;
+
+        if (versionMajor == 1 && versionMinor == 0) {
+            initVersion();
         }
     }
 
-    private void initDatabase() {
+    private boolean isDatabaseVersionInvalid() {
+        int version = getDatabaseVersion();
+        int versionApp = BuildConfig.VERSION_CODE;
+        return (version / 1000000 != versionApp / 1000000) || (version / 1000 > versionApp / 1000);
+    }
+
+    private boolean checkColumn(String table, String column, String type, boolean notnull, boolean primary) {
+        return checkSQL(R.string.sql_check_column, new Object[]{table, column, type, notnull, primary});
+    }
+
+    private boolean checkTableColumns(String table, int columnsCount) {
+        return checkSQL(R.string.sql_check_table_columns, new Object[]{table, columnsCount});
+    }
+
+    private boolean isDatabaseInvalid() {
+        //TODO
+        return false;
+    }
+
+    private void exitWithError(Activity activity, String message) {
+        activity.runOnUiThread(() -> ErrorDialog.showError(activity, message, () -> activity.runOnUiThread(activity::finishAndRemoveTask)));
+    }
+
+    private void exitWithError(Activity activity, @StringRes int message) {
+        exitWithError(activity, context.getString(message));
+    }
+
+    private void initDatabase(Activity activity) {
         if (database != null && database.isOpen()) {
             database.close();
         }
-        database = SQLiteDatabase.openOrCreateDatabase(getInternalFilePath(), null);
-        initData();
+        database = SQLiteDatabase.openDatabase(getInternalFilePath(), null, OPEN_READWRITE | CREATE_IF_NECESSARY | NO_LOCALIZED_COLLATORS);
+        if (isDatabaseEmpty()) {
+            initData();
+        } else {
+            if (isDatabaseVersionInvalid()) {
+                exitWithError(activity, R.string.error_database_version_mismatch);
+            } else if (isDatabaseInvalid()) {
+                exitWithError(activity, R.string.error_database_invalid);
+            } else {
+                updateDatabase();
+            }
+        }
     }
 
     @Override
-    public void init(Context context) {
+    public void init(Context context, Activity activity) {
         this.context = context;
-        initDatabase();
+        initDatabase(activity);
     }
 
     @Override
@@ -337,7 +413,16 @@ public class Repository implements IRepository {
 
     @Override
     public Money.MoneyItem getAccountSum(long accountId) {
-        return getMoney(R.string.sql_get_account_sum, new String[]{String.valueOf(accountId)}).items.get(0);
+        Money money = getMoney(R.string.sql_get_account_sum, new String[]{String.valueOf(accountId)});
+        if (money.items.isEmpty()) {
+            Money.MoneyItem item = new Money.MoneyItem();
+            item.sum10000 = 0;
+            item.currencyId = -1;
+            item.currencySymbol = "";
+            return item;
+        } else {
+            return money.items.get(0);
+        }
     }
 
     @Override
@@ -722,7 +807,6 @@ public class Repository implements IRepository {
     @Override
     public void updateCurrency(long currencyId, String name, String symbol, boolean isVisible, String comment) {
         execSQL(R.string.sql_update_currency, new Object[]{currencyId, name, symbol, isVisible, comment});
-        initData();
     }
 
     @Override
@@ -732,7 +816,6 @@ public class Repository implements IRepository {
         for (Long accountGroupId : accountGroupIds) {
             insertAccountGroupAccount(accountGroupId, accountId);
         }
-        initData();
     }
 
     private boolean checkForLoopsBeforeUpdateCategory(long categoryId, Long parentId) {
@@ -745,7 +828,6 @@ public class Repository implements IRepository {
             return false;
         }
         execSQL(R.string.sql_update_category, new Object[]{categoryId, name, parentId, isVisible, comment});
-        initData();
         return true;
     }
 
@@ -756,7 +838,6 @@ public class Repository implements IRepository {
         for (Long accountId : accountIds) {
             insertAccountGroupAccount(accountGroupId, accountId);
         }
-        initData();
     }
 
     @Override
@@ -766,7 +847,6 @@ public class Repository implements IRepository {
         } catch (Exception exception) {
             return false;
         }
-        initData();
         return true;
     }
 
@@ -777,7 +857,6 @@ public class Repository implements IRepository {
         } catch (Exception exception) {
             return false;
         }
-        initData();
         return true;
     }
 
@@ -788,7 +867,6 @@ public class Repository implements IRepository {
         } catch (Exception exception) {
             return false;
         }
-        initData();
         return true;
     }
 
@@ -799,7 +877,6 @@ public class Repository implements IRepository {
         } catch (Exception exception) {
             return false;
         }
-        initData();
         return true;
     }
 
@@ -874,7 +951,7 @@ public class Repository implements IRepository {
         int days = DateTime.getLengthOfMonth(year, month);
         List<Money.MoneyItem> result = new ArrayList<>();
         for (int day = 1; day <= days; day++) {
-            long fromUTC = DateTime.convertLocalToUTC(new DateTime(year, month, day, 0,0,0));
+            long fromUTC = DateTime.convertLocalToUTC(new DateTime(year, month, day, 0, 0, 0));
             long toUTC = DateTime.addDaysToUTC(fromUTC, 1);
             Money sum = getMoney(R.string.sql_get_category_sum_by_currency, new String[]{String.valueOf(categoryId), String.valueOf(currencyId), String.valueOf(fromUTC), String.valueOf(toUTC)});
             if (sum.items.isEmpty()) {

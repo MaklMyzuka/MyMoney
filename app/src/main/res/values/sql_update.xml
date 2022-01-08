@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_update_transaction">
+    <string name="sql_update_transaction" translatable="false">
         UPDATE [transaction]
         SET
             [category_id] = ?2,
@@ -10,7 +10,7 @@
             [created_at_utc] = ?6
         WHERE [transaction].[id] = ?1;
     </string>
-    <string name="sql_update_transfer">
+    <string name="sql_update_transfer" translatable="false">
         UPDATE [transfer]
         SET
             [account_id_from] = ?2,
@@ -20,7 +20,7 @@
             [created_at_utc] = ?6
         WHERE [transfer].[id] = ?1;
     </string>
-    <string name="sql_update_currency">
+    <string name="sql_update_currency" translatable="false">
         UPDATE [currency]
         SET
             [name] = ?2,
@@ -29,7 +29,7 @@
             [comment] = ?5
         WHERE [currency].[id] = ?1;
     </string>
-    <string name="sql_update_account">
+    <string name="sql_update_account" translatable="false">
         UPDATE [account]
         SET
             [name] = ?2,
@@ -39,7 +39,7 @@
             [comment] = ?6
         WHERE [account].[id] = ?1;
     </string>
-    <string name="sql_update_category">
+    <string name="sql_update_category" translatable="false">
         UPDATE [category]
         SET
             [name] = ?2,
@@ -48,7 +48,7 @@
             [comment] = ?5
         WHERE [category].[id] = ?1;
     </string>
-    <string name="sql_update_account_group">
+    <string name="sql_update_account_group" translatable="false">
         UPDATE [account_group]
         SET
             [name] = ?2,

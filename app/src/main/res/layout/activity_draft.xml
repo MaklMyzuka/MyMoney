@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="@+id/buttonDeleteDraft"
         app:layout_constraintStart_toStartOf="@+id/buttonDeleteDraft" />
 
-    <muzdima.mymoney.view.ChangeableActionList
+    <muzdima.mymoney.view.ActionList
         android:id="@+id/changeableActionListDraft"
         android:layout_width="0dp"
         android:layout_height="0dp"

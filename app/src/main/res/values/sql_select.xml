@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_get_account_info">
+    <string name="sql_get_account_info" translatable="false">
         SELECT
             [account].[id] AS [id],
             [account].[name] AS [name],
@@ -10,19 +10,19 @@
         INNER JOIN [currency] ON [currency].[id] = [account].[currency_id]
         WHERE [account].[id] = ?1;
     </string>
-    <string name="sql_get_account_groups_by_account">
+    <string name="sql_get_account_groups_by_account" translatable="false">
         SELECT
             [account_group_accounts].[account_group_id] AS [account_group_id]
         FROM [account_group_accounts]
         WHERE [account_group_accounts].[account_id] = ?1;
     </string>
-    <string name="sql_get_accounts_by_account_group">
+    <string name="sql_get_accounts_by_account_group" translatable="false">
         SELECT
             [account_group_accounts].[account_id] AS [account_id]
         FROM [account_group_accounts]
         WHERE [account_group_accounts].[account_group_id] = ?1;
     </string>
-    <string name="sql_last_insert_rowid">
+    <string name="sql_last_insert_rowid" translatable="false">
         SELECT last_insert_rowid();
     </string>
 </resources>

@@ -52,6 +52,8 @@
     <string name="dialog_delete_message">Delete %d item(-s)?</string>
     <string name="product_hint">Description of product</string>
     <string name="sum_hint">Sum</string>
+    <string name="add_title">Add</string>
+    <string name="edit_title">Edit</string>
     <string name="add_button_label">Add</string>
     <string name="edit_button_label">Edit</string>
     <string name="cancel_button_label">Cancel</string>
@@ -107,6 +109,10 @@
     <string name="format_time">Time format</string>
     <string name="before">Before</string>
     <string name="next">Next</string>
+    <string name="add_success_message">Added to draft</string>
+    <string name="account_not_selected_message">Account not selected</string>
+    <string name="error_database_version_mismatch">Database is not supported by the application. Update the app</string>
+    <string name="error_database_invalid">Database data invalid</string>
     <string-array name="languages">
         <item>System</item>
         <item>English</item>

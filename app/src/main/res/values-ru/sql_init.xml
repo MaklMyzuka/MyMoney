@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_init_currency">
+        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Рубль\', \'р\', 1, \'Создано автоматически\');
+        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Эвро\', \'€\', 1, \'Создано автоматически\');
+        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Доллар\', \'$\', 1, \'Создано автоматически\');
+    </string>
+    <string name="sql_init_account">
+        INSERT INTO [account] ([name], [currency_id], [sum10000], [is_visible], [comment])
+        SELECT \'Наличные (\' || [currency].[name] || \')\', [currency].[id], 0, 1, \'Создано автоматически\'
+        FROM [currency] WHERE [currency].[is_visible] = 1;
+    </string>
+    <string name="sql_init_account_group">
+        INSERT INTO [account_group] ([name], [is_visible], [comment]) VALUES (\'Всего\', 1, \'Создано автоматически\');
+        INSERT INTO [account_group_accounts] ([account_group_id], [account_id])
+        SELECT [account_group].[id], [account].[id]
+        FROM [account_group] CROSS JOIN [account]
+        WHERE [account_group].[is_visible] = 1 AND [account].[is_visible] = 1;
+    </string>
+    <string name="sql_init_category">
+        INSERT INTO [category] ([name], [parent_id], [is_visible], [comment]) VALUES (?1, ?2, 1, \'Создано автоматически\');
+    </string>
+    <string-array name="sql_init_category_values">
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Расходы</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Питание</item>
+        <item>Коммуналка</item>
+        <item>Медицина</item>
+        <item>Авто</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Топливо</item>
+        <item>Ремонты</item>
+        <item>@string/sql_init_category_values_divider_up</item>
+        <item>@string/sql_init_category_values_divider_up</item>
+        <item>Доходы</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Пенсия</item>
+        <item>Зарплата</item>
+        <item>Подарки</item>
+        <item>Аренда</item>
+    </string-array>
+</resources>

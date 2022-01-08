@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity {
                 findViewById(R.id.accountGroupSelector2),
                 findViewById(R.id.accountGroupSelector3)};
         Worker.run(this, () -> {
-            Repository.getRepository().init(getApplicationContext());
+            Repository.getRepository().init(getApplicationContext(), this);
             runOnUiThread(this::init);
         });
     }

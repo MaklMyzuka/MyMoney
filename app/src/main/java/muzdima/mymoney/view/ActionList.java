@@ -2,6 +2,7 @@ package muzdima.mymoney.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
@@ -25,13 +28,14 @@ import java.util.List;
 import java.util.Set;
 
 import muzdima.mymoney.R;
+import muzdima.mymoney.activity.ActionEditorActivity;
 import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
 import muzdima.mymoney.utils.DateTime;
 
-public abstract class ActionList extends RecyclerView {
+public class ActionList extends RecyclerView {
 
     private final Set<IActionItem> selected = Collections.newSetFromMap(new IdentityHashMap<>());
     private final ArrayList<OnCheckedChangeListener> listeners = new ArrayList<>();
@@ -51,17 +55,32 @@ public abstract class ActionList extends RecyclerView {
 
     // DON'T CHANGE CONTENTS OF LIST items
     // FOR CHANGE, PASS NEW LIST INTO update(items)
-    public void init(boolean selectable, List<IActionItem> items) {
+    public void init(boolean selectable, List<IActionItem> items, IActionItem editItem) {
         adapter = new Adapter(getContext(), selectable, items);
         setAdapter(adapter);
         setLayoutManager(new LinearLayoutManager(getContext()));
+        if (editItem != null) {
+            onEdit(editItem);
+        }
     }
 
     public void update(List<IActionItem> items, boolean forceRedraw) {
         adapter.update(items, forceRedraw);
     }
 
-    protected abstract void onEdit(IActionItem item);
+    protected void onEdit(IActionItem item) {
+        Context context = getContext();
+        Intent intent = new Intent(context, ActionEditorActivity.class);
+        switch (item.getType()) {
+            case IActionItem.TRANSACTION:
+                intent.putExtra("itemTransaction", (new Gson()).toJson(item));
+                break;
+            case IActionItem.TRANSFER:
+                intent.putExtra("itemTransfer", (new Gson()).toJson(item));
+                break;
+        }
+        context.startActivity(intent);
+    }
 
     public List<IActionItem> getSelected() {
         return new ArrayList<>(selected);

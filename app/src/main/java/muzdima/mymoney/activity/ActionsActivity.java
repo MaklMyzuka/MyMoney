@@ -10,17 +10,15 @@ import java.util.List;
 import muzdima.mymoney.R;
 import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.repository.model.IActionItem;
-import muzdima.mymoney.utils.ConfirmDialog;
 import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.Worker;
+import muzdima.mymoney.view.ActionList;
 import muzdima.mymoney.view.selector.CategorySelector;
-import muzdima.mymoney.view.ChangeableActionList;
 
 public class ActionsActivity extends BaseActivity {
     private long dateStartUTC;
     private TextView textViewDate;
-    private Button buttonToggle;
-    private ChangeableActionList actionList;
+    private ActionList actionList;
     private CategorySelector categorySelector;
 
     @Override
@@ -75,8 +73,7 @@ public class ActionsActivity extends BaseActivity {
         Worker.run(this, () -> {
             List<IActionItem> items = Repository.getRepository().getActionItems(fromUTC(), toUTC());
             runOnUiThread(() -> {
-                actionList.init(false, items, null, () -> Worker.run(this,  () -> update(false)));
-                actionList.setOnCheckedChangeListener(selectedAll -> buttonToggle.setText(selectedAll ? R.string.toggle_none_button_label : R.string.toggle_all_button_label));
+                actionList.init(false, items, null);
                 textViewDate.setOnClickListener(view -> {
                     DateTime local = DateTime.convertUTCToLocal(dateUTC());
                     new DatePickerDialog(this, (datePicker, year, month, dayOfMonth) -> {

@@ -1,107 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_init">
-        PRAGMA foreign_keys = ON;
-
-        CREATE TABLE IF NOT EXISTS [currency] (
-            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            [name] TEXT NOT NULL,
-            [symbol] TEXT NOT NULL,
-            [is_visible] INTEGER NOT NULL,
-            [comment] TEXT
-        );
-        CREATE INDEX IF NOT EXISTS [idx_currency_is_visible_id] ON [currency] ([is_visible], [id]);
-        CREATE TABLE IF NOT EXISTS [account] (
-            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            [name] TEXT NOT NULL,
-            [currency_id] INTEGER NOT NULL REFERENCES [currency]([id]) ON DELETE RESTRICT,
-            [sum10000] INTEGER NOT NULL,
-            [is_visible] INTEGER NOT NULL,
-            [comment] TEXT
-        );
-        CREATE INDEX IF NOT EXISTS [idx_account_is_visible_id] ON [account] ([is_visible], [id]);
-        CREATE TABLE IF NOT EXISTS [account_group] (
-            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            [name] TEXT NOT NULL,
-            [is_visible] INTEGER NOT NULL,
-            [comment] TEXT
-        );
-        CREATE INDEX IF NOT EXISTS [idx_account_group_is_visible_id] ON [account_group] ([is_visible], [id]);
-        CREATE TABLE IF NOT EXISTS [account_group_accounts] (
-            [account_group_id] INTEGER NOT NULL REFERENCES [account_group]([id]) ON DELETE RESTRICT,
-            [account_id] INTEGER NOT NULL REFERENCES [account]([id]) ON DELETE RESTRICT,
-            PRIMARY KEY ([account_group_id], [account_id])
-        );
-        CREATE INDEX IF NOT EXISTS [idx_account_group_accounts_account_group_id_account_id] ON [account_group_accounts] ([account_group_id], [account_id]);
-        CREATE TABLE IF NOT EXISTS [category] (
-            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            [name] TEXT NOT NULL,
-            [parent_id] INTEGER REFERENCES [category]([id]) ON DELETE RESTRICT,
-            [is_visible] INTEGER NOT NULL,
-            [comment] TEXT
-        );
-        CREATE INDEX IF NOT EXISTS [idx_category_is_visible_parent_id_id] ON [category] ([is_visible], [parent_id], [id]);
-        CREATE INDEX IF NOT EXISTS [idx_category_parent_id_id] ON [category] ([parent_id], [id]);
-        CREATE TABLE IF NOT EXISTS [transfer] (
-            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            [account_id_from] INTEGER NOT NULL REFERENCES [account]([id]) ON DELETE RESTRICT,
-            [account_id_to] INTEGER NOT NULL REFERENCES [account]([id]) ON DELETE RESTRICT,
-            [sum10000_from] INTEGER NOT NULL,
-            [sum10000_to] INTEGER NOT NULL,
-            [created_at_utc] INTEGER NOT NULL,
-            [is_committed] INTEGER NOT NULL
-        );
-        CREATE INDEX IF NOT EXISTS [idx_transfer_is_committed_account_id_from_created_at_utc] ON [transfer] ([is_committed], [account_id_from], [created_at_utc]);
-        CREATE INDEX IF NOT EXISTS [idx_transfer_is_committed_account_id_to_created_at_utc] ON [transfer] ([is_committed], [account_id_to], [created_at_utc]);
-        CREATE INDEX IF NOT EXISTS [idx_transfer_is_committed_created_at_utc] ON [transfer] ([is_committed], [created_at_utc]);
-        CREATE TABLE IF NOT EXISTS [transaction] (
-            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            [category_id] INTEGER NOT NULL REFERENCES [category]([id]) ON DELETE RESTRICT,
-            [account_id] INTEGER NOT NULL REFERENCES [account]([id]) ON DELETE RESTRICT,
-            [sum10000] INTEGER NOT NULL,
-            [product] TEXT,
-            [created_at_utc] INTEGER NOT NULL,
-            [is_committed] INTEGER NOT NULL
-        );
-        CREATE INDEX IF NOT EXISTS [idx_transaction_is_committed_category_id_created_at_utc] ON [transaction] ([is_committed], [category_id], [created_at_utc]);
-        CREATE INDEX IF NOT EXISTS [idx_transaction_is_committed_account_id_created_at_utc] ON [transaction] ([is_committed], [account_id], [created_at_utc]);
-        CREATE INDEX IF NOT EXISTS [idx_transaction_is_committed_account_id_category_id_created_at_utc] ON [transaction] ([is_committed], [account_id], [category_id], [created_at_utc]);
-        CREATE INDEX IF NOT EXISTS [idx_transaction_is_committed_created_at_utc] ON [transaction] ([is_committed], [created_at_utc]);
-        CREATE TABLE IF NOT EXISTS [settings] (
-            [key] TEXT NOT NULL PRIMARY KEY,
-            [value] TEXT
-        );
-    </string>
-    <string name="sql_check_currency">
-        SELECT EXISTS(SELECT 1 FROM [currency] WHERE [is_visible] = 1);
-    </string>
     <string name="sql_init_currency">
-        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Гривна\', \'грн\', 1, NULL);
-        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Евро\', \'€\', 1, NULL);
-        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Доллар\', \'$\', 1, NULL);
-    </string>
-    <string name="sql_check_account">
-        SELECT EXISTS(SELECT 1 FROM [account] WHERE [is_visible] = 1);
+        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Euro\', \'€\', 1, \'Auto generated\');
+        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Dollar\', \'$\', 1, \'Auto generated\');
     </string>
     <string name="sql_init_account">
         INSERT INTO [account] ([name], [currency_id], [sum10000], [is_visible], [comment])
-        SELECT \'Наличные (\' || [currency].[name] || \')\', [currency].[id], 0, 1, NULL
+        SELECT \'Cash (\' || [currency].[name] || \')\', [currency].[id], 0, 1, \'Auto generated\'
         FROM [currency] WHERE [currency].[is_visible] = 1;
     </string>
-    <string name="sql_check_account_group">
-        SELECT EXISTS(SELECT 1 FROM [account_group] WHERE [is_visible] = 1);
-    </string>
     <string name="sql_init_account_group">
-        INSERT INTO [account_group] ([name], [is_visible], [comment]) VALUES (\'Всего\', 1, NULL);
+        INSERT INTO [account_group] ([name], [is_visible], [comment]) VALUES (\'Total\', 1, \'Auto generated\');
         INSERT INTO [account_group_accounts] ([account_group_id], [account_id])
         SELECT [account_group].[id], [account].[id]
         FROM [account_group] CROSS JOIN [account]
         WHERE [account_group].[is_visible] = 1 AND [account].[is_visible] = 1;
     </string>
-    <string name="sql_check_category">
-        SELECT EXISTS(SELECT 1 FROM [category] WHERE [is_visible] = 1);
-    </string>
     <string name="sql_init_category">
-        INSERT INTO [category] ([name], [parent_id], [is_visible], [comment]) VALUES (?1, ?2, 1, NULL);
+        INSERT INTO [category] ([name], [parent_id], [is_visible], [comment]) VALUES (?1, ?2, 1, \'Auto generated\');
     </string>
+    <string-array name="sql_init_category_values">
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Expenses</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Food</item>
+        <item>House</item>
+        <item>Medicine</item>
+        <item>Car</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Fuel</item>
+        <item>Repair</item>
+        <item>@string/sql_init_category_values_divider_up</item>
+        <item>@string/sql_init_category_values_divider_up</item>
+        <item>Income</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Allowance</item>
+        <item>Salary</item>
+        <item>Presents</item>
+        <item>Interest</item>
+    </string-array>
 </resources>

@@ -31,6 +31,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+    protected boolean isMenuButtonSupported() {
+        return true;
+    }
+
     protected String getMenuTitle() {
         return null;
     }
@@ -44,7 +48,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        if (isMenuButtonSupported()){
+            getMenuInflater().inflate(R.menu.main_menu, menu);
+        }
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             if (isBackButtonSupported()) actionBar.setDisplayHomeAsUpEnabled(true);

@@ -1,17 +1,17 @@
-package muzdima.mymoney.view;
+package muzdima.mymoney.activity;
 
-import android.app.Activity;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.util.AttributeSet;
+import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -23,39 +23,68 @@ import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
-import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.ErrorDialog;
+import muzdima.mymoney.utils.InfoDialog;
 import muzdima.mymoney.utils.Worker;
+import muzdima.mymoney.view.HistorySpinner;
 
-public class ActionEditor extends LinearLayout {
-
+public class ActionEditorActivity extends BaseActivity {
     private long createdAtUTC;
+    private String title;
 
-    public ActionEditor(Context context) {
-        super(context);
+    @Override
+    protected String getMenuTitle() {
+        return title;
     }
 
-    public ActionEditor(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    @Override
+    protected boolean isMenuButtonSupported() {
+        return false;
     }
 
-    public ActionEditor(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        String itemTransactionStr = extras.getString("itemTransaction", null);
+        String itemTransferStr = extras.getString("itemTransfer", null);
+        IActionItem item = null;
+        if (itemTransactionStr != null) {
+            item = new Gson().fromJson(itemTransactionStr, TransactionItem.class);
+        }
+        if (itemTransferStr != null) {
+            item = new Gson().fromJson(itemTransferStr, TransferItem.class);
+        }
+        updateItem(item);
     }
 
-    public ActionEditor(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    private void updateItem(IActionItem item) {
+        if (item == null) {
+            finish();
+            return;
+        }
+        title = (item.getId() == -1 ? getString(R.string.add_title) : getString(R.string.edit_title));
+        switch (item.getType()) {
+            case IActionItem.TRANSACTION:
+                updateTransactionItem((TransactionItem) item);
+                break;
+            case IActionItem.TRANSFER:
+                updateTransferItem((TransferItem) item);
+                break;
+        }
     }
 
     private void setDateTextView(TextView date) {
-        date.setText(DateTime.printDate(getContext(), DateTime.convertUTCToLocal(createdAtUTC)));
+        date.setText(DateTime.printDate(this, DateTime.convertUTCToLocal(createdAtUTC)));
         date.setOnClickListener(view -> {
             DateTime localInit = DateTime.convertUTCToLocal(createdAtUTC);
-            new DatePickerDialog(getContext(), (datePicker, year, month, dayOfMonth) -> {
+            new DatePickerDialog(this, (datePicker, year, month, dayOfMonth) -> {
                 DateTime local = DateTime.convertUTCToLocal(createdAtUTC);
                 createdAtUTC = DateTime.convertLocalToUTC(new DateTime(year, month + 1, dayOfMonth, local.hours, local.minutes, local.seconds));
-                date.setText(DateTime.printDate(getContext(), DateTime.convertUTCToLocal(createdAtUTC)));
+                date.setText(DateTime.printDate(this, DateTime.convertUTCToLocal(createdAtUTC)));
             },
                     localInit.year,
                     localInit.month - 1,
@@ -65,13 +94,13 @@ public class ActionEditor extends LinearLayout {
     }
 
     private void setTimeTextView(TextView time) {
-        time.setText(DateTime.printTime(getContext(), DateTime.convertUTCToLocal(createdAtUTC)));
+        time.setText(DateTime.printTime(this, DateTime.convertUTCToLocal(createdAtUTC)));
         time.setOnClickListener(view -> {
             DateTime localInit = DateTime.convertUTCToLocal(createdAtUTC);
-            new TimePickerDialog(getContext(), (datePicker, hourOfDay, minute) -> {
+            new TimePickerDialog(this, (datePicker, hourOfDay, minute) -> {
                 DateTime local = DateTime.convertUTCToLocal(createdAtUTC);
                 createdAtUTC = DateTime.convertLocalToUTC(new DateTime(local.year, local.month, local.day, hourOfDay, minute, 0));
-                time.setText(DateTime.printTime(getContext(), DateTime.convertUTCToLocal(createdAtUTC)));
+                time.setText(DateTime.printTime(this, DateTime.convertUTCToLocal(createdAtUTC)));
             },
                     localInit.hours,
                     localInit.minutes,
@@ -80,12 +109,14 @@ public class ActionEditor extends LinearLayout {
         });
     }
 
-    // DON'T MODIFY item
-    private void updateTransactionItem(TransactionItem item, Runnable update) {
-        inflate(getContext(), R.layout.action_editor_transaction, this);
-        Activity activity = ActivitySolver.getActivity(getContext());
+    private void showAddInformDialog() {
+        InfoDialog.show(this, R.string.success, R.string.add_success_message, null);
+    }
+
+    private void updateTransactionItem(TransactionItem item) {
+        setContentView(R.layout.action_editor_transaction);
         boolean isIncome = item.sum.sum10000 > 0;
-        setBackgroundColor(ContextCompat.getColor(getContext(), isIncome ? R.color.transaction_income : R.color.transaction_expense));
+        getWindow().getDecorView().setBackgroundColor(this.getColor(isIncome ? R.color.transaction_income : R.color.transaction_expense));
 
         createdAtUTC = item.createdAtUTC;
         ((TextView) findViewById(R.id.textViewTitleTransactionEditor)).setText(isIncome ? R.string.action_income : R.string.action_expense);
@@ -94,13 +125,13 @@ public class ActionEditor extends LinearLayout {
         TextView currency = findViewById(R.id.textViewCurrencyTransactionEditor);
         currency.setText(item.sum.currencySymbol);
         HistorySpinner account = findViewById(R.id.accountTransactionEditor);
-        Worker.run(activity, () -> {
+        Worker.run(this, () -> {
             List<SpinnerItem> accounts = Repository.getRepository().getAccountSpinnerItems();
-            activity.runOnUiThread(() -> {
+            runOnUiThread(() -> {
                 account.setOnItemSelectedListener(id ->
-                        Worker.run(activity, () -> {
+                        Worker.run(this, () -> {
                             String currencySymbol = Repository.getRepository().getAccountInfo(id).currencySymbol;
-                            activity.runOnUiThread(() -> currency.setText(currencySymbol));
+                            runOnUiThread(() -> currency.setText(currencySymbol));
                         })
                 );
                 account.init(String.format("history_account_selector_on_edit_transaction_on_%s", isIncome ? "income" : "expense"), accounts, item.accountId);
@@ -113,9 +144,9 @@ public class ActionEditor extends LinearLayout {
         EditText product = findViewById(R.id.editProductTransactionEditor);
         product.setText(item.product);
         HistorySpinner category = findViewById(R.id.categoryTransactionEditor);
-        Worker.run(activity, () -> {
+        Worker.run(this, () -> {
             List<SpinnerItem> categories = Repository.getRepository().getCategorySpinnerItems();
-            activity.runOnUiThread(() ->
+            runOnUiThread(() ->
                     category.init(String.format("history_category_selector_on_edit_transaction_on_%s", isIncome ? "income" : "expense"), categories, item.categoryId)
             );
         });
@@ -128,16 +159,16 @@ public class ActionEditor extends LinearLayout {
             try {
                 sum10000 = Math.round(Double.parseDouble(sum.getText().toString()) * 10000.0d);
             } catch (NumberFormatException exception) {
-                ErrorDialog.showError(activity, R.string.error_sum_parse, null);
+                ErrorDialog.showError(this, R.string.error_sum_parse, null);
                 return;
             }
             if (sum10000 < 0) {
-                ErrorDialog.showError(activity, R.string.error_sum_negative, null);
+                ErrorDialog.showError(this, R.string.error_sum_negative, null);
                 return;
             }
             long sum1000Final = isIncome ? sum10000 : -sum10000;
             String productValue = product.getText().toString();
-            Worker.run(activity, () -> {
+            Worker.run(this, () -> {
                 if (item.id == -1) {
                     Repository.getRepository().insertTransaction(categoryId, accountId, sum1000Final, productValue, createdAtUTC);
                     TransactionItem transaction = new TransactionItem();
@@ -148,22 +179,22 @@ public class ActionEditor extends LinearLayout {
                     transaction.sum.sum10000 = isIncome ? 1 : -1;
                     transaction.product = productValue;
                     transaction.createdAtUTC = createdAtUTC;
-                    activity.runOnUiThread(() -> updateItem(transaction, update));
+                    runOnUiThread(() -> {
+                        updateItem(transaction);
+                        showAddInformDialog();
+                    });
                 } else {
                     Repository.getRepository().updateTransaction(item.id, categoryId, accountId, sum1000Final, productValue, createdAtUTC);
-                    activity.runOnUiThread(() -> updateItem(null, update));
+                    runOnUiThread(() -> updateItem(null));
                 }
-                activity.runOnUiThread(update);
             });
         });
-        findViewById(R.id.buttonCancelTransactionEditor).setOnClickListener(view -> updateItem(null, update));
+        findViewById(R.id.buttonCancelTransactionEditor).setOnClickListener(view -> updateItem(null));
     }
 
-    // DON'T MODIFY item
-    private void updateTransferItem(TransferItem item, Runnable update) {
-        inflate(getContext(), R.layout.action_editor_transfer, this);
-        Activity activity = ActivitySolver.getActivity(getContext());
-        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.transfer));
+    private void updateTransferItem(TransferItem item) {
+        setContentView(R.layout.action_editor_transfer);
+        getWindow().getDecorView().setBackgroundColor(this.getColor(R.color.transfer));
 
         createdAtUTC = item.createdAtUTC;
         ((TextView) findViewById(R.id.textViewTitleTransferEditor)).setText(R.string.action_transfer);
@@ -183,15 +214,15 @@ public class ActionEditor extends LinearLayout {
         }
         HistorySpinner accountFrom = findViewById(R.id.accountTransferEditorFrom);
         HistorySpinner accountTo = findViewById(R.id.accountTransferEditorTo);
-        Worker.run(activity, () -> {
+        Worker.run(this, () -> {
             List<SpinnerItem> accounts = Repository.getRepository().getAccountSpinnerItems();
             Runnable checkCurrency = () -> {
                 long accountIdFrom = accountFrom.getSelectedId();
                 long accountIdTo = accountTo.getSelectedId();
-                Worker.run(activity, () -> {
+                Worker.run(this, () -> {
                     AccountInfo accountInfoFrom = Repository.getRepository().getAccountInfo(accountIdFrom);
                     AccountInfo accountInfoTo = Repository.getRepository().getAccountInfo(accountIdTo);
-                    activity.runOnUiThread(() -> {
+                    runOnUiThread(() -> {
                         currencyFrom.setText(accountInfoFrom.currencySymbol);
                         currencyTo.setText(accountInfoTo.currencySymbol);
                         if (accountInfoFrom.currencyId == accountInfoTo.currencyId) {
@@ -204,7 +235,7 @@ public class ActionEditor extends LinearLayout {
                     });
                 });
             };
-            activity.runOnUiThread(() -> {
+            runOnUiThread(() -> {
                 accountFrom.setOnItemSelectedListener(id -> checkCurrency.run());
                 accountTo.setOnItemSelectedListener(id -> checkCurrency.run());
                 accountFrom.init("history_account_selector_on_edit_transfer_from", accounts, item.accountIdFrom);
@@ -222,40 +253,26 @@ public class ActionEditor extends LinearLayout {
                 sum10000From = Math.round(Double.parseDouble(sumFrom.getText().toString()) * 10000.0d);
                 sum10000To = sumTo.getVisibility() == VISIBLE ? Math.round(Double.parseDouble(sumTo.getText().toString()) * 10000.0d) : sum10000From;
             } catch (NumberFormatException exception) {
-                ErrorDialog.showError(activity, R.string.error_sum_parse, null);
+                ErrorDialog.showError(this, R.string.error_sum_parse, null);
                 return;
             }
             if (sum10000From < 0 || sum10000To < 0) {
-                ErrorDialog.showError(activity, R.string.error_sum_negative, null);
+                ErrorDialog.showError(this, R.string.error_sum_negative, null);
                 return;
             }
-            Worker.run(activity, () -> {
+            Worker.run(this, () -> {
                 if (item.id == -1) {
                     Repository.getRepository().insertTransfer(accountIdFrom, accountIdTo, sum10000From, sum10000To, createdAtUTC);
-                    activity.runOnUiThread(() -> updateItem(item, update));
+                    runOnUiThread(() -> {
+                        updateItem(item);
+                        showAddInformDialog();
+                    });
                 } else {
                     Repository.getRepository().updateTransfer(item.id, accountIdFrom, accountIdTo, sum10000From, sum10000To, createdAtUTC);
-                    activity.runOnUiThread(() -> updateItem(null, update));
+                    runOnUiThread(() -> updateItem(null));
                 }
-                activity.runOnUiThread(update);
             });
         });
-        findViewById(R.id.buttonCancelTransferEditor).setOnClickListener(view -> updateItem(null, update));
-    }
-
-    // DON'T MODIFY item
-    public void updateItem(IActionItem item, Runnable update) {
-        removeAllViews();
-        if (item == null) {
-            return;
-        }
-        switch (item.getType()) {
-            case IActionItem.TRANSACTION:
-                updateTransactionItem((TransactionItem) item, update);
-                break;
-            case IActionItem.TRANSFER:
-                updateTransferItem((TransferItem) item, update);
-                break;
-        }
+        findViewById(R.id.buttonCancelTransferEditor).setOnClickListener(view -> updateItem(null));
     }
 }

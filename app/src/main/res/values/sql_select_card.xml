@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_get_currency_card">
+    <string name="sql_get_currency_card" translatable="false">
         SELECT
             [currency].[id] AS [id],
             [currency].[name] AS [name],
@@ -10,7 +10,7 @@
         FROM [currency]
         WHERE [currency].[id] = ?1;
     </string>
-    <string name="sql_get_account_card">
+    <string name="sql_get_account_card" translatable="false">
         SELECT
             [account].[id] AS [id],
             [account].[name] AS [name],
@@ -21,7 +21,7 @@
         FROM [account]
         WHERE [account].[id] = ?1;
     </string>
-    <string name="sql_get_category_card">
+    <string name="sql_get_category_card" translatable="false">
         SELECT
             [category].[id] AS [id],
             [category].[name] AS [name],
@@ -31,7 +31,7 @@
         FROM [category]
         WHERE [category].[id] = ?1;
     </string>
-    <string name="sql_get_account_group_card">
+    <string name="sql_get_account_group_card" translatable="false">
         SELECT
             [account_group].[id] AS [id],
             [account_group].[name] AS [name],

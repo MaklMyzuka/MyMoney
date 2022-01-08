@@ -43,14 +43,14 @@ public class ImportExportActivity extends BaseActivity {
 
     private void Export() {
         Worker.run(this, () -> {
-            ExportResult result = Repository.getRepository().exportDatabase();
+            ExportResult result = Repository.getRepository().exportDatabase(this);
             runOnUiThread(() -> showResult(getString(R.string.export_to) + result.filePath, result.exception, null));
         });
     }
 
     private void Import() {
         Worker.run(this, () -> {
-            ImportResult result = Repository.getRepository().importDatabase();
+            ImportResult result = Repository.getRepository().importDatabase(this);
             runOnUiThread(() -> showResult(getString(R.string.import_from) + result.filePath, result.exception, ()->{
                 Restart.restart(this);
             }));

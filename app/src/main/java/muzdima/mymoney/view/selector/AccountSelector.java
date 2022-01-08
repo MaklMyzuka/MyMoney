@@ -25,6 +25,7 @@ import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.utils.ActivitySolver;
+import muzdima.mymoney.utils.InfoDialog;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.HistorySpinner;
 import muzdima.mymoney.view.MoneyTextView;
@@ -64,6 +65,10 @@ public class AccountSelector extends LinearLayout {
 
         findViewById(R.id.buttonAccountAction).setOnClickListener(view -> {
             Context context = getContext();
+            if (account_id == -1) {
+                InfoDialog.show(context, R.string.error, R.string.account_not_selected_message, null);
+                return;
+            }
             final DialogItemWithIcon[] dialogItems = {
                     new DialogItemWithIcon(context.getString(R.string.account_action_expense), R.drawable.ic_account_action_expense),
                     new DialogItemWithIcon(context.getString(R.string.account_action_income), R.drawable.ic_account_action_income),

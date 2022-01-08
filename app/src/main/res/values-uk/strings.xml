@@ -52,6 +52,8 @@
     <string name="dialog_delete_message">Видалити %d запись(-ів)?</string>
     <string name="product_hint">Опис товара чи послуги</string>
     <string name="sum_hint">Сума</string>
+    <string name="add_title">Додавання</string>
+    <string name="edit_title">Редагування</string>
     <string name="add_button_label">Додати</string>
     <string name="edit_button_label">Редагувати</string>
     <string name="cancel_button_label">Відміна</string>
@@ -107,6 +109,10 @@
     <string name="format_time">Формат часу</string>
     <string name="before">Назад</string>
     <string name="next">Вперед</string>
+    <string name="add_success_message">Додано до чернетки</string>
+    <string name="account_not_selected_message">Рахунок не вибраний</string>
+    <string name="error_database_version_mismatch">Версія бази не підтримується програмою. Оновіть програму</string>
+    <string name="error_database_invalid">База не валідна</string>
     <string-array name="languages">
         <item>Авто</item>
         <item>Англійська (English)</item>

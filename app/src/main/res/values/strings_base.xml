@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">MyMoney</string>
+    <string name="settings_version" translatable="false">VERSION</string>
     <string name="repository_file_name" translatable="false">db.sqlite</string>
     <string name="preference_language" translatable="false">preference_language</string>
     <string name="preference_night_mode" translatable="false">preference_night_mode</string>

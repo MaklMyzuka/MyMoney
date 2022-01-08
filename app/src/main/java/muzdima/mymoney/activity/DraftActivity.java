@@ -16,12 +16,12 @@ import muzdima.mymoney.repository.model.TransferItem;
 import muzdima.mymoney.utils.ConfirmDialog;
 import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.Worker;
-import muzdima.mymoney.view.ChangeableActionList;
+import muzdima.mymoney.view.ActionList;
 
 public class DraftActivity extends BaseActivity {
 
     private Button buttonToggle;
-    private ChangeableActionList actionList;
+    private ActionList actionList;
 
     @Override
     protected String getMenuTitle() {
@@ -133,7 +133,7 @@ public class DraftActivity extends BaseActivity {
             List<IActionItem> items = Repository.getRepository().getDraftActionItems();
             IActionItem editItemFinal = editItem;
             runOnUiThread(() -> {
-                actionList.init(true, items, editItemFinal, () -> Worker.run(this, () -> update(false)));
+                actionList.init(true, items, editItemFinal);
                 actionList.setOnCheckedChangeListener(selectedAll -> buttonToggle.setText(selectedAll ? R.string.toggle_none_button_label : R.string.toggle_all_button_label));
                 findViewById(R.id.buttonToggleDraft).setOnClickListener(view -> actionList.toggleSelected());
                 findViewById(R.id.buttonCommitDraft).setOnClickListener(view -> {
@@ -154,6 +154,8 @@ public class DraftActivity extends BaseActivity {
                             })
                     );
                 });
+                intent.putExtra("action", 0);
+                setIntent(intent);
             });
         });
     }

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_delete_transaction">
+    <string name="sql_delete_transaction" translatable="false">
         DELETE FROM [transaction] WHERE [transaction].[id] = ?1;
     </string>
-    <string name="sql_delete_transfer">
+    <string name="sql_delete_transfer" translatable="false">
         DELETE FROM [transfer] WHERE [transfer].[id] = ?1;
     </string>
-    <string name="sql_delete_currency">
+    <string name="sql_delete_currency" translatable="false">
         DELETE FROM [currency] WHERE [currency].[id] = ?1;
     </string>
-    <string name="sql_delete_account">
+    <string name="sql_delete_account" translatable="false">
         DELETE FROM [account] WHERE [account].[id] = ?1;
     </string>
-    <string name="sql_delete_category">
+    <string name="sql_delete_category" translatable="false">
         DELETE FROM [category] WHERE [category].[id] = ?1;
     </string>
-    <string name="sql_delete_account_group">
+    <string name="sql_delete_account_group" translatable="false">
         DELETE FROM [account_group] WHERE [account_group].[id] = ?1;
     </string>
-    <string name="sql_delete_account_group_account_by_account_group">
+    <string name="sql_delete_account_group_account_by_account_group" translatable="false">
         DELETE FROM [account_group_accounts] WHERE [account_group_id] = ?1;
     </string>
-    <string name="sql_delete_account_group_account_by_account">
+    <string name="sql_delete_account_group_account_by_account" translatable="false">
         DELETE FROM [account_group_accounts] WHERE [account_id] = ?1;
     </string>
 </resources>

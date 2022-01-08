@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_init" translatable="false">
+        PRAGMA foreign_keys = ON;
+
+        CREATE TABLE IF NOT EXISTS [currency] (
+            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [name] TEXT NOT NULL,
+            [symbol] TEXT NOT NULL,
+            [is_visible] INTEGER NOT NULL,
+            [comment] TEXT
+        );
+        CREATE INDEX IF NOT EXISTS [idx_currency_is_visible_id] ON [currency] ([is_visible], [id]);
+        CREATE TABLE IF NOT EXISTS [account] (
+            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [name] TEXT NOT NULL,
+            [currency_id] INTEGER NOT NULL REFERENCES [currency]([id]) ON DELETE RESTRICT,
+            [sum10000] INTEGER NOT NULL,
+            [is_visible] INTEGER NOT NULL,
+            [comment] TEXT
+        );
+        CREATE INDEX IF NOT EXISTS [idx_account_is_visible_id] ON [account] ([is_visible], [id]);
+        CREATE TABLE IF NOT EXISTS [account_group] (
+            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [name] TEXT NOT NULL,
+            [is_visible] INTEGER NOT NULL,
+            [comment] TEXT
+        );
+        CREATE INDEX IF NOT EXISTS [idx_account_group_is_visible_id] ON [account_group] ([is_visible], [id]);
+        CREATE TABLE IF NOT EXISTS [account_group_accounts] (
+            [account_group_id] INTEGER NOT NULL REFERENCES [account_group]([id]) ON DELETE RESTRICT,
+            [account_id] INTEGER NOT NULL REFERENCES [account]([id]) ON DELETE RESTRICT,
+            PRIMARY KEY ([account_group_id], [account_id])
+        );
+        CREATE INDEX IF NOT EXISTS [idx_account_group_accounts_account_group_id_account_id] ON [account_group_accounts] ([account_group_id], [account_id]);
+        CREATE TABLE IF NOT EXISTS [category] (
+            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [name] TEXT NOT NULL,
+            [parent_id] INTEGER REFERENCES [category]([id]) ON DELETE RESTRICT,
+            [is_visible] INTEGER NOT NULL,
+            [comment] TEXT
+        );
+        CREATE INDEX IF NOT EXISTS [idx_category_is_visible_parent_id_id] ON [category] ([is_visible], [parent_id], [id]);
+        CREATE INDEX IF NOT EXISTS [idx_category_parent_id_id] ON [category] ([parent_id], [id]);
+        CREATE TABLE IF NOT EXISTS [transfer] (
+            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [account_id_from] INTEGER NOT NULL REFERENCES [account]([id]) ON DELETE RESTRICT,
+            [account_id_to] INTEGER NOT NULL REFERENCES [account]([id]) ON DELETE RESTRICT,
+            [sum10000_from] INTEGER NOT NULL,
+            [sum10000_to] INTEGER NOT NULL,
+            [created_at_utc] INTEGER NOT NULL,
+            [is_committed] INTEGER NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS [idx_transfer_is_committed_account_id_from_created_at_utc] ON [transfer] ([is_committed], [account_id_from], [created_at_utc]);
+        CREATE INDEX IF NOT EXISTS [idx_transfer_is_committed_account_id_to_created_at_utc] ON [transfer] ([is_committed], [account_id_to], [created_at_utc]);
+        CREATE INDEX IF NOT EXISTS [idx_transfer_is_committed_created_at_utc] ON [transfer] ([is_committed], [created_at_utc]);
+        CREATE TABLE IF NOT EXISTS [transaction] (
+            [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [category_id] INTEGER NOT NULL REFERENCES [category]([id]) ON DELETE RESTRICT,
+            [account_id] INTEGER NOT NULL REFERENCES [account]([id]) ON DELETE RESTRICT,
+            [sum10000] INTEGER NOT NULL,
+            [product] TEXT,
+            [created_at_utc] INTEGER NOT NULL,
+            [is_committed] INTEGER NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS [idx_transaction_is_committed_category_id_created_at_utc] ON [transaction] ([is_committed], [category_id], [created_at_utc]);
+        CREATE INDEX IF NOT EXISTS [idx_transaction_is_committed_account_id_created_at_utc] ON [transaction] ([is_committed], [account_id], [created_at_utc]);
+        CREATE INDEX IF NOT EXISTS [idx_transaction_is_committed_account_id_category_id_created_at_utc] ON [transaction] ([is_committed], [account_id], [category_id], [created_at_utc]);
+        CREATE INDEX IF NOT EXISTS [idx_transaction_is_committed_created_at_utc] ON [transaction] ([is_committed], [created_at_utc]);
+        CREATE TABLE IF NOT EXISTS [settings] (
+            [key] TEXT NOT NULL PRIMARY KEY,
+            [value] TEXT
+        );
+    </string>
+    <string name="sql_check_currency" translatable="false">
+        SELECT EXISTS(SELECT 1 FROM [currency]);
+    </string>
+    <string name="sql_check_account" translatable="false">
+        SELECT EXISTS(SELECT 1 FROM [account]);
+    </string>
+    <string name="sql_check_account_group" translatable="false">
+        SELECT EXISTS(SELECT 1 FROM [account_group]);
+    </string>
+    <string name="sql_check_category" translatable="false">
+        SELECT EXISTS(SELECT 1 FROM [category]);
+    </string>
+    <string name="sql_check_database_empty" translatable="false">
+        SELECT EXISTS(SELECT 1 FROM sqlite_master WHERE type = \'table\');
+    </string>
+    <string name="sql_init_category_values_divider_down" translatable="false">+</string>
+    <string name="sql_init_category_values_divider_up" translatable="false">-</string>
+    <string name="sql_check_column" translatable="false">
+        SELECT EXISTS(SELECT 1 FROM pragma_table_info(?1) WHERE [name] = ?2 AND [type] = ?3 AND [notnull] = ?4 AND [pk] = ?5);
+    </string>
+    <string name="sql_check_table_columns" translatable="false">
+        SELECT CASE (SELECT COUNT(*) from pragma_table_info(?1)) WHEN ?2 THEN 1 ELSE 0 END;
+    </string>
+</resources>

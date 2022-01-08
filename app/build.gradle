@@ -9,8 +9,8 @@ android {
         applicationId "muzdima.mymoney"
         minSdk 28
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 1001000
+        versionName "1.1.0"
     }
 
     buildTypes {
@@ -43,4 +43,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.google.code.gson:gson:2.8.9'
 }

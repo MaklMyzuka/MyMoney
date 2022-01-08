@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_get_accounts_for_money_list_total">
+    <string name="sql_get_accounts_for_money_list_total" translatable="false">
         SELECT
             [account_total].[account_id] AS [text_id],
             [account].[name] AS [text],
@@ -36,7 +36,7 @@
         INNER JOIN [currency] ON [currency].[id] = [account].[currency_id]
         WHERE [account].[is_visible] = 1;
     </string>
-    <string name="sql_get_account_groups_for_money_list_total">
+    <string name="sql_get_account_groups_for_money_list_total" translatable="false">
         SELECT
             [account_group_total].[account_group_id] AS [text_id],
             [account_group].[name] AS [text],
@@ -80,7 +80,7 @@
         INNER JOIN [currency] ON [currency].[id] = [account_group_total].[currency_id]
         WHERE [account_group].[is_visible] = 1;
     </string>
-    <string name="sql_get_accounts_for_money_list">
+    <string name="sql_get_accounts_for_money_list" translatable="false">
         SELECT
             [account_total].[account_id] AS [text_id],
             [account].[name] AS [text],
@@ -113,7 +113,7 @@
         INNER JOIN [currency] ON [currency].[id] = [account].[currency_id]
         WHERE [account].[is_visible] = 1;
     </string>
-    <string name="sql_get_categories_for_money_list">
+    <string name="sql_get_categories_for_money_list" translatable="false">
         WITH RECURSIVE
         [category_text_loop]([id], [name], [parent_id]) AS
         (
@@ -171,7 +171,7 @@
         INNER JOIN [currency] ON [currency].[id] = [category_total].[currency_id]
         WHERE [category].[is_visible] = 1;
     </string>
-    <string name="sql_get_account_groups_for_money_list">
+    <string name="sql_get_account_groups_for_money_list" translatable="false">
         SELECT
             [account_group_total].[account_group_id] AS [text_id],
             [account_group].[name] AS [text],

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_get_account_sum">
+    <string name="sql_get_account_sum" translatable="false">
         SELECT [account_res].[currency_id] AS [currency_id], [currency].[symbol] AS [currency_symbol], [account_res].[sum10000] AS [sum10000]
         FROM
         (
@@ -31,7 +31,7 @@
         ) AS [account_res]
         INNER JOIN [currency] ON [currency].[id] = [account_res].[currency_id]
     </string>
-    <string name="sql_get_category_sum">
+    <string name="sql_get_category_sum" translatable="false">
         WITH RECURSIVE [category_ids_filter]([category_id]) AS
         (
             SELECT ?1 AS [category_id]
@@ -51,7 +51,7 @@
         ) AS [category_res]
         INNER JOIN [currency] ON [currency].[id] = [category_res].[currency_id]
     </string>
-    <string name="sql_get_account_group_sum">
+    <string name="sql_get_account_group_sum" translatable="false">
         WITH [account_ids_filter]([account_id]) AS
         (
             SELECT [account_group_accounts].[account_id]
@@ -91,7 +91,7 @@
         ) AS [account_group_res]
         INNER JOIN [currency] ON [currency].[id] = [account_group_res].[currency_id]
     </string>
-    <string name="sql_get_category_sum_by_currency">
+    <string name="sql_get_category_sum_by_currency" translatable="false">
         WITH RECURSIVE [category_ids_filter]([category_id]) AS
         (
             SELECT ?1 AS [category_id]

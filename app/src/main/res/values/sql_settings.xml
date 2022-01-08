@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_check_settings">
+    <string name="sql_check_settings" translatable="false">
         SELECT EXISTS(SELECT 1 FROM [settings] WHERE [key] = ?1);
     </string>
-    <string name="sql_insert_settings">
+    <string name="sql_insert_settings" translatable="false">
         INSERT INTO [settings] ([key], [value]) VALUES (?1, ?2);
     </string>
-    <string name="sql_update_settings">
+    <string name="sql_update_settings" translatable="false">
         UPDATE [settings] SET [value] = ?2 WHERE [key] = ?1;
     </string>
-    <string name="sql_get_settings">
+    <string name="sql_get_settings" translatable="false">
         SELECT [value] FROM [settings] WHERE [key] = ?1;
     </string>
 </resources>

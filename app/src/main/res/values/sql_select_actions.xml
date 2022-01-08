@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_get_draft">
+    <string name="sql_get_draft" translatable="false">
         WITH RECURSIVE [categories_recursive]([id], [name], [parent_id]) AS
         (
             SELECT
@@ -78,7 +78,7 @@
         LEFT JOIN [currency] AS [transfer_account_to_currency] ON [transfer_account_to_currency].[id] = [transfer_account_to].[currency_id]
         LEFT JOIN [categories] AS [transaction_category] ON [transaction_category].[id] = [actions_sort].[transaction_category_id]
     </string>
-    <string name="sql_get_actions_by_time">
+    <string name="sql_get_actions_by_time" translatable="false">
         WITH RECURSIVE [categories_recursive]([id], [name], [parent_id]) AS
         (
             SELECT

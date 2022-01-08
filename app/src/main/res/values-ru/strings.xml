@@ -52,6 +52,8 @@
     <string name="dialog_delete_message">Удалить %d запись(-ей)?</string>
     <string name="product_hint">Описание товара или услуги</string>
     <string name="sum_hint">Сумма</string>
+    <string name="add_title">Добавление</string>
+    <string name="edit_title">Измение</string>
     <string name="add_button_label">Добавить</string>
     <string name="edit_button_label">Изменить</string>
     <string name="cancel_button_label">Отмена</string>
@@ -107,6 +109,10 @@
     <string name="format_time">Формат времени</string>
     <string name="before">Назад</string>
     <string name="next">Вперед</string>
+    <string name="add_success_message">Добавлено в черновик</string>
+    <string name="account_not_selected_message">Счет не выбран</string>
+    <string name="error_database_version_mismatch">Версия базы не поддерживается приложением. Обновите приложение</string>
+    <string name="error_database_invalid">База не валидна</string>
     <string-array name="languages">
         <item>Язык системы</item>
         <item>Английский (English)</item>

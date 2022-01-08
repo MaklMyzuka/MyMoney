@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_init_currency">
+        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Гривня\', \'грн\', 1, \'Створено автоматично\');
+        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Євро\', \'€\', 1, \'Створено автоматично\');
+        INSERT INTO [currency] ([name], [symbol], [is_visible], [comment]) VALUES (\'Долар\', \'$\', 1, \'Створено автоматично\');
+    </string>
+    <string name="sql_init_account">
+        INSERT INTO [account] ([name], [currency_id], [sum10000], [is_visible], [comment])
+        SELECT \'Готівка (\' || [currency].[name] || \')\', [currency].[id], 0, 1, \'Створено автоматично\'
+        FROM [currency] WHERE [currency].[is_visible] = 1;
+    </string>
+    <string name="sql_init_account_group">
+        INSERT INTO [account_group] ([name], [is_visible], [comment]) VALUES (\'Загалом\', 1, \'Створено автоматично\');
+        INSERT INTO [account_group_accounts] ([account_group_id], [account_id])
+        SELECT [account_group].[id], [account].[id]
+        FROM [account_group] CROSS JOIN [account]
+        WHERE [account_group].[is_visible] = 1 AND [account].[is_visible] = 1;
+    </string>
+    <string name="sql_init_category">
+        INSERT INTO [category] ([name], [parent_id], [is_visible], [comment]) VALUES (?1, ?2, 1, \'Створено автоматично\');
+    </string>
+    <string-array name="sql_init_category_values">
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Витрати</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Xарчування</item>
+        <item>Комуналка</item>
+        <item>Медицина</item>
+        <item>Авто</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Паливо</item>
+        <item>Ремонти</item>
+        <item>@string/sql_init_category_values_divider_up</item>
+        <item>@string/sql_init_category_values_divider_up</item>
+        <item>Доходи</item>
+        <item>@string/sql_init_category_values_divider_down</item>
+        <item>Пенсія</item>
+        <item>Зарплата</item>
+        <item>Подарунки</item>
+        <item>Оренда</item>
+    </string-array>
+</resources>
