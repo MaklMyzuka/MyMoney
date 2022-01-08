@@ -1,4 +1,4 @@
-package muzdima.mymoney.activity.dictionary;
+package muzdima.mymoney.activity.dictionaries;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import java.util.List;

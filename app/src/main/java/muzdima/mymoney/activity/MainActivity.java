@@ -5,9 +5,9 @@ import android.os.Bundle;
 import muzdima.mymoney.R;
 import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.utils.Worker;
-import muzdima.mymoney.view.AccountGroupSelector;
-import muzdima.mymoney.view.AccountSelector;
-import muzdima.mymoney.view.CategorySelectorCurrentMonth;
+import muzdima.mymoney.view.selector.AccountGroupSelector;
+import muzdima.mymoney.view.selector.AccountSelector;
+import muzdima.mymoney.view.selector.CategorySelectorCurrentMonth;
 
 public class MainActivity extends BaseActivity {
 

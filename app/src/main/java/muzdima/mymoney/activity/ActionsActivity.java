@@ -13,7 +13,7 @@ import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.utils.ConfirmDialog;
 import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.Worker;
-import muzdima.mymoney.view.CategorySelector;
+import muzdima.mymoney.view.selector.CategorySelector;
 import muzdima.mymoney.view.ChangeableActionList;
 
 public class ActionsActivity extends BaseActivity {
@@ -64,7 +64,6 @@ public class ActionsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actions);
-        buttonToggle = findViewById(R.id.buttonToggleActions);
         actionList = findViewById(R.id.changeableActionListActions);
         textViewDate = findViewById(R.id.textViewDateActions);
         categorySelector = findViewById(R.id.categorySelectorActions);
@@ -76,18 +75,8 @@ public class ActionsActivity extends BaseActivity {
         Worker.run(this, () -> {
             List<IActionItem> items = Repository.getRepository().getActionItems(fromUTC(), toUTC());
             runOnUiThread(() -> {
-                actionList.init(true, items, null, () -> Worker.run(this,  () -> update(false)));
+                actionList.init(false, items, null, () -> Worker.run(this,  () -> update(false)));
                 actionList.setOnCheckedChangeListener(selectedAll -> buttonToggle.setText(selectedAll ? R.string.toggle_none_button_label : R.string.toggle_all_button_label));
-                findViewById(R.id.buttonToggleActions).setOnClickListener(view -> actionList.toggleSelected());
-                findViewById(R.id.buttonDeleteActions).setOnClickListener(view -> {
-                    List<IActionItem> selected = actionList.getSelected();
-                    ConfirmDialog.show(this, R.string.dialog_delete_title, String.format(getString(R.string.dialog_delete_message), selected.size()), () ->
-                            Worker.run(this, () -> {
-                                Repository.getRepository().deleteActionItems(selected);
-                                update(false);
-                            })
-                    );
-                });
                 textViewDate.setOnClickListener(view -> {
                     DateTime local = DateTime.convertUTCToLocal(dateUTC());
                     new DatePickerDialog(this, (datePicker, year, month, dayOfMonth) -> {

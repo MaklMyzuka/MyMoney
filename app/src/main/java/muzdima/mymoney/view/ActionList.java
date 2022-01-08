@@ -154,10 +154,13 @@ public abstract class ActionList extends RecyclerView {
             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
             this.items.clear();
             this.items.addAll(items);
-            selected.clear();
-            selected.addAll(diffCallback.selectedNew);
+            if (selectable) {
+                selected.clear();
+                selected.addAll(diffCallback.selectedNew);
+            }
             diffResult.dispatchUpdatesTo(this);
-            checkedChange();
+            if (selectable)
+                checkedChange();
         }
 
         public class DiffCallback extends DiffUtil.Callback {
@@ -201,7 +204,7 @@ public abstract class ActionList extends RecyclerView {
             public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                 IActionItem oldItem = oldList.get(oldItemPosition);
                 IActionItem newItem = newList.get(newItemPosition);
-                if (selectedOld.contains(oldItem)) {
+                if (selectable && selectedOld.contains(oldItem)) {
                     selectedNew.add(newItem);
                 }
                 if (forceRedraw) {

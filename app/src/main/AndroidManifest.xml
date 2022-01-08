@@ -21,19 +21,16 @@
             android:name=".activity.ImportExportActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.dictionary.DictionariesActivity"
+            android:name=".activity.dictionaries.dictionary.AccountGroupsDictionaryActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.dictionary.dictionaries.AccountGroupsDictionaryActivity"
+            android:name=".activity.dictionaries.dictionary.AccountsDictionaryActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.dictionary.dictionaries.AccountsDictionaryActivity"
+            android:name=".activity.dictionaries.dictionary.CategoriesDictionaryActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.dictionary.dictionaries.CategoriesDictionaryActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activity.dictionary.dictionaries.CurrenciesDictionaryActivity"
+            android:name=".activity.dictionaries.dictionary.CurrenciesDictionaryActivity"
             android:exported="true" />
         <activity
             android:name=".activity.DraftActivity"
@@ -42,16 +39,16 @@
             android:name=".activity.ActionsActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.dictionary.cards.CurrencyCardActivity"
+            android:name=".activity.dictionaries.card.CurrencyCardActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.dictionary.cards.AccountCardActivity"
+            android:name=".activity.dictionaries.card.AccountCardActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.dictionary.cards.CategoryCardActivity"
+            android:name=".activity.dictionaries.card.CategoryCardActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.dictionary.cards.AccountGroupCardActivity"
+            android:name=".activity.dictionaries.card.AccountGroupCardActivity"
             android:exported="true" />
         <activity
             android:name=".activity.StatisticsActivity"

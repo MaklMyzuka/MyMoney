@@ -12,6 +12,10 @@
     <string name="menu_statistics">Статистика</string>
     <string name="menu_statistics_monthly">Статистика за місяць</string>
     <string name="menu_settings">Налаштування</string>
+    <string name="menu_dictionary_currencies">Валюти</string>
+    <string name="menu_dictionary_categories">Категорії</string>
+    <string name="menu_dictionary_accounts">Рахунки</string>
+    <string name="menu_dictionary_account_groups">Групи рахунків</string>
     <string name="import_button_label">Імпорт файла БД</string>
     <string name="export_button_label">Експорт файла БД</string>
     <string name="error_open_destination_file">Неможливо відкрити файл </string>
@@ -101,6 +105,8 @@
     <string name="format_number_thousand">Дільник тисяч</string>
     <string name="format_date">Формат дати</string>
     <string name="format_time">Формат часу</string>
+    <string name="before">Назад</string>
+    <string name="next">Вперед</string>
     <string-array name="languages">
         <item>Авто</item>
         <item>Англійська (English)</item>

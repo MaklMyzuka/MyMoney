@@ -4,24 +4,17 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import muzdima.mymoney.R;
 import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.MoneyListItem;
 import muzdima.mymoney.utils.Worker;
-import muzdima.mymoney.view.AccountGroupSelector;
-import muzdima.mymoney.view.AccountSelector;
-import muzdima.mymoney.view.CategorySelectorCurrentMonth;
 import muzdima.mymoney.view.MoneyList;
 
 public class StatisticsActivity extends BaseActivity {

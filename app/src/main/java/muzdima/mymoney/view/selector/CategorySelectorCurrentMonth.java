@@ -1,12 +1,12 @@
-package muzdima.mymoney.view;
+package muzdima.mymoney.view.selector;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Pair;
 
 import androidx.annotation.Nullable;
 
 import muzdima.mymoney.utils.DateTime;
+import muzdima.mymoney.view.selector.CategorySelector;
 
 public class CategorySelectorCurrentMonth extends CategorySelector {
 

@@ -12,6 +12,10 @@
     <string name="menu_statistics">Статистика</string>
     <string name="menu_statistics_monthly">Статистика за месяц</string>
     <string name="menu_settings">Настройки</string>
+    <string name="menu_dictionary_currencies">Валюты</string>
+    <string name="menu_dictionary_categories">Категории</string>
+    <string name="menu_dictionary_accounts">Счета</string>
+    <string name="menu_dictionary_account_groups">Группы счетов</string>
     <string name="import_button_label">Импорт файла БД</string>
     <string name="export_button_label">Експорт файла БД</string>
     <string name="error_open_destination_file">Невозможно открыть файл </string>
@@ -101,6 +105,8 @@
     <string name="format_number_thousand">Делитель тысяч</string>
     <string name="format_date">Формат даты</string>
     <string name="format_time">Формат времени</string>
+    <string name="before">Назад</string>
+    <string name="next">Вперед</string>
     <string-array name="languages">
         <item>Язык системы</item>
         <item>Английский (English)</item>

@@ -21,32 +21,32 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <muzdima.mymoney.view.AccountSelector
+        <muzdima.mymoney.view.selector.AccountSelector
             android:id="@+id/accountSelector1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.AccountSelector
+        <muzdima.mymoney.view.selector.AccountSelector
             android:id="@+id/accountSelector2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.AccountSelector
+        <muzdima.mymoney.view.selector.AccountSelector
             android:id="@+id/accountSelector3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.AccountSelector
+        <muzdima.mymoney.view.selector.AccountSelector
             android:id="@+id/accountSelector4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.AccountSelector
+        <muzdima.mymoney.view.selector.AccountSelector
             android:id="@+id/accountSelector5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.AccountSelector
+        <muzdima.mymoney.view.selector.AccountSelector
             android:id="@+id/accountSelector6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -62,17 +62,17 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <muzdima.mymoney.view.CategorySelectorCurrentMonth
+        <muzdima.mymoney.view.selector.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.CategorySelectorCurrentMonth
+        <muzdima.mymoney.view.selector.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.CategorySelectorCurrentMonth
+        <muzdima.mymoney.view.selector.CategorySelectorCurrentMonth
             android:id="@+id/categorySelector3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -88,17 +88,17 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <muzdima.mymoney.view.AccountGroupSelector
+        <muzdima.mymoney.view.selector.AccountGroupSelector
             android:id="@+id/accountGroupSelector1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.AccountGroupSelector
+        <muzdima.mymoney.view.selector.AccountGroupSelector
             android:id="@+id/accountGroupSelector2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <muzdima.mymoney.view.AccountGroupSelector
+        <muzdima.mymoney.view.selector.AccountGroupSelector
             android:id="@+id/accountGroupSelector3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

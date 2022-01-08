@@ -1,13 +1,19 @@
-package muzdima.mymoney.view;
+package muzdima.mymoney.view.selector;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -20,6 +26,8 @@ import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.Worker;
+import muzdima.mymoney.view.HistorySpinner;
+import muzdima.mymoney.view.MoneyTextView;
 
 public class AccountSelector extends LinearLayout {
 
@@ -53,16 +61,31 @@ public class AccountSelector extends LinearLayout {
         spinner = findViewById(R.id.accountSpinner);
         textView = findViewById(R.id.textViewAccountSum);
         textView.setText();
+
         findViewById(R.id.buttonAccountAction).setOnClickListener(view -> {
             Context context = getContext();
+            final DialogItemWithIcon[] dialogItems = {
+                    new DialogItemWithIcon(context.getString(R.string.account_action_expense), R.drawable.ic_account_action_expense),
+                    new DialogItemWithIcon(context.getString(R.string.account_action_income), R.drawable.ic_account_action_income),
+                    new DialogItemWithIcon(context.getString(R.string.account_action_transfer_from), R.drawable.ic_account_action_transfer_from),
+                    new DialogItemWithIcon(context.getString(R.string.account_action_transfer_to), R.drawable.ic_account_action_transfer_to),
+            };
+            ListAdapter adapter = new ArrayAdapter<DialogItemWithIcon>(
+                    context,
+                    android.R.layout.select_dialog_item,
+                    android.R.id.text1,
+                    dialogItems) {
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View view = super.getView(position, convertView, parent);
+                    TextView textView = (TextView) view.findViewById(android.R.id.text1);
+                    textView.setCompoundDrawablesRelativeWithIntrinsicBounds(dialogItems[position].icon, 0, 0, 0);
+                    textView.setCompoundDrawablePadding((int) (5 * getResources().getDisplayMetrics().density + 0.5f));
+                    return view;
+                }
+            };
             new AlertDialog.Builder(context)
                     .setTitle(R.string.account_action)
-                    .setItems(new String[]{
-                            context.getString(R.string.account_action_expense),
-                            context.getString(R.string.account_action_income),
-                            context.getString(R.string.account_action_transfer_from),
-                            context.getString(R.string.account_action_transfer_to),
-                    }, (DialogInterface.OnClickListener) (dialogInterface, i) -> {
+                    .setAdapter(adapter, (dialogInterface, i) -> {
                         dialogInterface.dismiss();
                         Intent intent = new Intent(context, DraftActivity.class);
                         intent.putExtra("action", i + 1);
@@ -93,7 +116,7 @@ public class AccountSelector extends LinearLayout {
         Activity activity = ActivitySolver.getActivity(getContext());
         Worker.run(activity, () -> {
             List<SpinnerItem> spinnerItems = Repository.getRepository().getAccountSpinnerItems();
-            activity.runOnUiThread(()->{
+            activity.runOnUiThread(() -> {
                 items.clear();
                 items.addAll(spinnerItems);
                 callback.run();
@@ -106,5 +129,21 @@ public class AccountSelector extends LinearLayout {
             spinner.update();
             updateSum();
         });
+    }
+
+    private static class DialogItemWithIcon {
+        public final String text;
+        public final int icon;
+
+        public DialogItemWithIcon(String text, @DrawableRes Integer icon) {
+            this.text = text;
+            this.icon = icon;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return text;
+        }
     }
 }

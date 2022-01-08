@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:text="@string/button_prev_day_label"
+        android:contentDescription="@string/before"
+        app:icon="@drawable/ic_navigate_before"
         app:layout_constraintEnd_toStartOf="@+id/textViewDateActions"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,8 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
-        android:text="@string/button_next_day_label"
+        android:contentDescription="@string/next"
+        app:icon="@drawable/ic_navigate_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textViewDateActions"
@@ -60,63 +62,15 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/barrierButtonsActions"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categorySelectorActions">
 
     </muzdima.mymoney.view.ChangeableActionList>
 
-    <View
-        android:id="@+id/viewUpButtonToggleActions"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonToggleActions"
-        app:layout_constraintEnd_toEndOf="@+id/buttonToggleActions"
-        app:layout_constraintStart_toStartOf="@+id/buttonToggleActions" />
-
-    <View
-        android:id="@+id/viewUpButtonDeleteActions"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonDeleteActions"
-        app:layout_constraintEnd_toEndOf="@+id/buttonDeleteActions"
-        app:layout_constraintStart_toStartOf="@+id/buttonDeleteActions" />
-
-    <Button
-        android:id="@+id/buttonToggleActions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/toggle_all_button_label"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDeleteActions"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/buttonDeleteActions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/delete_button_label"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonToggleActions" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrierButtonsActions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        app:constraint_referenced_ids="viewUpButtonToggleActions,viewUpButtonDeleteActions"
-        tools:layout_editor_absoluteY="618dp" />
-
-    <muzdima.mymoney.view.CategorySelector
+    <muzdima.mymoney.view.selector.CategorySelector
         android:id="@+id/categorySelectorActions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -2,12 +2,6 @@
 <resources>
     <string name="app_name" translatable="false">MyMoney</string>
     <string name="repository_file_name" translatable="false">db.sqlite</string>
-    <string name="button_prev_day_label" translatable="false"><![CDATA[<]]></string>
-    <string name="button_next_day_label" translatable="false"><![CDATA[>]]></string>
-    <string name="action_button_label" translatable="false">+</string>
-    <string name="dictionary_edit_button_label" translatable="false">#</string>
-    <string name="action_button_transaction_item_label" translatable="false">#</string>
-    <string name="action_button_transfer_item_label" translatable="false">#</string>
     <string name="preference_language" translatable="false">preference_language</string>
     <string name="preference_night_mode" translatable="false">preference_night_mode</string>
     <string name="preference_format_number_decimal" translatable="false">preference_format_number_decimal</string>

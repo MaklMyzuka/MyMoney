@@ -59,8 +59,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
-        android:text="@string/action_button_transfer_item_label"
-        android:textSize="12sp"
+        android:contentDescription="@string/edit_button_label"
+        app:icon="@drawable/ic_action_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

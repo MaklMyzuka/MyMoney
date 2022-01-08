@@ -1,4 +1,4 @@
-package muzdima.mymoney.view;
+package muzdima.mymoney.view.selector;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,52 +16,50 @@ import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.Worker;
+import muzdima.mymoney.view.HistorySpinner;
+import muzdima.mymoney.view.MoneyTextView;
 
-public class CategorySelector extends LinearLayout {
+public class AccountGroupSelector extends LinearLayout {
     private final List<SpinnerItem> items = new ArrayList<>();
     private HistorySpinner spinner;
     private MoneyTextView textView;
-    private long fromUTC;
-    private long toUTC;
 
-    public CategorySelector(Context context) {
+    public AccountGroupSelector(Context context) {
         super(context);
         init();
     }
 
-    public CategorySelector(Context context, @Nullable AttributeSet attrs) {
+    public AccountGroupSelector(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public CategorySelector(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public AccountGroupSelector(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public CategorySelector(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AccountGroupSelector(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
     private void init() {
-        inflate(getContext(), R.layout.category_selector, this);
-        spinner = findViewById(R.id.categorySpinner);
-        textView = findViewById(R.id.textViewCategorySum);
+        inflate(getContext(), R.layout.account_group_selector, this);
+        spinner = findViewById(R.id.accountGroupSpinner);
+        textView = findViewById(R.id.textViewAccountGroupSum);
         textView.setText();
     }
 
     private void updateSum() {
         Activity activity = ActivitySolver.getActivity(getContext());
         Worker.run(activity, () -> {
-            Money sum = Repository.getRepository().getCategorySum(spinner.getSelectedId(), fromUTC, toUTC);
+            Money sum = Repository.getRepository().getAccountGroupSum(spinner.getSelectedId());
             activity.runOnUiThread(() -> textView.setText(sum));
         });
     }
 
-    public void init(String history_key, long fromUTC, long toUTC) {
-        this.fromUTC = fromUTC;
-        this.toUTC = toUTC;
+    public void init(String history_key) {
         updateData(() -> {
             spinner.setOnItemSelectedListener(id -> updateSum());
             spinner.init(history_key, items, null);
@@ -69,10 +67,9 @@ public class CategorySelector extends LinearLayout {
     }
 
     private void updateData(Runnable callback) {
-
         Activity activity = ActivitySolver.getActivity(getContext());
         Worker.run(activity, () -> {
-            List<SpinnerItem> spinnerItems = Repository.getRepository().getCategorySpinnerItems();
+            List<SpinnerItem> spinnerItems = Repository.getRepository().getAccountGroupSpinnerItems();
             activity.runOnUiThread(()->{
                 items.clear();
                 items.addAll(spinnerItems);
@@ -81,9 +78,7 @@ public class CategorySelector extends LinearLayout {
         });
     }
 
-    public void update(long fromUTC, long toUTC) {
-        this.fromUTC = fromUTC;
-        this.toUTC = toUTC;
+    public void update() {
         updateData(() -> {
             spinner.update();
             updateSum();

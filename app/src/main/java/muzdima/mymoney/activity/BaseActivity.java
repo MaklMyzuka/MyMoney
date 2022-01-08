@@ -11,7 +11,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import muzdima.mymoney.R;
-import muzdima.mymoney.activity.dictionary.DictionariesActivity;
+import muzdima.mymoney.activity.dictionaries.dictionary.AccountGroupsDictionaryActivity;
+import muzdima.mymoney.activity.dictionaries.dictionary.AccountsDictionaryActivity;
+import muzdima.mymoney.activity.dictionaries.dictionary.CategoriesDictionaryActivity;
+import muzdima.mymoney.activity.dictionaries.dictionary.CurrenciesDictionaryActivity;
 import muzdima.mymoney.utils.ConfigurationPreferences;
 import muzdima.mymoney.utils.Loading;
 
@@ -74,32 +77,44 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (id == android.R.id.home) {
             finish();
             return true;
-        } else if (id == R.id.menu_actions) {
+        } else if (id == R.id.menuActions) {
             Intent intent = new Intent(this, ActionsActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.menu_draft) {
+        } else if (id == R.id.menuDraft) {
             Intent intent = new Intent(this, DraftActivity.class);
             intent.putExtra("action", 0);
             startActivity(intent);
             return true;
-        } else if (id == R.id.menu_dictionaries) {
-            Intent intent = new Intent(this, DictionariesActivity.class);
+        } else if (id == R.id.menuDictionaryCurrencies) {
+            Intent intent = new Intent(this, CurrenciesDictionaryActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.menu_import_export) {
+        } else if (id == R.id.menuDictionaryCategories) {
+            Intent intent = new Intent(this, CategoriesDictionaryActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.menuDictionaryAccounts) {
+            Intent intent = new Intent(this, AccountsDictionaryActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.menuDictionaryAccountGroups) {
+            Intent intent = new Intent(this, AccountGroupsDictionaryActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.menuImportExport) {
             Intent intent = new Intent(this, ImportExportActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.menu_statistics) {
+        } else if (id == R.id.menuStatistics) {
             Intent intent = new Intent(this, StatisticsActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.menu_statistics_monthly) {
+        } else if (id == R.id.menuStatisticsMonthly) {
             Intent intent = new Intent(this, StatisticsMonthlyActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.menu_settings) {
+        } else if (id == R.id.menuSettings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
