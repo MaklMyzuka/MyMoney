@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="loading_dialog_text">Ожидайте завершения операции</string>
-    <string name="permission_not_granted">Разрешение не предоставлено</string>
     <string name="success">Успех</string>
-    <string name="export_to">Експорт в </string>
-    <string name="import_from">Импорт из </string>
     <string name="menu_actions">Транзакции</string>
     <string name="menu_draft">Черновик</string>
     <string name="menu_dictionaries">Справочники</string>
     <string name="menu_import_export">Импорт/Експорт</string>
+    <string name="menu_import_database">Импорт базы</string>
+    <string name="menu_export_database">Експорт базы</string>
+    <string name="menu_export_excel">Експорт в Excel</string>
     <string name="menu_statistics">Статистика</string>
     <string name="menu_statistics_monthly">Статистика за месяц</string>
     <string name="menu_settings">Настройки</string>
@@ -16,10 +16,6 @@
     <string name="menu_dictionary_categories">Категории</string>
     <string name="menu_dictionary_accounts">Счета</string>
     <string name="menu_dictionary_account_groups">Группы счетов</string>
-    <string name="import_button_label">Импорт файла БД</string>
-    <string name="export_button_label">Експорт файла БД</string>
-    <string name="error_open_destination_file">Невозможно открыть файл </string>
-    <string name="error_create_destination_directories">Невозможно создать директорию </string>
     <string name="cause">Причина:</string>
     <string name="exception">Ошибка:</string>
     <string name="error">Ошибка</string>
@@ -45,7 +41,6 @@
     <string name="toggle_none_button_label">Очистить</string>
     <string name="commit_button_label">Сохранить</string>
     <string name="delete_button_label">Удалить</string>
-    <string name="action_list">Список транзакций</string>
     <string name="dialog_commit_title">Сохранение</string>
     <string name="dialog_delete_title">Удаление</string>
     <string name="dialog_commit_message">Сохранить %d запись(-ей)?</string>
@@ -113,6 +108,29 @@
     <string name="account_not_selected_message">Счет не выбран</string>
     <string name="error_database_version_mismatch">Версия базы не поддерживается приложением. Обновите приложение</string>
     <string name="error_database_invalid">База не валидна</string>
+    <string name="error_database_open">Ошибка чтения базы</string>
+    <string name="error_open_file">Ошибка чтения файла</string>
+    <string name="error_write_file">Ошибка записи файла</string>
+    <string name="error_file_not_found">Файл не найден</string>
+    <string name="success_import">Импорт завершен успешно</string>
+    <string name="success_export">Експорт завершен успешно</string>
+    <string name="restart">Приложение будет перезапущено</string>
+    <string name="import_export">Импорт/Експорт</string>
+    <string name="excel_actions">Транзакции</string>
+    <string name="excel_actions_type">Тип</string>
+    <string name="excel_actions_account">Счет</string>
+    <string name="excel_actions_sum10000">Сумма</string>
+    <string name="excel_actions_currency">Валюта</string>
+    <string name="excel_actions_category">Категория</string>
+    <string name="excel_actions_product">Описание</string>
+    <string name="excel_actions_created_at">Время</string>
+    <string name="excel_actions_type_initial">Начальная сумма</string>
+    <string name="excel_actions_type_transaction">Транзакция</string>
+    <string name="excel_actions_type_transfer">Перевод</string>
+    <string name="excel_categories">Категории</string>
+    <string name="excel_categories_name">Название</string>
+    <string name="excel_categories_parent">Родитель</string>
+    <string name="excel_categories_full">Полное название</string>
     <string-array name="languages">
         <item>Язык системы</item>
         <item>Английский (English)</item>

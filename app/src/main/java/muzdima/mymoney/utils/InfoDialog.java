@@ -11,6 +11,7 @@ public class InfoDialog {
 
     public static void show(Context context, String title, String message, Runnable callback) {
         new AlertDialog.Builder(context)
+                .setCancelable(false)
                 .setTitle(title)
                 .setMessage(message)
                 .setNeutralButton(R.string.dialog_ok, callback == null ? null : (dialogInterface, i) -> {

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_excel_actions" translatable="false">
+        WITH RECURSIVE [categories_recursive]([id], [name], [parent_id]) AS
+        (
+            SELECT
+                [category].[id] AS [id],
+                [category].[name] AS [name],
+                [category].[parent_id] AS [parent_id]
+            FROM [category]
+                UNION ALL
+            SELECT
+                [categories_recursive].[id] AS [id],
+                [category].[name] || \'>\' || [categories_recursive].[name] AS [name],
+                [category].[parent_id] AS [parent_id]
+            FROM [categories_recursive]
+            INNER JOIN [category] ON [category].[id] = [categories_recursive].[parent_id]
+        ),
+        [categories]([id], [name]) AS
+        (
+            SELECT
+                [categories_recursive].[id] AS [id],
+                [categories_recursive].[name] AS [name]
+            FROM [categories_recursive] WHERE [categories_recursive].[parent_id] IS NULL
+        )
+        SELECT
+            ?2 AS [type],
+            [account].[name] AS [account],
+            [transaction].[sum10000] AS [sum10000],
+            [currency].[symbol] AS [currency],
+            [categories].[name] AS [category],
+            [transaction].[product] AS [product],
+            [transaction].[created_at_utc] AS [created_at]
+        FROM [transaction]
+        INNER JOIN [account] ON [account].[id] = [transaction].[account_id]
+        INNER JOIN [currency] ON [currency].[id] = [account].[currency_id]
+        INNER JOIN [categories] ON [categories].[id] = [transaction].[category_id]
+        WHERE [transaction].[is_committed] = 1
+            UNION ALL
+        SELECT
+            ?3 AS [type],
+            [account_main].[name] AS [account],
+            -[transfer].[sum10000_from] AS [sum10000],
+            [currency].[symbol] AS [currency],
+            NULL AS [category],
+            [account_second].[name] AS [product],
+            [transfer].[created_at_utc] AS [created_at]
+        FROM [transfer]
+        INNER JOIN [account] AS [account_main] ON [account_main].[id] = [transfer].[account_id_from]
+        INNER JOIN [currency] ON [currency].[id] = [account_main].[currency_id]
+        INNER JOIN [account] AS [account_second] ON [account_second].[id] = [transfer].[account_id_to]
+        WHERE [transfer].[is_committed] = 1
+            UNION ALL
+        SELECT
+            ?3 AS [type],
+            [account_main].[name] AS [account],
+            [transfer].[sum10000_to] AS [sum10000],
+            [currency].[symbol] AS [currency],
+            NULL AS [category],
+            [account_second].[name] AS [product],
+            [transfer].[created_at_utc] AS [created_at]
+        FROM [transfer]
+        INNER JOIN [account] AS [account_main] ON [account_main].[id] = [transfer].[account_id_to]
+        INNER JOIN [currency] ON [currency].[id] = [account_main].[currency_id]
+        INNER JOIN [account] AS [account_second] ON [account_second].[id] = [transfer].[account_id_from]
+        WHERE [transfer].[is_committed] = 1
+            UNION ALL
+        SELECT
+            ?1 AS [type],
+            [account].[name] AS [account],
+            [account].[sum10000] AS [sum10000],
+            [currency].[symbol] AS [currency],
+            NULL AS [category],
+            NULL AS [product],
+            NULL AS [created_at]
+        FROM [account]
+        INNER JOIN [currency] ON [currency].[id] = [account].[currency_id]
+    </string>
+    <string name="sql_excel_categories" translatable="false">
+        WITH RECURSIVE [categories_recursive]([id], [name], [parent_id]) AS
+        (
+            SELECT
+                [category].[id] AS [id],
+                [category].[name] AS [name],
+                [category].[parent_id] AS [parent_id]
+            FROM [category]
+                UNION ALL
+            SELECT
+                [categories_recursive].[id] AS [id],
+                [category].[name] || \'>\' || [categories_recursive].[name] AS [name],
+                [category].[parent_id] AS [parent_id]
+            FROM [categories_recursive]
+            INNER JOIN [category] ON [category].[id] = [categories_recursive].[parent_id]
+        )
+        SELECT
+            [item].[name] AS [name],
+            [parent].[name] AS [parent],
+            [categories_recursive].[name] AS [full]
+        FROM [category] AS [item]
+        INNER JOIN [categories_recursive] ON [item].[id] = [categories_recursive].[id] AND [categories_recursive].[parent_id] IS NULL
+        LEFT JOIN [category] AS [parent] ON [parent].[id] = [item].[parent_id]
+        ORDER BY [categories_recursive].[name]
+    </string>
+</resources>

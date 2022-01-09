@@ -6,11 +6,5 @@
     android:tint="@color/icon">
   <path
       android:fillColor="@color/icon"
-      android:pathData="M12,2l-5.5,9h11z"/>
-  <path
-      android:fillColor="@color/icon"
-      android:pathData="M17.5,17.5m-4.5,0a4.5,4.5 0,1 1,9 0a4.5,4.5 0,1 1,-9 0"/>
-  <path
-      android:fillColor="@color/icon"
-      android:pathData="M3,13.5h8v8H3z"/>
+      android:pathData="M9,16h6v-6h4l-7,-7 -7,7h4zM5,18h14v2L5,20z"/>
 </vector>

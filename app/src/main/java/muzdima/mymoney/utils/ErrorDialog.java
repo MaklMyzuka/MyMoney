@@ -35,6 +35,7 @@ public class ErrorDialog {
 
     public static void showError(Context context, String message, Runnable callback) {
         new AlertDialog.Builder(context)
+                .setCancelable(false)
                 .setTitle(context.getString(R.string.error))
                 .setMessage(message)
                 .setNeutralButton(R.string.dialog_ok, callback == null ? null : (dialogInterface, i) -> {

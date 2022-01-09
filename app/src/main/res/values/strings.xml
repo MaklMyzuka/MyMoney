@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="loading_dialog_text">Please wait for operation to complete</string>
-    <string name="permission_not_granted">Permission not granted</string>
     <string name="success">Success</string>
-    <string name="export_to">Export to </string>
-    <string name="import_from">Import from </string>
     <string name="menu_actions">Transactions</string>
     <string name="menu_draft">Draft</string>
     <string name="menu_dictionaries">Dictionaries</string>
     <string name="menu_import_export">Import/Export</string>
+    <string name="menu_import_database">Import database</string>
+    <string name="menu_export_database">Export database</string>
+    <string name="menu_export_excel">Export excel</string>
     <string name="menu_statistics">Statistics</string>
     <string name="menu_statistics_monthly">Statistics monthly</string>
     <string name="menu_settings">Settings</string>
@@ -16,10 +16,6 @@
     <string name="menu_dictionary_categories">Categories</string>
     <string name="menu_dictionary_accounts">Accounts</string>
     <string name="menu_dictionary_account_groups">Groups of accounts</string>
-    <string name="import_button_label">Import DB file</string>
-    <string name="export_button_label">Export DB file</string>
-    <string name="error_open_destination_file">Unable to open file </string>
-    <string name="error_create_destination_directories">Unable to create directory </string>
     <string name="cause">Cause:</string>
     <string name="exception">Error:</string>
     <string name="error">Error</string>
@@ -45,7 +41,6 @@
     <string name="toggle_none_button_label">Clear</string>
     <string name="commit_button_label">Save</string>
     <string name="delete_button_label">Delete</string>
-    <string name="action_list">List of transactions</string>
     <string name="dialog_commit_title">Saving</string>
     <string name="dialog_delete_title">Deleting</string>
     <string name="dialog_commit_message">Save %d item(-s)?</string>
@@ -113,6 +108,29 @@
     <string name="account_not_selected_message">Account not selected</string>
     <string name="error_database_version_mismatch">Database is not supported by the application. Update the app</string>
     <string name="error_database_invalid">Database data invalid</string>
+    <string name="error_database_open">Unable open database</string>
+    <string name="error_open_file">Unable open file</string>
+    <string name="error_write_file">Unable write file</string>
+    <string name="error_file_not_found">File not found</string>
+    <string name="success_import">Import successful</string>
+    <string name="success_export">Export successful</string>
+    <string name="restart">Application will be restarted</string>
+    <string name="import_export">Import/Export</string>
+    <string name="excel_actions">Transactions</string>
+    <string name="excel_actions_type">Type</string>
+    <string name="excel_actions_account">Account</string>
+    <string name="excel_actions_sum10000">Sum</string>
+    <string name="excel_actions_currency">Currency</string>
+    <string name="excel_actions_category">Category</string>
+    <string name="excel_actions_product">Product</string>
+    <string name="excel_actions_created_at">Date Time</string>
+    <string name="excel_actions_type_initial">Initial</string>
+    <string name="excel_actions_type_transaction">Transaction</string>
+    <string name="excel_actions_type_transfer">Transfer</string>
+    <string name="excel_categories">Categories</string>
+    <string name="excel_categories_name">Name</string>
+    <string name="excel_categories_parent">Parent</string>
+    <string name="excel_categories_full">Full name</string>
     <string-array name="languages">
         <item>System</item>
         <item>English</item>

@@ -42,7 +42,26 @@
             <item
                 android:id="@+id/menuImportExport"
                 android:icon="@drawable/ic_menu_import_export"
-                android:title="@string/menu_import_export" />
+                android:title="@string/menu_import_export">
+                <menu>
+                    <group android:id="@+id/menuImportGroup">
+                        <item
+                            android:id="@+id/menuImportDatabase"
+                            android:icon="@drawable/ic_menu_import_database"
+                            android:title="@string/menu_import_database" />
+                    </group>
+                    <group android:id="@+id/menuExportGroup">
+                        <item
+                            android:id="@+id/menuExportDatabase"
+                            android:icon="@drawable/ic_menu_export_database"
+                            android:title="@string/menu_export_database" />
+                        <item
+                            android:id="@+id/menuExportExcel"
+                            android:icon="@drawable/ic_menu_export_excel"
+                            android:title="@string/menu_export_excel" />
+                    </group>
+                </menu>
+            </item>
             <item
                 android:id="@+id/menuStatistics"
                 android:icon="@drawable/ic_menu_statistics"

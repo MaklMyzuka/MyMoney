@@ -14,11 +14,13 @@ import android.database.sqlite.SQLiteStatement;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,17 +35,17 @@ import muzdima.mymoney.repository.model.AccountInfo;
 import muzdima.mymoney.repository.model.CategoryCard;
 import muzdima.mymoney.repository.model.CurrencyCard;
 import muzdima.mymoney.repository.model.DictionaryItem;
-import muzdima.mymoney.repository.model.ExportResult;
 import muzdima.mymoney.repository.model.IActionItem;
-import muzdima.mymoney.repository.model.ImportResult;
 import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.MoneyListItem;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
-import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.ErrorDialog;
+import muzdima.mymoney.utils.Excel;
+import muzdima.mymoney.utils.ImportExport;
+import muzdima.mymoney.utils.Restart;
 
 public class Repository implements IRepository {
     private static final IRepository repository = new Repository();
@@ -54,70 +56,49 @@ public class Repository implements IRepository {
         return repository;
     }
 
-    private String getRepositoryFileName() {
-        return context.getString(R.string.repository_file_name);
-    }
-
-    private String getExternalFilePath() {
-        return context.getExternalFilesDir(null)
-                + File.separator
-                + getRepositoryFileName();
-    }
-
-    private String getInternalFilePath() {
+    public String getFilePath() {
         return context.getFilesDir()
                 + File.separator
-                + getRepositoryFileName();
+                + context.getString(R.string.repository_file_name);
     }
 
-    private void copyFile(String srcPath, String dstPath) throws IOException {
-        File srcFile = new File(srcPath);
-        File dstFile = new File(dstPath);
+    public String getTempFilePath() {
+        return context.getFilesDir()
+                + File.separator
+                + context.getString(R.string.repository_temp_file_name);
+    }
 
-        if (dstFile.getParentFile() == null) {
-            throw new RuntimeException(context.getString(R.string.error_open_destination_file) + dstFile);
+    public void open(Activity activity) {
+        String error = initDatabase();
+        if (error != null) {
+            exitWithError(activity, error);
         }
+    }
 
-        if (!dstFile.getParentFile().exists()) {
-            if (!dstFile.getParentFile().mkdir()) {
-                throw new RuntimeException(context.getString(R.string.error_create_destination_directories) + dstFile.getParentFile());
+    public void openTemp(Activity activity) {
+        String error = initTempDatabase();
+        if (error != null) {
+            activity.runOnUiThread(() -> ErrorDialog.showError(activity, error, activity::finish));
+        } else {
+            try {
+                FileInputStream inputStream = new FileInputStream(getTempFilePath());
+                FileOutputStream outputStream = new FileOutputStream(getFilePath());
+                if (ImportExport.transferFile(activity, inputStream, outputStream)) {
+                    outputStream.flush();
+                    outputStream.close();
+                    inputStream.close();
+                }
+            } catch (FileNotFoundException exception) {
+                activity.runOnUiThread(() -> ErrorDialog.showError(activity, R.string.error_file_not_found, activity::finish));
+            } catch (Exception exception) {
+                activity.runOnUiThread(() -> ErrorDialog.showError(activity, R.string.error_open_file, activity::finish));
             }
         }
-
-        try (FileChannel inChannel = new FileInputStream(srcFile).getChannel();
-             FileChannel outChannel = new FileOutputStream(dstFile).getChannel()) {
-            inChannel.transferTo(0, inChannel.size(), outChannel);
-        }
+        open(activity);
     }
 
-    @Override
-    public ImportResult importDatabase(Activity activity) {
-        ImportResult result = new ImportResult();
-        result.exception = null;
-        result.filePath = getExternalFilePath();
-        try {
-            database.close();
-            copyFile(getExternalFilePath(), getInternalFilePath());
-            initDatabase(activity);
-        } catch (Exception exception) {
-            result.exception = exception;
-        }
-        return result;
-    }
-
-    @Override
-    public ExportResult exportDatabase(Activity activity) {
-        ExportResult result = new ExportResult();
-        result.exception = null;
-        result.filePath = getExternalFilePath();
-        try {
-            database.close();
-            copyFile(getInternalFilePath(), getExternalFilePath());
-            initDatabase(activity);
-        } catch (Exception exception) {
-            result.exception = exception;
-        }
-        return result;
+    public void close() {
+        database.close();
     }
 
     private void execSQL(@NonNull String sql, Object[] bindArgs) {
@@ -295,35 +276,44 @@ public class Repository implements IRepository {
     }
 
     private void exitWithError(Activity activity, String message) {
-        activity.runOnUiThread(() -> ErrorDialog.showError(activity, message, () -> activity.runOnUiThread(activity::finishAndRemoveTask)));
+        activity.runOnUiThread(() -> ErrorDialog.showError(activity, message, () -> activity.runOnUiThread(Restart::exit)));
     }
 
-    private void exitWithError(Activity activity, @StringRes int message) {
-        exitWithError(activity, context.getString(message));
+    private String initDatabase() {
+        return initDatabase(getFilePath());
     }
 
-    private void initDatabase(Activity activity) {
-        if (database != null && database.isOpen()) {
-            database.close();
-        }
-        database = SQLiteDatabase.openDatabase(getInternalFilePath(), null, OPEN_READWRITE | CREATE_IF_NECESSARY | NO_LOCALIZED_COLLATORS);
-        if (isDatabaseEmpty()) {
-            initData();
-        } else {
-            if (isDatabaseVersionInvalid()) {
-                exitWithError(activity, R.string.error_database_version_mismatch);
-            } else if (isDatabaseInvalid()) {
-                exitWithError(activity, R.string.error_database_invalid);
-            } else {
-                updateDatabase();
+    private String initTempDatabase() {
+        return initDatabase(getTempFilePath());
+    }
+
+    private String initDatabase(String path) {
+        try {
+            if (database != null && database.isOpen()) {
+                database.close();
             }
+            database = SQLiteDatabase.openDatabase(path, null, OPEN_READWRITE | CREATE_IF_NECESSARY | NO_LOCALIZED_COLLATORS);
+            if (isDatabaseEmpty()) {
+                initData();
+            } else {
+                if (isDatabaseVersionInvalid()) {
+                    return context.getString(R.string.error_database_version_mismatch);
+                } else if (isDatabaseInvalid()) {
+                    return context.getString(R.string.error_database_invalid);
+                } else {
+                    updateDatabase();
+                }
+            }
+            return null;
+        } catch (Exception exception) {
+            return context.getString(R.string.error_database_open);
         }
     }
 
     @Override
     public void init(Context context, Activity activity) {
         this.context = context;
-        initDatabase(activity);
+        open(activity);
     }
 
     @Override
@@ -963,8 +953,35 @@ public class Repository implements IRepository {
             } else {
                 result.add(sum.items.get(0));
             }
-            fromUTC = toUTC;
         }
         return result;
+    }
+
+    private XSSFSheet excelCreateSheetWithTable(@NonNull String sql, String[] args, XSSFWorkbook workbook, String sheetName, Excel.TableColumn[] columns) {
+        try (Cursor cursor = querySQL(sql, args)) {
+            return Excel.createSheetWithTable(workbook, cursor, sheetName, columns);
+        }
+    }
+
+    private XSSFSheet excelCreateSheetWithTable(@StringRes int resId, String[] args, XSSFWorkbook workbook, String sheetName, Excel.TableColumn[] columns) {
+        return excelCreateSheetWithTable(context.getString(resId), args, workbook, sheetName, columns);
+    }
+
+    private XSSFSheet excelCreateSheetWithTable(@StringRes int resId, XSSFWorkbook workbook, String sheetName, Excel.TableColumn[] columns) {
+        return excelCreateSheetWithTable(resId, new String[]{}, workbook, sheetName, columns);
+    }
+
+    @Override
+    public XSSFSheet excelSheetActions(XSSFWorkbook workbook, String sheetName, Excel.TableColumn[] columns) {
+        return excelCreateSheetWithTable(R.string.sql_excel_actions, new String[]{
+                context.getString(R.string.excel_actions_type_initial),
+                context.getString(R.string.excel_actions_type_transaction),
+                context.getString(R.string.excel_actions_type_transfer)
+        }, workbook, sheetName, columns);
+    }
+
+    @Override
+    public XSSFSheet excelSheetCategories(XSSFWorkbook workbook, String sheetName, Excel.TableColumn[] columns) {
+        return excelCreateSheetWithTable(R.string.sql_excel_categories, workbook, sheetName, columns);
     }
 }

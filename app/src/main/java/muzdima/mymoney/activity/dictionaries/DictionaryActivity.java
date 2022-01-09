@@ -39,8 +39,8 @@ public abstract class DictionaryActivity extends BaseActivity {
 
     @Override
     public void onResume() {
-        update();
         super.onResume();
+        update();
     }
 
     private void update() {

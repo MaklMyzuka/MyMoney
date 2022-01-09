@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="loading_dialog_text">Очікуйте завершення операції</string>
-    <string name="permission_not_granted">Дозвіл не отримано</string>
     <string name="success">Успіх</string>
-    <string name="export_to">Експорт в </string>
-    <string name="import_from">Імпорт з </string>
     <string name="menu_actions">Транзакції</string>
     <string name="menu_draft">Чернетка</string>
     <string name="menu_dictionaries">Довідники</string>
     <string name="menu_import_export">Імпорт/Експорт</string>
+    <string name="menu_import_database">Імпорт бази</string>
+    <string name="menu_export_database">Експорт бази</string>
+    <string name="menu_export_excel">Експорт в Excel</string>
     <string name="menu_statistics">Статистика</string>
     <string name="menu_statistics_monthly">Статистика за місяць</string>
     <string name="menu_settings">Налаштування</string>
@@ -16,10 +16,6 @@
     <string name="menu_dictionary_categories">Категорії</string>
     <string name="menu_dictionary_accounts">Рахунки</string>
     <string name="menu_dictionary_account_groups">Групи рахунків</string>
-    <string name="import_button_label">Імпорт файла БД</string>
-    <string name="export_button_label">Експорт файла БД</string>
-    <string name="error_open_destination_file">Неможливо відкрити файл </string>
-    <string name="error_create_destination_directories">Неможливо створити директорію </string>
     <string name="cause">Причина:</string>
     <string name="exception">Помилка:</string>
     <string name="error">Помилка</string>
@@ -45,7 +41,6 @@
     <string name="toggle_none_button_label">Очистити</string>
     <string name="commit_button_label">Зберегти</string>
     <string name="delete_button_label">Видалити</string>
-    <string name="action_list">Список транзакцій</string>
     <string name="dialog_commit_title">Збереження</string>
     <string name="dialog_delete_title">Видалення</string>
     <string name="dialog_commit_message">Зберегти %d запись(-ів)?</string>
@@ -91,7 +86,7 @@
     <string name="account">Рахунок</string>
     <string name="category">Категорія</string>
     <string name="sum_account">Початкова сума</string>
-    <string name="parent">Потомок</string>
+    <string name="parent">Родитель</string>
     <string name="null_parent">корневий элемент в іерархії</string>
     <string name="error_hierarchy_loop">Наявність циклів в ієрархії неприпустимо</string>
     <string name="statistics">Статистика</string>
@@ -113,6 +108,29 @@
     <string name="account_not_selected_message">Рахунок не вибраний</string>
     <string name="error_database_version_mismatch">Версія бази не підтримується програмою. Оновіть програму</string>
     <string name="error_database_invalid">База не валідна</string>
+    <string name="error_database_open">Помилка читання бази</string>
+    <string name="error_open_file">Помилка читання файла</string>
+    <string name="error_write_file">Помилка запису файла</string>
+    <string name="error_file_not_found">Файл не знайдено</string>
+    <string name="success_import">Імпорт пройшов успішно</string>
+    <string name="success_export">Експорт пройшов успішно</string>
+    <string name="restart">Програма буде перезапущена</string>
+    <string name="import_export">Імпорт/Експорт</string>
+    <string name="excel_actions">Транзакції</string>
+    <string name="excel_actions_type">Тип</string>
+    <string name="excel_actions_account">Рахунок</string>
+    <string name="excel_actions_sum10000">Сума</string>
+    <string name="excel_actions_currency">Валюта</string>
+    <string name="excel_actions_category">Категорія</string>
+    <string name="excel_actions_product">Опис</string>
+    <string name="excel_actions_created_at">Час</string>
+    <string name="excel_actions_type_initial">Початкова сума</string>
+    <string name="excel_actions_type_transaction">Транзакція</string>
+    <string name="excel_actions_type_transfer">Перевод</string>
+    <string name="excel_categories">Категорії</string>
+    <string name="excel_categories_name">Назва</string>
+    <string name="excel_categories_parent">Родитель</string>
+    <string name="excel_categories_full">Повна назва</string>
     <string-array name="languages">
         <item>Авто</item>
         <item>Англійська (English)</item>

@@ -10,6 +10,7 @@ import muzdima.mymoney.R;
 public class ConfirmDialog {
     public static void show(Context context, String title, String message, Runnable runnable) {
         new AlertDialog.Builder(context)
+                .setCancelable(false)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(R.string.dialog_yes, (dialogInterface, i) -> runnable.run())

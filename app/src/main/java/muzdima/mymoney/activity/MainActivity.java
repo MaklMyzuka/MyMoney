@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity {
                 findViewById(R.id.accountGroupSelector2),
                 findViewById(R.id.accountGroupSelector3)};
         Worker.run(this, () -> {
-            Repository.getRepository().init(getApplicationContext(), this);
+            Repository.getRepository().init(this, this);
             runOnUiThread(this::init);
         });
     }
@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity {
             super.onResume();
             return;
         }
+        super.onResume();
         for (AccountSelector accountSelector : accountSelectors) {
             accountSelector.update();
         }
@@ -80,6 +81,5 @@ public class MainActivity extends BaseActivity {
         for (AccountGroupSelector accountGroupSelector : accountGroupSelectors) {
             accountGroupSelector.update();
         }
-        super.onResume();
     }
 }

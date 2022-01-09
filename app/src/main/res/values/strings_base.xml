@@ -3,6 +3,10 @@
     <string name="app_name" translatable="false">MyMoney</string>
     <string name="settings_version" translatable="false">VERSION</string>
     <string name="repository_file_name" translatable="false">db.sqlite</string>
+    <string name="repository_temp_file_name" translatable="false">db_temp.sqlite</string>
+    <string name="mime_import_database" translatable="false">*/*</string>
+    <string name="mime_export_database" translatable="false">application/vnd.sqlite3</string>
+    <string name="mime_export_excel" translatable="false">application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</string>
     <string name="preference_language" translatable="false">preference_language</string>
     <string name="preference_night_mode" translatable="false">preference_night_mode</string>
     <string name="preference_format_number_decimal" translatable="false">preference_format_number_decimal</string>

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuCompat;
 
 import muzdima.mymoney.R;
 import muzdima.mymoney.activity.dictionaries.dictionary.AccountGroupsDictionaryActivity;
@@ -16,10 +17,10 @@ import muzdima.mymoney.activity.dictionaries.dictionary.AccountsDictionaryActivi
 import muzdima.mymoney.activity.dictionaries.dictionary.CategoriesDictionaryActivity;
 import muzdima.mymoney.activity.dictionaries.dictionary.CurrenciesDictionaryActivity;
 import muzdima.mymoney.utils.ConfigurationPreferences;
+import muzdima.mymoney.utils.ImportExport;
 import muzdima.mymoney.utils.Loading;
 
 public abstract class BaseActivity extends AppCompatActivity {
-
     private boolean recreating = false;
     private String languageCode;
 
@@ -48,8 +49,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (isMenuButtonSupported()){
+        if (isMenuButtonSupported()) {
             getMenuInflater().inflate(R.menu.main_menu, menu);
+            MenuCompat.setGroupDividerEnabled(menu, true);
         }
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -108,8 +110,19 @@ public abstract class BaseActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AccountGroupsDictionaryActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.menuImportExport) {
+        } else if (id == R.id.menuImportDatabase) {
             Intent intent = new Intent(this, ImportExportActivity.class);
+            intent.putExtra("request",  ImportExport.IMPORT_DATABASE_REQUEST);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.menuExportDatabase) {
+            Intent intent = new Intent(this, ImportExportActivity.class);
+            intent.putExtra("request", ImportExport.EXPORT_DATABASE_REQUEST);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.menuExportExcel) {
+            Intent intent = new Intent(this, ImportExportActivity.class);
+            intent.putExtra("request", ImportExport.EXPORT_EXCEL_REQUEST);
             startActivity(intent);
             return true;
         } else if (id == R.id.menuStatistics) {

@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +26,10 @@ public class DateTime {
         this.hours = hours;
         this.minutes = minutes;
         this.seconds = seconds;
+    }
+
+    public LocalDateTime toLocalDateTime(){
+        return LocalDateTime.of(this.year, this.month, this.day, this.hours, this.minutes, this.seconds);
     }
 
     public static long getNowUTC() {
