@@ -31,4 +31,12 @@ public class TransferItem implements IActionItem {
     public int getType() {
         return IActionItem.TRANSFER;
     }
+
+    @Override
+    public Money getMoney() {
+        Money money = new Money();
+        money.items.add(sumFrom);
+        money.items.add(sumTo);
+        return money;
+    }
 }

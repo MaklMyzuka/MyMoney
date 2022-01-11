@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sql_init" translatable="false">
+    <string name="sql_init_pre" translatable="false">
         PRAGMA foreign_keys = ON;
-
+    </string>
+    <string name="sql_init" translatable="false">
         CREATE TABLE IF NOT EXISTS [currency] (
             [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             [name] TEXT NOT NULL,

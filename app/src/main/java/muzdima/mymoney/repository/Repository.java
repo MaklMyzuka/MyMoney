@@ -49,6 +49,64 @@ import muzdima.mymoney.utils.Restart;
 
 public class Repository implements IRepository {
     private static final IRepository repository = new Repository();
+    private static final TableDef[] tables = {
+            new TableDef("currency", new ColumnDef[]{
+                    new ColumnDef("id", "INTEGER", true, 1),
+                    new ColumnDef("name", "TEXT", true, 0),
+                    new ColumnDef("symbol", "TEXT", true, 0),
+                    new ColumnDef("is_visible", "INTEGER", true, 0),
+                    new ColumnDef("comment", "TEXT", false, 0),
+            }),
+            new TableDef("account", new ColumnDef[]{
+                    new ColumnDef("id", "INTEGER", true, 1),
+                    new ColumnDef("name", "TEXT", true, 0),
+                    new ColumnDef("currency_id", "INTEGER", true, 0),
+                    new ColumnDef("sum10000", "INTEGER", true, 0),
+                    new ColumnDef("is_visible", "INTEGER", true, 0),
+                    new ColumnDef("comment", "TEXT", false, 0),
+            }),
+            new TableDef("account_group", new ColumnDef[]{
+                    new ColumnDef("id", "INTEGER", true, 1),
+                    new ColumnDef("name", "TEXT", true, 0),
+                    new ColumnDef("is_visible", "INTEGER", true, 0),
+                    new ColumnDef("comment", "TEXT", false, 0),
+            }),
+            new TableDef("account_group_accounts", new ColumnDef[]{
+                    new ColumnDef("account_group_id", "INTEGER", true, 1),
+                    new ColumnDef("account_id", "INTEGER", true, 2),
+            }),
+            new TableDef("category", new ColumnDef[]{
+                    new ColumnDef("id", "INTEGER", true, 1),
+                    new ColumnDef("name", "TEXT", true, 0),
+                    new ColumnDef("parent_id", "INTEGER", false, 0),
+                    new ColumnDef("is_visible", "INTEGER", true, 0),
+                    new ColumnDef("comment", "TEXT", false, 0),
+            }),
+            new TableDef("transfer", new ColumnDef[]{
+                    new ColumnDef("id", "INTEGER", true, 1),
+                    new ColumnDef("account_id_from", "INTEGER", true, 0),
+                    new ColumnDef("account_id_to", "INTEGER", true, 0),
+                    new ColumnDef("sum10000_from", "INTEGER", true, 0),
+                    new ColumnDef("sum10000_to", "INTEGER", true, 0),
+                    new ColumnDef("created_at_utc", "INTEGER", true, 0),
+                    new ColumnDef("is_committed", "INTEGER", true, 0),
+            }),
+            new TableDef("transaction", new ColumnDef[]{
+                    new ColumnDef("id", "INTEGER", true, 1),
+                    new ColumnDef("category_id", "INTEGER", true, 0),
+                    new ColumnDef("account_id", "INTEGER", true, 0),
+                    new ColumnDef("sum10000", "INTEGER", true, 0),
+                    new ColumnDef("product", "TEXT", false, 0),
+                    new ColumnDef("created_at_utc", "INTEGER", true, 0),
+                    new ColumnDef("is_committed", "INTEGER", true, 0),
+            }),
+            new TableDef("settings", new ColumnDef[]{
+                    new ColumnDef("key", "TEXT", true, 1),
+                    new ColumnDef("value", "TEXT", false, 0),
+            }),
+    };
+
+
     private Context context;
     private SQLiteDatabase database = null;
 
@@ -168,7 +226,7 @@ public class Repository implements IRepository {
         execSQL(resId, null);
     }
 
-    private boolean checkSQLFalse(@StringRes int resId) {
+    private boolean checkSQLFail(@StringRes int resId) {
         return !checkSQL(resId, null);
     }
 
@@ -205,16 +263,16 @@ public class Repository implements IRepository {
 
     private void initData() {
         execSQL(R.string.sql_init);
-        if (checkSQLFalse(R.string.sql_check_currency)) {
+        if (checkSQLFail(R.string.sql_check_currency)) {
             execSQL(R.string.sql_init_currency);
         }
-        if (checkSQLFalse(R.string.sql_check_account)) {
+        if (checkSQLFail(R.string.sql_check_account)) {
             execSQL(R.string.sql_init_account);
         }
-        if (checkSQLFalse(R.string.sql_check_account_group)) {
+        if (checkSQLFail(R.string.sql_check_account_group)) {
             execSQL(R.string.sql_init_account_group);
         }
-        if (checkSQLFalse(R.string.sql_check_category)) {
+        if (checkSQLFail(R.string.sql_check_category)) {
             try {
                 initCategory();
             } catch (Exception ignored) {
@@ -228,7 +286,7 @@ public class Repository implements IRepository {
     }
 
     private boolean isDatabaseEmpty() {
-        return checkSQLFalse(R.string.sql_check_database_empty);
+        return checkSQLFail(R.string.sql_check_database_empty);
     }
 
     private int getDatabaseVersion() {
@@ -262,16 +320,23 @@ public class Repository implements IRepository {
         return (version / 1000000 != versionApp / 1000000) || (version / 1000 > versionApp / 1000);
     }
 
-    private boolean checkColumn(String table, String column, String type, boolean notnull, boolean primary) {
-        return checkSQL(R.string.sql_check_column, new Object[]{table, column, type, notnull, primary});
+    private boolean checkColumnFail(String table, String column, String type, boolean notnull, int primary) {
+        return !checkSQL(R.string.sql_check_column, new Object[]{table, column, type, notnull ? 1L : 0L, (long)primary});
     }
 
-    private boolean checkTableColumns(String table, int columnsCount) {
-        return checkSQL(R.string.sql_check_table_columns, new Object[]{table, columnsCount});
+    private boolean checkTableColumnsFail(String table, int columnsCount) {
+        return !checkSQL(R.string.sql_check_table_columns, new Object[]{table, (long)columnsCount});
     }
 
     private boolean isDatabaseInvalid() {
-        //TODO
+        for(TableDef table : tables){
+            if (checkTableColumnsFail(table.name, table.columns.length))
+                return true;
+            for(ColumnDef column : table.columns){
+                if (checkColumnFail(table.name, column.name, column.type, column.notnull, column.primary))
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -293,6 +358,7 @@ public class Repository implements IRepository {
                 database.close();
             }
             database = SQLiteDatabase.openDatabase(path, null, OPEN_READWRITE | CREATE_IF_NECESSARY | NO_LOCALIZED_COLLATORS);
+            execSQL(R.string.sql_init_pre);
             if (isDatabaseEmpty()) {
                 initData();
             } else {
@@ -983,5 +1049,29 @@ public class Repository implements IRepository {
     @Override
     public XSSFSheet excelSheetCategories(XSSFWorkbook workbook, String sheetName, Excel.TableColumn[] columns) {
         return excelCreateSheetWithTable(R.string.sql_excel_categories, workbook, sheetName, columns);
+    }
+
+    private static class ColumnDef {
+        public final String name;
+        public final String type;
+        public final boolean notnull;
+        public final int primary;
+
+        ColumnDef(String name, String type, boolean notnull, int primary) {
+            this.name = name;
+            this.type = type;
+            this.notnull = notnull;
+            this.primary = primary;
+        }
+    }
+
+    private static class TableDef {
+        public final String name;
+        public final ColumnDef[] columns;
+
+        TableDef(String name, ColumnDef[] columns) {
+            this.name = name;
+            this.columns = columns;
+        }
     }
 }

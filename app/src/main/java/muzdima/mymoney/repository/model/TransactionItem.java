@@ -31,4 +31,11 @@ public class TransactionItem implements IActionItem {
     public int getType() {
         return IActionItem.TRANSACTION;
     }
+
+    @Override
+    public Money getMoney() {
+        Money money = new Money();
+        money.items.add(sum);
+        return money;
+    }
 }

@@ -5,6 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <muzdima.mymoney.view.ActionList
+        android:id="@+id/changeableActionListDraft"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/moneyTextViewDraft"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTotalMoneyDraft"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/draft_total_selected_label"
+        android:textAlignment="textEnd"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/moneyTextViewDraft"
+        app:layout_constraintEnd_toStartOf="@+id/moneyTextViewDraft"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/moneyTextViewDraft" />
+
+    <muzdima.mymoney.view.MoneyTextView
+        android:id="@+id/moneyTextViewDraft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/barrierButtonsDraft"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <View
         android:id="@+id/viewUpButtonToggleDraft"
         android:layout_width="0dp"
@@ -28,19 +64,6 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonDeleteDraft"
         app:layout_constraintEnd_toEndOf="@+id/buttonDeleteDraft"
         app:layout_constraintStart_toStartOf="@+id/buttonDeleteDraft" />
-
-    <muzdima.mymoney.view.ActionList
-        android:id="@+id/changeableActionListDraft"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/barrierButtonsDraft"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonToggleDraft"

@@ -17,7 +17,7 @@ import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.MoneyListItem;
 import muzdima.mymoney.utils.ActivitySolver;
 
-public class MoneyList extends LinearLayout implements IMoneyVIew {
+public class MoneyList extends LinearLayout implements IMoneyView {
     private LinearLayout layout;
     private Money.DisplayParams params;
 

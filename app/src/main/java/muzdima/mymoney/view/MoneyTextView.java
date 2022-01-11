@@ -11,7 +11,7 @@ import androidx.core.text.HtmlCompat;
 import muzdima.mymoney.repository.model.Money;
 
 @SuppressLint("AppCompatCustomView")
-public class MoneyTextView extends TextView implements IMoneyVIew {
+public class MoneyTextView extends TextView implements IMoneyView {
 
     private Context context;
     private Money.DisplayParams params;

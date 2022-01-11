@@ -38,6 +38,25 @@ public class Money {
         return result.reverse().toString();
     }
 
+    public void add(Money money) {
+        for (MoneyItem moneyItem : money.items) {
+            boolean ok = false;
+            for (MoneyItem item : items) {
+                if (!ok && item.currencyId == moneyItem.currencyId) {
+                    ok = true;
+                    item.sum10000 += moneyItem.sum10000;
+                }
+            }
+            if (!ok) {
+                MoneyItem newItem = new MoneyItem();
+                newItem.currencyId = moneyItem.currencyId;
+                newItem.currencySymbol = moneyItem.currencySymbol;
+                newItem.sum10000 = moneyItem.sum10000;
+                items.add(newItem);
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
