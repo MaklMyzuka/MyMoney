@@ -19,12 +19,11 @@
         android:id="@+id/textViewProductTransactionItem"
         android:layout_width="300dp"
         android:layout_height="18dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonTransactionItem"
         app:layout_constraintHorizontal_bias="0.777"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxTransactionItem"
+        app:layout_constraintStart_toStartOf="@+id/textViewSumTransactionItem"
         app:layout_constraintTop_toBottomOf="@+id/textViewSumTransactionItem" />
 
     <TextView
