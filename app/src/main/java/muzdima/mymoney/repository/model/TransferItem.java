@@ -35,8 +35,16 @@ public class TransferItem implements IActionItem {
     @Override
     public Money getMoney() {
         Money money = new Money();
-        money.items.add(sumFrom);
-        money.items.add(sumTo);
+        Money.MoneyItem moneyFrom = new Money.MoneyItem();
+        Money.MoneyItem moneyTo = new Money.MoneyItem();
+        moneyFrom.currencyId = sumFrom.currencyId;
+        moneyFrom.currencySymbol = sumFrom.currencySymbol;
+        moneyFrom.sum10000 = -sumFrom.sum10000;
+        moneyTo.currencyId = sumTo.currencyId;
+        moneyTo.currencySymbol = sumTo.currencySymbol;
+        moneyTo.sum10000 = sumTo.sum10000;
+        money.items.add(moneyFrom);
+        money.items.add(moneyTo);
         return money;
     }
 }
