@@ -18,19 +18,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewSumTransferItem"
+        app:layout_constraintEnd_toStartOf="@+id/buttonTransferItem"
         app:layout_constraintStart_toEndOf="@+id/checkBoxTransferItem"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTimeTransferItem" />
 
     <TextView
         android:id="@+id/textViewToTransferItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/textViewTimeTransferItem"
+        app:layout_constraintEnd_toEndOf="@+id/textViewFromTransferItem"
         app:layout_constraintStart_toStartOf="@+id/textViewFromTransferItem"
         app:layout_constraintTop_toBottomOf="@+id/textViewFromTransferItem" />
 
@@ -38,19 +37,22 @@
         android:id="@+id/textViewSumTransferItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonTransferItem"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxTransferItem"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewTimeTransferItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewSumTransferItem"
         app:layout_constraintEnd_toStartOf="@+id/buttonTransferItem"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSumTransferItem" />
+        app:layout_constraintStart_toEndOf="@+id/textViewSumTransferItem"
+        app:layout_constraintTop_toTopOf="@+id/textViewSumTransferItem" />
 
     <Button
         android:id="@+id/buttonTransferItem"

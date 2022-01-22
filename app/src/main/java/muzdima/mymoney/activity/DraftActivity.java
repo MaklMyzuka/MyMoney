@@ -15,8 +15,10 @@ import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
+import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.ConfirmDialog;
 import muzdima.mymoney.utils.DateTime;
+import muzdima.mymoney.utils.ErrorDialog;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.ActionList;
 import muzdima.mymoney.view.MoneyTextView;
@@ -27,7 +29,7 @@ public class DraftActivity extends BaseActivity {
     private ActionList actionList;
     private TextView labelTotal;
     private MoneyTextView moneyTotal;
-    private IActionItem editItem = null;
+    private boolean skipResume = false;
 
     @Override
     protected String getMenuTitle() {
@@ -37,15 +39,28 @@ public class DraftActivity extends BaseActivity {
     // CALL FROM WORKER THREAD
     private void update(boolean forceRedraw) {
         List<IActionItem> items = Repository.getRepository().getDraftActionItems();
-        runOnUiThread(() -> actionList.update(items, forceRedraw));
+        //TODO remove error checking
+        try{
+            runOnUiThread(() -> {
+                try {
+                    actionList.update(items, forceRedraw);
+                }
+                catch (Exception exception){
+                    ErrorDialog.showError(ActivitySolver.getActivity(this), exception, null);
+                }
+            });
+        }
+        catch (Exception exception){
+            runOnUiThread(()-> ErrorDialog.showError(ActivitySolver.getActivity(this), exception, null));
+        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (editItem != null) {
-            actionList.onEdit(editItem);
-            editItem = null;
+        if (skipResume) {
+            skipResume = false;
         } else {
             Worker.run(this, () -> update(true));
         }
@@ -69,9 +84,11 @@ public class DraftActivity extends BaseActivity {
         Bundle extras = intent.getExtras();
         int action = extras.getInt("action", 0);
         long accountId = extras.getLong("account_id", -1);
+        skipResume = action != 0;
 
         Worker.run(this, () -> {
             AccountInfo accountInfo = (action == 0 ? null : Repository.getRepository().getAccountInfo(accountId));
+            IActionItem editItem = null;
             switch (action) {
                 case 0:
                     // no action
@@ -148,6 +165,7 @@ public class DraftActivity extends BaseActivity {
                     break;
             }
             List<IActionItem> items = Repository.getRepository().getDraftActionItems();
+            IActionItem editItemFinal = editItem;
             runOnUiThread(() -> {
                 actionList.init(true, items);
                 actionList.setOnCheckedChangeListener(selectedAll -> {
@@ -187,6 +205,9 @@ public class DraftActivity extends BaseActivity {
                 });
                 intent.putExtra("action", 0);
                 setIntent(intent);
+                if (editItemFinal != null) {
+                    actionList.onEdit(editItemFinal);
+                }
             });
         });
     }

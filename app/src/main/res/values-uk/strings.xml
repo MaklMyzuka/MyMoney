@@ -132,6 +132,7 @@
     <string name="excel_categories_parent">Родитель</string>
     <string name="excel_categories_full">Повна назва</string>
     <string name="draft_total_selected_label">Всього обрано:</string>
+    <string name="no_product">Відсутній опис товару</string>
     <string-array name="languages">
         <item>Авто</item>
         <item>Англійська (English)</item>

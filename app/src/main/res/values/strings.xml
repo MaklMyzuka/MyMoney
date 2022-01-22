@@ -132,6 +132,7 @@
     <string name="excel_categories_parent">Parent</string>
     <string name="excel_categories_full">Full name</string>
     <string name="draft_total_selected_label">Selected total:</string>
+    <string name="no_product">No product description</string>
     <string-array name="languages">
         <item>System</item>
         <item>English</item>

@@ -70,7 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!languageCode.equals(ConfigurationPreferences.getLanguageCode(this))) {
+        if (languageCode!=null && !languageCode.equals(ConfigurationPreferences.getLanguageCode(this))) {
             runOnUiThread(() -> {
                 Loading.dismiss();
                 recreating = true;
