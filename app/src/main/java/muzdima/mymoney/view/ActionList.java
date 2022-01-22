@@ -55,20 +55,17 @@ public class ActionList extends RecyclerView {
 
     // DON'T CHANGE CONTENTS OF LIST items
     // FOR CHANGE, PASS NEW LIST INTO update(items)
-    public void init(boolean selectable, List<IActionItem> items, IActionItem editItem) {
+    public void init(boolean selectable, List<IActionItem> items) {
         adapter = new Adapter(getContext(), selectable, items);
         setAdapter(adapter);
         setLayoutManager(new LinearLayoutManager(getContext()));
-        if (editItem != null) {
-            onEdit(editItem);
-        }
     }
 
     public void update(List<IActionItem> items, boolean forceRedraw) {
         adapter.update(items, forceRedraw);
     }
 
-    protected void onEdit(IActionItem item) {
+    public void onEdit(IActionItem item) {
         Context context = getContext();
         Intent intent = new Intent(context, ActionEditorActivity.class);
         switch (item.getType()) {

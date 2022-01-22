@@ -27,6 +27,7 @@ public class DraftActivity extends BaseActivity {
     private ActionList actionList;
     private TextView labelTotal;
     private MoneyTextView moneyTotal;
+    private IActionItem editItem = null;
 
     @Override
     protected String getMenuTitle() {
@@ -42,7 +43,12 @@ public class DraftActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Worker.run(this, () -> update(true));
+        if (editItem != null) {
+            actionList.onEdit(editItem);
+            editItem = null;
+        } else {
+            Worker.run(this, () -> update(true));
+        }
     }
 
     @Override
@@ -65,7 +71,6 @@ public class DraftActivity extends BaseActivity {
         long accountId = extras.getLong("account_id", -1);
 
         Worker.run(this, () -> {
-            IActionItem editItem = null;
             AccountInfo accountInfo = (action == 0 ? null : Repository.getRepository().getAccountInfo(accountId));
             switch (action) {
                 case 0:
@@ -143,20 +148,19 @@ public class DraftActivity extends BaseActivity {
                     break;
             }
             List<IActionItem> items = Repository.getRepository().getDraftActionItems();
-            IActionItem editItemFinal = editItem;
             runOnUiThread(() -> {
-                actionList.init(true, items, editItemFinal);
+                actionList.init(true, items);
                 actionList.setOnCheckedChangeListener(selectedAll -> {
                     buttonToggle.setText(selectedAll ? R.string.toggle_none_button_label : R.string.toggle_all_button_label);
                     List<IActionItem> selected = actionList.getSelected();
                     Money total = new Money();
-                    for (IActionItem item : selected){
+                    for (IActionItem item : selected) {
                         total.add(item.getMoney());
                     }
-                    if (total.items.isEmpty()){
+                    if (total.items.isEmpty()) {
                         labelTotal.setVisibility(View.GONE);
                         moneyTotal.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         moneyTotal.setText(total);
                         labelTotal.setVisibility(View.VISIBLE);
                         moneyTotal.setVisibility(View.VISIBLE);

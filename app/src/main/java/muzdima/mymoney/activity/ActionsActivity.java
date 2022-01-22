@@ -2,7 +2,6 @@ package muzdima.mymoney.activity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -73,7 +72,7 @@ public class ActionsActivity extends BaseActivity {
         Worker.run(this, () -> {
             List<IActionItem> items = Repository.getRepository().getActionItems(fromUTC(), toUTC());
             runOnUiThread(() -> {
-                actionList.init(false, items, null);
+                actionList.init(false, items);
                 textViewDate.setOnClickListener(view -> {
                     DateTime local = DateTime.convertUTCToLocal(dateUTC());
                     new DatePickerDialog(this, (datePicker, year, month, dayOfMonth) -> {
