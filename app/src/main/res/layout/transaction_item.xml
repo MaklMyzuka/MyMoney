@@ -3,42 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
-    android:layout_marginEnd="2dp">
+    android:layout_height="wrap_content">
 
     <CheckBox
         android:id="@+id/checkBoxTransactionItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewProductTransactionItem"
-        android:layout_width="300dp"
-        android:layout_height="18dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonTransactionItem"
-        app:layout_constraintHorizontal_bias="0.777"
         app:layout_constraintStart_toStartOf="@+id/textViewSumTransactionItem"
         app:layout_constraintTop_toBottomOf="@+id/textViewSumTransactionItem" />
 
     <TextView
         android:id="@+id/textViewCategoryTransactionItem"
-        android:layout_width="300dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/textViewProductTransactionItem"
         app:layout_constraintStart_toStartOf="@+id/textViewProductTransactionItem"
         app:layout_constraintTop_toBottomOf="@+id/textViewProductTransactionItem" />
 
     <muzdima.mymoney.view.MoneyTextView
         android:id="@+id/textViewSumTransactionItem"
-        android:layout_width="117dp"
-        android:layout_height="25dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:textSize="16sp"
@@ -47,9 +44,9 @@
 
     <TextView
         android:id="@+id/textViewAccountTransactionItem"
-        android:layout_width="300dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/textViewCategoryTransactionItem"
         app:layout_constraintStart_toStartOf="@+id/textViewCategoryTransactionItem"
         app:layout_constraintTop_toBottomOf="@+id/textViewCategoryTransactionItem" />
@@ -57,20 +54,18 @@
     <TextView
         android:id="@+id/textViewTimeTransactionItem"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewSumTransactionItem"
         app:layout_constraintEnd_toStartOf="@+id/buttonTransactionItem"
-        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toEndOf="@+id/textViewSumTransactionItem"
         app:layout_constraintTop_toTopOf="@+id/textViewSumTransactionItem" />
 
     <Button
         android:id="@+id/buttonTransactionItem"
-        android:layout_width="48dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:contentDescription="@string/edit_button_label"
         app:icon="@drawable/ic_action_edit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +74,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:background="@color/header"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
