@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +24,12 @@ import java.util.List;
 import muzdima.mymoney.R;
 import muzdima.mymoney.activity.DraftActivity;
 import muzdima.mymoney.repository.Repository;
+import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.SpinnerItem;
+import muzdima.mymoney.utils.ActionHelper;
 import muzdima.mymoney.utils.ActivitySolver;
+import muzdima.mymoney.utils.ConfigurationPreferences;
 import muzdima.mymoney.utils.InfoDialog;
 import muzdima.mymoney.utils.Worker;
 import muzdima.mymoney.view.HistorySpinner;
@@ -92,10 +97,15 @@ public class AccountSelector extends LinearLayout {
                     .setTitle(R.string.account_action)
                     .setAdapter(adapter, (dialogInterface, i) -> {
                         dialogInterface.dismiss();
-                        Intent intent = new Intent(context, DraftActivity.class);
-                        intent.putExtra("action", i + 1);
-                        intent.putExtra("account_id", account_id);
-                        context.startActivity(intent);
+                        if (ConfigurationPreferences.useDraft(context)) {
+                            Intent intent = new Intent(context, DraftActivity.class);
+                            intent.putExtra("action", i + 1);
+                            intent.putExtra("account_id", account_id);
+                            context.startActivity(intent);
+                        } else {
+                            IActionItem item = ActionHelper.createAction(i + 1, account_id);
+                            ActionHelper.startActionEditorActivity(context, item);
+                        }
                     })
                     .show();
         });

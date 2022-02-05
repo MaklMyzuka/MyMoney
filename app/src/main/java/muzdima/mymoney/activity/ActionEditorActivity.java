@@ -23,6 +23,7 @@ import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.SpinnerItem;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
+import muzdima.mymoney.utils.ConfigurationPreferences;
 import muzdima.mymoney.utils.DateTime;
 import muzdima.mymoney.utils.ErrorDialog;
 import muzdima.mymoney.utils.InfoDialog;
@@ -109,8 +110,8 @@ public class ActionEditorActivity extends BaseActivity {
         });
     }
 
-    private void showAddInformDialog() {
-        InfoDialog.show(this, R.string.success, R.string.add_success_message, null);
+    private void showAddInformDialog(boolean intoDraft) {
+        InfoDialog.show(this, R.string.success, intoDraft ? R.string.add_into_draft_success_message : R.string.add_success_message, null);
     }
 
     private void updateTransactionItem(TransactionItem item) {
@@ -168,9 +169,10 @@ public class ActionEditorActivity extends BaseActivity {
             }
             long sum1000Final = isIncome ? sum10000 : -sum10000;
             String productValue = product.getText().toString();
+            boolean useDraft = ConfigurationPreferences.useDraft(this);
             Worker.run(this, () -> {
                 if (item.id == -1) {
-                    Repository.getRepository().insertTransaction(categoryId, accountId, sum1000Final, productValue, createdAtUTC);
+                    Repository.getRepository().insertTransaction(categoryId, accountId, sum1000Final, productValue, createdAtUTC, useDraft);
                     TransactionItem transaction = new TransactionItem();
                     transaction.id = -1;
                     transaction.categoryId = categoryId;
@@ -181,7 +183,7 @@ public class ActionEditorActivity extends BaseActivity {
                     transaction.createdAtUTC = createdAtUTC;
                     runOnUiThread(() -> {
                         updateItem(transaction);
-                        showAddInformDialog();
+                        showAddInformDialog(useDraft);
                     });
                 } else {
                     Repository.getRepository().updateTransaction(item.id, categoryId, accountId, sum1000Final, productValue, createdAtUTC);
@@ -260,12 +262,13 @@ public class ActionEditorActivity extends BaseActivity {
                 ErrorDialog.showError(this, R.string.error_sum_negative, null);
                 return;
             }
+            boolean useDraft = ConfigurationPreferences.useDraft(this);
             Worker.run(this, () -> {
                 if (item.id == -1) {
-                    Repository.getRepository().insertTransfer(accountIdFrom, accountIdTo, sum10000From, sum10000To, createdAtUTC);
+                    Repository.getRepository().insertTransfer(accountIdFrom, accountIdTo, sum10000From, sum10000To, createdAtUTC, useDraft);
                     runOnUiThread(() -> {
                         updateItem(item);
-                        showAddInformDialog();
+                        showAddInformDialog(useDraft);
                     });
                 } else {
                     Repository.getRepository().updateTransfer(item.id, accountIdFrom, accountIdTo, sum10000From, sum10000To, createdAtUTC);

@@ -104,7 +104,8 @@
     <string name="format_time">Time format</string>
     <string name="before">Before</string>
     <string name="next">Next</string>
-    <string name="add_success_message">Added to draft</string>
+    <string name="add_into_draft_success_message">Added to draft</string>
+    <string name="add_success_message">Added successfully</string>
     <string name="account_not_selected_message">Account not selected</string>
     <string name="error_database_version_mismatch">Database is not supported by the application. Update the app</string>
     <string name="error_database_invalid">Database data invalid</string>
@@ -133,6 +134,9 @@
     <string name="excel_categories_full">Full name</string>
     <string name="draft_total_selected_label">Selected total:</string>
     <string name="no_product">No product description</string>
+    <string name="use_draft_title">Use draft</string>
+    <string name="use_draft_summary_on">New transactions enrolls into draft first</string>
+    <string name="use_draft_summary_off">New transactions commits immediately, past draft</string>
     <string-array name="languages">
         <item>System</item>
         <item>English</item>

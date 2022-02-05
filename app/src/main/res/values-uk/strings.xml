@@ -104,7 +104,8 @@
     <string name="format_time">Формат часу</string>
     <string name="before">Назад</string>
     <string name="next">Вперед</string>
-    <string name="add_success_message">Додано до чернетки</string>
+    <string name="add_into_draft_success_message">Додано до чернетки</string>
+    <string name="add_success_message">Додано успішно</string>
     <string name="account_not_selected_message">Рахунок не вибраний</string>
     <string name="error_database_version_mismatch">Версія бази не підтримується програмою. Оновіть програму</string>
     <string name="error_database_invalid">База не валідна</string>
@@ -133,6 +134,9 @@
     <string name="excel_categories_full">Повна назва</string>
     <string name="draft_total_selected_label">Всього обрано:</string>
     <string name="no_product">Відсутній опис товару</string>
+    <string name="use_draft_title">Використовувати чернетку</string>
+    <string name="use_draft_summary_on">Нові транзакції зберігаються через чернетку</string>
+    <string name="use_draft_summary_off">Нові транзакції зберігаються відразу, повз чернетку</string>
     <string-array name="languages">
         <item>Авто</item>
         <item>Англійська (English)</item>

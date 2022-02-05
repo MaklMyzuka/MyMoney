@@ -33,6 +33,7 @@ import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
+import muzdima.mymoney.utils.ActionHelper;
 import muzdima.mymoney.utils.DateTime;
 
 public class ActionList extends RecyclerView {
@@ -67,16 +68,7 @@ public class ActionList extends RecyclerView {
 
     public void onEdit(IActionItem item) {
         Context context = getContext();
-        Intent intent = new Intent(context, ActionEditorActivity.class);
-        switch (item.getType()) {
-            case IActionItem.TRANSACTION:
-                intent.putExtra("itemTransaction", (new Gson()).toJson(item));
-                break;
-            case IActionItem.TRANSFER:
-                intent.putExtra("itemTransfer", (new Gson()).toJson(item));
-                break;
-        }
-        context.startActivity(intent);
+        ActionHelper.startActionEditorActivity(context, item);
     }
 
     public List<IActionItem> getSelected() {

@@ -15,6 +15,7 @@ import muzdima.mymoney.repository.model.IActionItem;
 import muzdima.mymoney.repository.model.Money;
 import muzdima.mymoney.repository.model.TransactionItem;
 import muzdima.mymoney.repository.model.TransferItem;
+import muzdima.mymoney.utils.ActionHelper;
 import muzdima.mymoney.utils.ActivitySolver;
 import muzdima.mymoney.utils.ConfirmDialog;
 import muzdima.mymoney.utils.DateTime;
@@ -39,21 +40,7 @@ public class DraftActivity extends BaseActivity {
     // CALL FROM WORKER THREAD
     private void update(boolean forceRedraw) {
         List<IActionItem> items = Repository.getRepository().getDraftActionItems();
-        //TODO remove error checking
-        try{
-            runOnUiThread(() -> {
-                try {
-                    actionList.update(items, forceRedraw);
-                }
-                catch (Exception exception){
-                    ErrorDialog.showError(ActivitySolver.getActivity(this), exception, null);
-                }
-            });
-        }
-        catch (Exception exception){
-            runOnUiThread(()-> ErrorDialog.showError(ActivitySolver.getActivity(this), exception, null));
-        }
-
+        runOnUiThread(() -> actionList.update(items, forceRedraw));
     }
 
     @Override
@@ -87,85 +74,8 @@ public class DraftActivity extends BaseActivity {
         skipResume = action != 0;
 
         Worker.run(this, () -> {
-            AccountInfo accountInfo = (action == 0 ? null : Repository.getRepository().getAccountInfo(accountId));
-            IActionItem editItem = null;
-            switch (action) {
-                case 0:
-                    // no action
-                    break;
-                case 1:
-                    // expense
-                    TransactionItem expense = new TransactionItem();
-                    expense.id = -1;
-                    expense.categoryId = -1;
-                    expense.categoryName = null;
-                    expense.accountId = accountInfo.id;
-                    expense.accountName = accountInfo.name;
-                    expense.sum = new Money.MoneyItem();
-                    expense.sum.sum10000 = -1;
-                    expense.sum.currencyId = accountInfo.currencyId;
-                    expense.sum.currencySymbol = accountInfo.currencySymbol;
-                    expense.product = "";
-                    expense.createdAtUTC = DateTime.getNowUTC();
-                    editItem = expense;
-                    break;
-                case 2:
-                    // income
-                    TransactionItem income = new TransactionItem();
-                    income.id = -1;
-                    income.categoryId = -1;
-                    income.categoryName = null;
-                    income.accountId = accountInfo.id;
-                    income.accountName = accountInfo.name;
-                    income.sum = new Money.MoneyItem();
-                    income.sum.sum10000 = 1;
-                    income.sum.currencyId = accountInfo.currencyId;
-                    income.sum.currencySymbol = accountInfo.currencySymbol;
-                    income.product = "";
-                    income.createdAtUTC = DateTime.getNowUTC();
-                    editItem = income;
-                    break;
-                case 3:
-                    // transfer from
-                    TransferItem transferFrom = new TransferItem();
-                    transferFrom.id = -1;
-                    transferFrom.accountIdFrom = accountInfo.id;
-                    transferFrom.accountNameFrom = accountInfo.name;
-                    transferFrom.sumFrom = new Money.MoneyItem();
-                    transferFrom.sumFrom.sum10000 = 0;
-                    transferFrom.sumFrom.currencyId = accountInfo.currencyId;
-                    transferFrom.sumFrom.currencySymbol = accountInfo.currencySymbol;
-                    transferFrom.accountIdTo = -1;
-                    transferFrom.accountNameTo = null;
-                    transferFrom.sumTo = new Money.MoneyItem();
-                    transferFrom.sumTo.sum10000 = 0;
-                    transferFrom.sumTo.currencyId = -1;
-                    transferFrom.sumTo.currencySymbol = null;
-                    transferFrom.createdAtUTC = DateTime.getNowUTC();
-                    editItem = transferFrom;
-                    break;
-                case 4:
-                    // transfer to
-                    TransferItem transferTo = new TransferItem();
-                    transferTo.id = -1;
-                    transferTo.accountIdFrom = -1;
-                    transferTo.accountNameFrom = null;
-                    transferTo.sumFrom = new Money.MoneyItem();
-                    transferTo.sumFrom.sum10000 = 0;
-                    transferTo.sumFrom.currencyId = -1;
-                    transferTo.sumFrom.currencySymbol = null;
-                    transferTo.accountIdTo = accountInfo.id;
-                    transferTo.accountNameTo = accountInfo.name;
-                    transferTo.sumTo = new Money.MoneyItem();
-                    transferTo.sumTo.sum10000 = 0;
-                    transferTo.sumTo.currencyId = accountInfo.currencyId;
-                    transferTo.sumTo.currencySymbol = accountInfo.currencySymbol;
-                    transferTo.createdAtUTC = DateTime.getNowUTC();
-                    editItem = transferTo;
-                    break;
-            }
             List<IActionItem> items = Repository.getRepository().getDraftActionItems();
-            IActionItem editItemFinal = editItem;
+            IActionItem editItemFinal = ActionHelper.createAction(action, accountId);
             runOnUiThread(() -> {
                 actionList.init(true, items);
                 actionList.setOnCheckedChangeListener(selectedAll -> {

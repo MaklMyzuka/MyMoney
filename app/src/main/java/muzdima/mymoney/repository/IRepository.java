@@ -67,9 +67,9 @@ public interface IRepository {
 
     void deleteActionItems(List<IActionItem> items);
 
-    void insertTransaction(long categoryId, long accountId, long sum10000, String product, long createdAtUTC);
+    void insertTransaction(long categoryId, long accountId, long sum10000, String product, long createdAtUTC, boolean intoDraft);
 
-    void insertTransfer(long accountIdFrom, long accountIdTo, long sum10000From, long sum10000To, long createdAtUTC);
+    void insertTransfer(long accountIdFrom, long accountIdTo, long sum10000From, long sum10000To, long createdAtUTC, boolean intoDraft);
 
     void updateTransaction(long transactionId, long categoryId, long accountId, long sum10000, String product, long createdAtUTC);
 
@@ -126,4 +126,6 @@ public interface IRepository {
     XSSFSheet excelSheetActions(XSSFWorkbook workbook, String sheetName, Excel.TableColumn[] columns);
 
     XSSFSheet excelSheetCategories(XSSFWorkbook workbook, String sheetName, Excel.TableColumn[] columns);
+
+    boolean isDraftEmptyFastCheck();
 }

@@ -54,6 +54,10 @@ public class ConfigurationPreferences {
                 .getString(resources.getString(R.string.preference_language), resources.getString(R.string.language_system_value));
     }
 
+    public static boolean useDraft(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.preference_use_draft), false);
+    }
+
     public static void updateFormatPreferences(Context context, String key, String value) {
         Resources resources = context.getResources();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);

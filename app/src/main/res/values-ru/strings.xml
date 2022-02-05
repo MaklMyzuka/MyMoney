@@ -104,7 +104,8 @@
     <string name="format_time">Формат времени</string>
     <string name="before">Назад</string>
     <string name="next">Вперед</string>
-    <string name="add_success_message">Добавлено в черновик</string>
+    <string name="add_into_draft_success_message">Добавлено в черновик</string>
+    <string name="add_success_message">Успешно добавлено</string>
     <string name="account_not_selected_message">Счет не выбран</string>
     <string name="error_database_version_mismatch">Версия базы не поддерживается приложением. Обновите приложение</string>
     <string name="error_database_invalid">База не валидна</string>
@@ -133,6 +134,9 @@
     <string name="excel_categories_full">Полное название</string>
     <string name="draft_total_selected_label">Всего выбрано:</string>
     <string name="no_product">Отсутствует описание товара</string>
+    <string name="use_draft_title">Использовать черновик</string>
+    <string name="use_draft_summary_on">Новые записи сохраняются через черновик</string>
+    <string name="use_draft_summary_off">Новые записи сохраняются сразу, минуя черновик</string>
     <string-array name="languages">
         <item>Язык системы</item>
         <item>Английский (English)</item>

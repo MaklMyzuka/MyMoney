@@ -17,6 +17,12 @@
         android:key="@string/preference_night_mode"
         android:title="@string/night_mode"
         app:useSimpleSummaryProvider="true"/>
+    <SwitchPreference
+        android:summaryOff="@string/use_draft_summary_off"
+        android:summaryOn="@string/use_draft_summary_on"
+        android:icon="@drawable/ic_preference_use_draft"
+        android:key="@string/preference_use_draft"
+        android:title="@string/use_draft_title"/>
     <PreferenceCategory android:title="@string/format_date_time_number">
 
         <ListPreference

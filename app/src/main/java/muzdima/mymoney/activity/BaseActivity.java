@@ -16,6 +16,7 @@ import muzdima.mymoney.activity.dictionaries.dictionary.AccountGroupsDictionaryA
 import muzdima.mymoney.activity.dictionaries.dictionary.AccountsDictionaryActivity;
 import muzdima.mymoney.activity.dictionaries.dictionary.CategoriesDictionaryActivity;
 import muzdima.mymoney.activity.dictionaries.dictionary.CurrenciesDictionaryActivity;
+import muzdima.mymoney.repository.Repository;
 import muzdima.mymoney.utils.ConfigurationPreferences;
 import muzdima.mymoney.utils.ImportExport;
 import muzdima.mymoney.utils.Loading;
@@ -51,6 +52,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (isMenuButtonSupported()) {
             getMenuInflater().inflate(R.menu.main_menu, menu);
+            try{
+                if(Repository.getRepository().isDraftEmptyFastCheck()) {
+                    MenuItem menuDraft = menu.findItem(R.id.menuDraft);
+                    menuDraft.setVisible(false);
+                }
+            }catch(Exception ignored){}
             MenuCompat.setGroupDividerEnabled(menu, true);
         }
         ActionBar actionBar = getSupportActionBar();
@@ -77,6 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 recreate();
             });
         }
+        invalidateOptionsMenu();
     }
 
     @Override

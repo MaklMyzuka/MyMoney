@@ -226,7 +226,7 @@ public class Repository implements IRepository {
         execSQL(resId, null);
     }
 
-    private boolean checkSQLFail(@StringRes int resId) {
+    private boolean checkSQLFalse(@StringRes int resId) {
         return !checkSQL(resId, null);
     }
 
@@ -263,16 +263,16 @@ public class Repository implements IRepository {
 
     private void initData() {
         execSQL(R.string.sql_init);
-        if (checkSQLFail(R.string.sql_check_currency)) {
+        if (checkSQLFalse(R.string.sql_check_currency)) {
             execSQL(R.string.sql_init_currency);
         }
-        if (checkSQLFail(R.string.sql_check_account)) {
+        if (checkSQLFalse(R.string.sql_check_account)) {
             execSQL(R.string.sql_init_account);
         }
-        if (checkSQLFail(R.string.sql_check_account_group)) {
+        if (checkSQLFalse(R.string.sql_check_account_group)) {
             execSQL(R.string.sql_init_account_group);
         }
-        if (checkSQLFail(R.string.sql_check_category)) {
+        if (checkSQLFalse(R.string.sql_check_category)) {
             try {
                 initCategory();
             } catch (Exception ignored) {
@@ -286,7 +286,7 @@ public class Repository implements IRepository {
     }
 
     private boolean isDatabaseEmpty() {
-        return checkSQLFail(R.string.sql_check_database_empty);
+        return checkSQLFalse(R.string.sql_check_database_empty);
     }
 
     private int getDatabaseVersion() {
@@ -680,13 +680,13 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public void insertTransaction(long categoryId, long accountId, long sum10000, String product, long createdAtUTC) {
-        execSQL(R.string.sql_insert_transaction, new Object[]{categoryId, accountId, sum10000, product, createdAtUTC});
+    public void insertTransaction(long categoryId, long accountId, long sum10000, String product, long createdAtUTC, boolean intoDraft) {
+        execSQL(R.string.sql_insert_transaction, new Object[]{categoryId, accountId, sum10000, product, createdAtUTC, intoDraft ? 0 : 1});
     }
 
     @Override
-    public void insertTransfer(long accountIdFrom, long accountIdTo, long sum10000From, long sum10000To, long createdAtUTC) {
-        execSQL(R.string.sql_insert_transfer, new Object[]{accountIdFrom, accountIdTo, sum10000From, sum10000To, createdAtUTC});
+    public void insertTransfer(long accountIdFrom, long accountIdTo, long sum10000From, long sum10000To, long createdAtUTC, boolean intoDraft) {
+        execSQL(R.string.sql_insert_transfer, new Object[]{accountIdFrom, accountIdTo, sum10000From, sum10000To, createdAtUTC, intoDraft ? 0 : 1});
     }
 
     @Override
@@ -1073,5 +1073,10 @@ public class Repository implements IRepository {
             this.name = name;
             this.columns = columns;
         }
+    }
+
+    @Override
+    public boolean isDraftEmptyFastCheck(){
+        return checkSQLFalse(R.string.sql_check_fast_draft);
     }
 }

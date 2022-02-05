@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_check_fast_draft" translatable="false">
+        SELECT
+            CASE EXISTS(SELECT 1 FROM [transaction] WHERE [transaction].[is_committed] = 0) WHEN 1 THEN 1 ELSE
+            CASE EXISTS(SELECT 1 FROM [transfer] WHERE [transfer].[is_committed] = 0) WHEN 1 THEN 1 ELSE 0 END
+        END;
+    </string>
+</resources>

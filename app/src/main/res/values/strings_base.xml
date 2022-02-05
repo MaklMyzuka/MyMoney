@@ -13,6 +13,7 @@
     <string name="preference_format_number_thousand" translatable="false">preference_format_number_thousand</string>
     <string name="preference_format_date" translatable="false">preference_format_date</string>
     <string name="preference_format_time" translatable="false">preference_format_time</string>
+    <string name="preference_use_draft" translatable="false">preference_use_draft</string>
     <string name="preference_night_mode_system_value" translatable="false">-1</string>
     <string name="preference_night_mode_on_value" translatable="false">1</string>
     <string name="preference_night_mode_off_value" translatable="false">0</string>
